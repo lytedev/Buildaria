@@ -23,6 +23,8 @@ Build:
 	1. Download source. 
 
 	2. Install XNA Game Studio 4.0.
+		Found here: http://www.microsoft.com/downloads/en/details.aspx?FamilyID=9ac86eca-206f-4274-97f2-ef6c8b1f478f
+			<a href="http://www.microsoft.com/downloads/en/details.aspx?FamilyID=9ac86eca-206f-4274-97f2-ef6c8b1f478f">Download XNA Game Studio 4.0</a>
 
 	3. Open the Buildaria solution file "Buildaria.sln" in Visual Studio. 
 
