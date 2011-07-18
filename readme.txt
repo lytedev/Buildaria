@@ -69,8 +69,8 @@ Tools:
 	Empty Buckets - Removes liquid, quite obviously. Remove any liquid within the selection by Right-clicking. 
 
 Other Info: 
-	Buildaria has an IRC chatroom at FOSSnet. http://webchat.fossnet.info/?channels=#buildaria
-		<a href="http://webchat.fossnet.info/?channels=#buildaria">Buildaria IRC</a>
+	Buildaria has an IRC chatroom at FOSSnet. http://webchat.ospnet.info/?channels=#buildaria
+		<a href="http://webchat.ospnet.info/?channels=#buildaria">Buildaria IRC</a>
 
-	If chatrooms (especially IRC) scare you, check out the site. http://lytedev.flansite.com/buildaria.php
-		<a href="http://lytedev.flansite.com/buildaria.php">Buildaria Site</a>
+	If chatrooms (especially IRC) scare you, check out the site. http://lytedev.com/buildaria.php
+		<a href="http://lytedev.com/buildaria.php">Buildaria Site</a>
