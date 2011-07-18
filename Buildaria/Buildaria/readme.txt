@@ -11,13 +11,29 @@ Intro:
 
 	Below, you can find a list of features, the custom controls and what they do, as well as which tools do what.
 
-	After the installation instructions, of course. You know you just wanna dive in. =)
+	After the installation and build instructions, of course. You know you just wanna dive in. =)
 
 Installation: 
-	1. Put "Buildaria.exe" in your Terraria folder. This is usually found here:
+	1. Put "Buildaria.exe" in your Terraria folder with "Terraria.exe". This is usually found here:
 		Program Files/Steam/steamapps/common/terraria/
 
 	2. Run "Buildaria.exe"!
+
+Build:
+	1. Download source. 
+
+	2. Open the Buildaria solution file "Buildaria.sln" in Visual Studio. 
+
+	3. In the Solution Explorer, expand References. 
+
+	4. Delete Terraria. You'll need to re-add your own. 
+
+	5. Right-click References and select "Add Reference...".
+
+	6. In the dialog box, click "Browse" and open your "Terraria.exe".This is usually found here:
+		Program Files/Steam/steamapps/common/terraria/
+
+	7. Build!
 
 Features:
 	- Easy-to-use selection system that supports multiple shapes, copy, and paste.
@@ -69,8 +85,8 @@ Tools:
 	Empty Buckets - Removes liquid, quite obviously. Remove any liquid within the selection by Right-clicking. 
 
 Other Info: 
-	Buildaria has an IRC chatroom at FOSSnet. http://webchat.ospnet.info/?channels=#buildaria
-		<a href="http://webchat.ospnet.info/?channels=#buildaria">Buildaria IRC</a>
+	Buildaria has an IRC chatroom at FOSSnet. http://webchat.ospnet.org/?channels=#buildaria
+		<a href="http://webchat.ospnet.org/?channels=#buildaria">Buildaria IRC</a>
 
 	If chatrooms (especially IRC) scare you, check out the site. http://lytedev.com/buildaria.php
 		<a href="http://lytedev.com/buildaria.php">Buildaria Site</a>
