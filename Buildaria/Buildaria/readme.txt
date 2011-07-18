@@ -22,18 +22,20 @@ Installation:
 Build:
 	1. Download source. 
 
-	2. Open the Buildaria solution file "Buildaria.sln" in Visual Studio. 
+	2. Install XNA Game Studio 4.0.
 
-	3. In the Solution Explorer, expand References. 
+	3. Open the Buildaria solution file "Buildaria.sln" in Visual Studio. 
 
-	4. Delete Terraria. You'll need to re-add your own. 
+	4. In the Solution Explorer, expand References. 
 
-	5. Right-click References and select "Add Reference...".
+	5. Delete Terraria. You'll need to re-add your own. 
 
-	6. In the dialog box, click "Browse" and open your "Terraria.exe".This is usually found here:
+	6. Right-click References and select "Add Reference...".
+
+	7. In the dialog box, click "Browse" and open your "Terraria.exe".This is usually found here:
 		Program Files/Steam/steamapps/common/terraria/
 
-	7. Build!
+	8. Build!
 
 Features:
 	- Easy-to-use selection system that supports multiple shapes, copy, and paste.
