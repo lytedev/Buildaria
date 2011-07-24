@@ -1,4 +1,4 @@
-﻿Buildaria 1.4
+﻿Buildaria 1.5
 
 Intro: 
 	** READ FIRST **
@@ -11,7 +11,7 @@ Intro:
 
 	Below, you can find a list of features, the custom controls and what they do, as well as which tools do what.
 
-	After the installation and build instructions, of course. You know you just wanna dive in. =)
+	After the installation and build instructions, of course. You know you just wanna dive in anyways. =)
 
 Installation: 
 	1. Put "Buildaria.exe" in your Terraria folder with "Terraria.exe". This is usually found here:
@@ -40,14 +40,20 @@ Build:
 	8. Build!
 
 Features:
-	- Easy-to-use selection system that supports multiple shapes, copy, and paste.
-	- Disabled enemy NPCs.
-	- A ghost mode for easy construction.
+	- Easy-to-use selection system that supports multiple shapes, copy, paste, and an undo.
+	- Toggle-able enemy NPC auto-killing. 
+	- A toggl-able ghost mode for easy construction.
+	- Toggle between tools that instantly destroy everything you hover over and normal 100% power tools.
 	- Place blocks anywhere without needing background walls or adjacent blocks. 
-	- Multiple, saved, preset inventory pages with all the construction materials you'll ever need. 
+	- Multiple, saved, preset inventory pages with all the construction materials you'll ever need.  
 	- Cycle forward to dawn/dusk instantly. 
-	- Invulnerability just in case you fall or ghost into lava. 
+	- Optional god mode just in case you fall or ghost into lava. 
 	- A trash slot - you will always have inventory room. 
+	- NEW: Infinite rocket boots.
+	- NEW: Depth meter and watch active with god mode. 
+	- NEW: A special inventory that disables most of the "cheats", allowing you to test your map properly.
+		Also contains most items used in puzzle/adventure maps. Did I forget one? Let me know! 
+	- NEW: Inventories for alchemy and potions! 
 
 Controls:
 	Right-click - Fills the current selection with whatever the current item normally fills/destroys. 
@@ -55,12 +61,19 @@ Controls:
 	Alt - Transforms the current selection in an ellipse (oval or circle). 
 
 	Shift - Transforms the current selection into an outline. Works with Alt for a circle outline. 
-
 		Also, super-speed when in ghost mode.
 
 	Ctrl-C - Copy the currently selected tiles.
 
 	Ctrl-V - Paste your current copy to the selected position. 
+
+	Ctrl-Z - Undo the last selection-based modification. 
+
+	T - Toggles item speeds. 
+
+	G - Toggles god mode.
+
+	C - Toggles NPC spawning
 
 	P - Toggles between ghost mode. Hold Shift while in flight mode to go extra fast. Noclip! 
 
