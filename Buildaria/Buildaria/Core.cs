@@ -1184,12 +1184,16 @@ namespace Buildaria
                 i[38].SetDefaults(0);
 
                 i[44].SetDefaults(88);
+                i[45].SetDefaults("Tuxedo Shirt");
+                i[46].SetDefaults("Tuxedo Pants");
 
-                i[46].SetDefaults(0x36);
                 i[47].SetDefaults(0x35);
                 i[48].SetDefaults(0x9f);
                 i[49].SetDefaults(0x80);
                 i[50].SetDefaults(0x9e);
+                i[51].SetDefaults(0x36);
+
+                i[52].SetDefaults("Sunglasses");
 
                 Inventories.Add(i);
             }
@@ -1250,12 +1254,16 @@ namespace Buildaria
                 i[38].SetDefaults(222);
 
                 i[44].SetDefaults(88);
+                i[45].SetDefaults("Tuxedo Shirt");
+                i[46].SetDefaults("Tuxedo Pants");
 
-                i[46].SetDefaults(0x36);
                 i[47].SetDefaults(0x35);
                 i[48].SetDefaults(0x9f);
                 i[49].SetDefaults(0x80);
                 i[50].SetDefaults(0x9e);
+                i[51].SetDefaults(0x36);
+
+                i[52].SetDefaults("Sunglasses");
 
                 Inventories.Add(i);
             }
@@ -1314,12 +1322,16 @@ namespace Buildaria
                 i[38].SetDefaults(0);
 
                 i[44].SetDefaults(88);
+                i[45].SetDefaults("Tuxedo Shirt");
+                i[46].SetDefaults("Tuxedo Pants");
 
-                i[46].SetDefaults(0x36);
                 i[47].SetDefaults(0x35);
                 i[48].SetDefaults(0x9f);
                 i[49].SetDefaults(0x80);
                 i[50].SetDefaults(0x9e);
+                i[51].SetDefaults(0x36);
+
+                i[52].SetDefaults("Sunglasses");
 
                 Inventories.Add(i);
             }
@@ -1338,17 +1350,18 @@ namespace Buildaria
                 i[2].SetDefaults(0xc6);
                 i[2].useStyle = 0;
 
-                i[4].SetDefaults(0x19);
-                i[5].SetDefaults(0x1f);
-                i[6].SetDefaults(0x20);
-                i[7].SetDefaults(0x21);
-                i[8].SetDefaults(0x22);
-                i[9].SetDefaults(0x23);
+                i[3].SetDefaults(0x19);
+                i[4].SetDefaults(0x1f);
+                i[5].SetDefaults(0x20);
+                i[6].SetDefaults(0x21);
+                i[7].SetDefaults(0x22);
+                i[8].SetDefaults(0x23);
+                i[9].SetDefaults(0x24);
 
-                i[10].SetDefaults(0x24);
+                i[10].SetDefaults("Gold Chest");
                 i[11].SetDefaults(0x30);
-                i[12].SetDefaults(0x3f);
-                i[13].SetDefaults(0x57);
+                i[12].SetDefaults(0x57);
+                i[13].SetDefaults("Water Candle");
                 i[14].SetDefaults(0x69);
                 i[15].SetDefaults(0x6a);
                 i[16].SetDefaults(0x6b);
@@ -1369,9 +1382,9 @@ namespace Buildaria
 
                 i[30].SetDefaults(0xde);
                 i[31].SetDefaults(0xe0);
-                i[32].SetDefaults(50);
-                i[32].mana = 0;
-                i[33].SetDefaults(0);
+                i[32].SetDefaults(0x3f);
+                i[33].SetDefaults(50);
+                i[33].mana = 0;
                 i[34].SetDefaults(0);
                 i[35].SetDefaults(0);
                 i[36].SetDefaults(0);
@@ -1379,12 +1392,16 @@ namespace Buildaria
                 i[38].SetDefaults(0);
 
                 i[44].SetDefaults(88);
+                i[45].SetDefaults("Tuxedo Shirt");
+                i[46].SetDefaults("Tuxedo Pants");
 
-                i[46].SetDefaults(0x36);
                 i[47].SetDefaults(0x35);
                 i[48].SetDefaults(0x9f);
                 i[49].SetDefaults(0x80);
                 i[50].SetDefaults(0x9e);
+                i[51].SetDefaults(0x36);
+
+                i[52].SetDefaults("Sunglasses");
 
                 Inventories.Add(i);
             }
@@ -1445,12 +1462,16 @@ namespace Buildaria
                 i[38].SetDefaults(0xc3);
 
                 i[44].SetDefaults(88);
+                i[45].SetDefaults("Tuxedo Shirt");
+                i[46].SetDefaults("Tuxedo Pants");
 
-                i[46].SetDefaults(0x36);
                 i[47].SetDefaults(0x35);
                 i[48].SetDefaults(0x9f);
                 i[49].SetDefaults(0x80);
                 i[50].SetDefaults(0x9e);
+                i[51].SetDefaults(0x36);
+
+                i[52].SetDefaults("Sunglasses");
 
                 Inventories.Add(i);
             }
