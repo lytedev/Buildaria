@@ -57,7 +57,10 @@ Features:
 	- NEW: Depth meter and watch active with god mode. 
 	- NEW: A special inventory that disables most of the "cheats", allowing you to test your map properly.
 		Also contains most items used in puzzle/adventure maps. Did I forget one? Let me know! 
-	- NEW: Inventories for alchemy and potions! 
+	- NEW: Inventories now include nearly every item! (Thanks to: septor)
+	- NEW: Inventories are now loaded and saved to and from an XML file, allowing you to add, remove, and
+		customize your own inventories. 
+	- NEW: Output appears in chat area, letting you know what's going on... most of the time. 
 
 Controls:
 	Right-click - Fills the current selection with whatever the current item normally fills/destroys. 
@@ -74,6 +77,10 @@ Controls:
 	Ctrl-V - Paste your current copy to the selected position. 
 
 	Ctrl-Z - Undo the last selection-based modification. 
+
+	Ctrl-Shift-S - Save Inventories to file. 
+
+	Ctrl-Shift-O - Load Inventories from file. 
 
 	T - Toggles item speeds. 
 
