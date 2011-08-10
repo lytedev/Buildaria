@@ -114,6 +114,9 @@ namespace Buildaria
 
         protected override void Initialize()
         {
+            screenHeight = 720;
+            screenWidth = 1280; // */
+
             base.Initialize();
             spriteBatch = new SpriteBatch(base.GraphicsDevice);
 

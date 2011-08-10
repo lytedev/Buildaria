@@ -30,12 +30,16 @@ Build:
 
 	4. In the Solution Explorer, expand References. 
 
-	5. Delete Terraria. You'll need to re-add your own. 
+	5. Delete Terraria. 
 
-	6. Right-click References and select "Add Reference...".
-
-	7. In the dialog box, click "Browse" and open your "Terraria.exe".This is usually found here:
+	6. Copy "Terraria.exe" and the "Content" folder from your Terraria folder, found here:
 		Program Files/Steam/steamapps/common/terraria/
+		
+	7. Paste them in the "bin\x86\Debug" and "bin\x86\Release" folders in the project directory.
+
+	8. Right-click References and select "Add Reference...".
+
+	9. In the dialog box, click "Browse" and open your newly pasted "Terraria.exe".
 
 	8. Build!
 
@@ -102,8 +106,7 @@ Tools:
 	Empty Buckets - Removes liquid, quite obviously. Remove any liquid within the selection by Right-clicking. 
 
 Other Info: 
-	Buildaria has an IRC chatroom at FOSSnet. http://webchat.ospnet.org/?channels=#buildaria
-		<a href="http://webchat.ospnet.org/?channels=#buildaria">Buildaria IRC</a>
-
-	If chatrooms (especially IRC) scare you, check out the site. http://lytedev.com/buildaria.php
+	Site: http://lytedev.com/buildaria.php
 		<a href="http://lytedev.com/buildaria.php">Buildaria Site</a>
+
+	This readme is printed directly onto a webpage. That's why the HTML, okay? =)
