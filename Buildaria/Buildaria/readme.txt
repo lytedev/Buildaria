@@ -30,14 +30,18 @@ Build:
 
 	4. In the Solution Explorer, expand References. 
 
-	5. Delete Terraria. You'll need to re-add your own. 
+	5. Delete Terraria. 
 
-	6. Right-click References and select "Add Reference...".
-
-	7. In the dialog box, click "Browse" and open your "Terraria.exe".This is usually found here:
+	6. Copy "Terraria.exe" and the "Content" folder from your Terraria folder, found here:
 		Program Files/Steam/steamapps/common/terraria/
+		
+	7. Paste them in the "bin\x86\Debug" and "bin\x86\Release" folders in the project directory.
 
-	8. Build!
+	8. Right-click References and select "Add Reference...".
+
+	9. In the dialog box, click "Browse" and open your newly pasted "Terraria.exe".
+
+	10. Build!
 
 Features:
 	- Easy-to-use selection system that supports multiple shapes, copy, paste, and an undo.
@@ -53,21 +57,30 @@ Features:
 	- NEW: Depth meter and watch active with god mode. 
 	- NEW: A special inventory that disables most of the "cheats", allowing you to test your map properly.
 		Also contains most items used in puzzle/adventure maps. Did I forget one? Let me know! 
-	- NEW: Inventories for alchemy and potions! 
+	- NEW: Inventories now include nearly every item! (Thanks to: septor)
+	- NEW: Inventories are now loaded and saved to and from an XML file, allowing you to add, remove, and
+		customize your own inventories. 
+	- NEW: Output appears in chat area, letting you know what's going on... most of the time. 
 
 Controls:
 	Right-click - Fills the current selection with whatever the current item normally fills/destroys. 
 
-	Alt - Transforms the current selection in an ellipse (oval or circle). 
+	Alt - Transforms the current selection in an ellipse (oval or circle). Also causes Paste to paste
+		upside-down, or flipped vertically. 
 
 	Shift - Transforms the current selection into an outline. Works with Alt for a circle outline. 
-		Also, super-speed when in ghost mode.
+		Also, super-speed when in ghost mode. Also causes Paste to paste backwards, or flipped 
+		horizontally. 
 
 	Ctrl-C - Copy the currently selected tiles.
 
 	Ctrl-V - Paste your current copy to the selected position. 
 
 	Ctrl-Z - Undo the last selection-based modification. 
+
+	Ctrl-Shift-S - Save Inventories to file. 
+
+	Ctrl-Shift-O - Load Inventories from file. 
 
 	T - Toggles item speeds. 
 
@@ -102,8 +115,7 @@ Tools:
 	Empty Buckets - Removes liquid, quite obviously. Remove any liquid within the selection by Right-clicking. 
 
 Other Info: 
-	Buildaria has an IRC chatroom at FOSSnet. http://webchat.ospnet.org/?channels=#buildaria
-		<a href="http://webchat.ospnet.org/?channels=#buildaria">Buildaria IRC</a>
-
-	If chatrooms (especially IRC) scare you, check out the site. http://lytedev.com/buildaria.php
+	Site: http://lytedev.com/buildaria.php
 		<a href="http://lytedev.com/buildaria.php">Buildaria Site</a>
+
+	This readme is printed directly onto a webpage. That's why the HTML, okay? =)
