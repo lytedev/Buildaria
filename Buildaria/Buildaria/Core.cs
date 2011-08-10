@@ -159,17 +159,10 @@ namespace Buildaria
                     {
                         Item it = player[myPlayer].inventory[i];
 
-                        if (i == 39)
-                        {
-                            player[myPlayer].inventory[i].SetDefaults(0);
-                            player[myPlayer].inventory[i].name = "";
-                            player[myPlayer].inventory[i].stack = 0;
-                            player[myPlayer].inventory[i].UpdateItem(0);
-                        }
-                        else if (it.name != "Magic Mirror")
+                        if (it.name != "Magic Mirror")
                         {
                             it.SetDefaults(it.type);
-                            it.stack = 255;
+                            it.stack = 250;
                             if (itemHax)
                             {
                                 it.autoReuse = true;
@@ -1074,7 +1067,7 @@ namespace Buildaria
 
         public void CreateInventories()
         {
-            #region Tester
+            #region Blank
             {
                 Item[] i = new Item[53];
 
@@ -1082,54 +1075,325 @@ namespace Buildaria
                 {
                     i[it] = new Item();
                 }
-                i[0].SetDefaults(84);
-                i[1].SetDefaults(114);
-                i[2].SetDefaults(87);
-
-                i[4].SetDefaults(205);
-                i[5].SetDefaults(185);
-                i[6].SetDefaults(0);
-                i[7].SetDefaults(0);
-                i[8].SetDefaults(0);
-                i[9].SetDefaults(285);
-
-                i[10].SetDefaults(49);
-                i[11].SetDefaults(50);
-                i[12].SetDefaults(53);
-                i[13].SetDefaults(111);
-                i[14].SetDefaults(88);
-                i[15].SetDefaults(54);
-                i[16].SetDefaults(128);
-                i[17].SetDefaults(186);
-                i[18].SetDefaults(187);
-                i[19].SetDefaults(233);
-
-                i[20].SetDefaults(211);
-                i[21].SetDefaults(212);
-                i[22].SetDefaults(100);
-                i[23].SetDefaults(101);
-                i[24].SetDefaults(102);
-                i[25].SetDefaults(123);
-                i[26].SetDefaults(124);
-                i[27].SetDefaults(125);
-                i[28].SetDefaults(151);
-                i[29].SetDefaults(152);
-
-                i[30].SetDefaults(153);
-                i[31].SetDefaults(156);
-                i[32].SetDefaults(213);
-                i[33].SetDefaults(223);
-                i[34].SetDefaults(228);
-                i[35].SetDefaults(229);
-                i[36].SetDefaults(230);
-                i[37].SetDefaults(231);
-                i[38].SetDefaults(232);
+                i[0].SetDefaults("Ivy Whip");
 
                 Inventories.Add(i);
             }
             #endregion
 
-            #region Potions
+            #region Armor
+            {
+                Item[] i = new Item[53];
+
+                for (int it = 0; it < i.Length; it++)
+                {
+                    i[it] = new Item();
+                }
+
+                // Row 1
+                i[0].SetDefaults("Ivy Whip");
+
+                // Row 2
+                i[10].SetDefaults("Copper Helmet");
+                i[11].SetDefaults("Iron Helmet");
+                i[12].SetDefaults("Silver Helmet");
+                i[13].SetDefaults("Gold Helmet");
+                i[14].SetDefaults("Meteor Helmet");
+                i[15].SetDefaults("Shadow Helmet");
+                i[16].SetDefaults("Necro Helmet");
+                i[17].SetDefaults("Jungle Hat");
+                i[18].SetDefaults("Molten Helmet");
+
+                // Row 3
+                i[20].SetDefaults("Copper Chainmail");
+                i[21].SetDefaults("Iron Chainmail");
+                i[22].SetDefaults("Silver Chainmail");
+                i[23].SetDefaults("Gold Chainmail");
+                i[24].SetDefaults("Meteor Suit");
+                i[25].SetDefaults("Shadow Scalemail");
+                i[26].SetDefaults("Necro Breastplate");
+                i[27].SetDefaults("Jungle Shirt");
+                i[28].SetDefaults("Molten Breastplate");
+
+                // Row 4
+                i[30].SetDefaults("Copper Greaves");
+                i[31].SetDefaults("Iron Greaves");
+                i[32].SetDefaults("Silver Greaves");
+                i[33].SetDefaults("Gold Greaves");
+                i[34].SetDefaults("Meteor Leggings");
+                i[35].SetDefaults("Shadow Greaves");
+                i[36].SetDefaults("Necro Greaves");
+                i[37].SetDefaults("Jungle Pants");
+                i[38].SetDefaults("Molten Greaves");
+
+                // Accessories
+                i[47].SetDefaults("Cloud in a Bottle");
+                i[48].SetDefaults("Shiny Red Balloon");
+                i[49].SetDefaults("Rocket Boots");
+                i[50].SetDefaults("Lucky Horseshoe");
+                i[51].SetDefaults("Hermes Boots");
+
+                Inventories.Add(i);
+            }
+            #endregion
+
+            #region Weapons (throwable, explosive, flails, spears, bows, guns)
+            {
+                Item[] i = new Item[53];
+
+                for (int it = 0; it < i.Length; it++)
+                {
+                    i[it] = new Item();
+                }
+
+                // Row 1
+                i[0].SetDefaults("Ivy Whip");
+                i[1].SetDefaults("Blowpipe");
+                i[2].SetDefaults("Flintlock Pistol");
+                i[3].SetDefaults("Musket");
+                i[4].SetDefaults("Handgun");
+                i[5].SetDefaults("Minishark");
+                i[6].SetDefaults("Space Gun");
+                i[7].SetDefaults("Phoenix Blaster");
+                i[8].SetDefaults("Sandgun");
+                i[9].SetDefaults("Star Cannon");
+
+                // Row 2
+                i[10].SetDefaults("Vile Powder");
+                i[11].SetDefaults("Shuriken");
+                i[12].SetDefaults("Bone");
+                i[13].SetDefaults("Spikey Ball");
+                i[14].SetDefaults("Throwing Knife");
+                i[15].SetDefaults("Poisoned Knife");
+                i[16].SetDefaults("Grenade");
+                i[17].SetDefaults("Bomb");
+                i[18].SetDefaults("Sticky Bomb");
+                i[19].SetDefaults("Dynamite");
+
+                // Row 3
+                i[20].SetDefaults("Harpoon");
+                i[21].SetDefaults("Ball 'O Hurt");
+                i[22].SetDefaults("Blue Moon");
+                i[23].SetDefaults("Sunfury");
+                i[24].SetDefaults("Spear");
+                i[25].SetDefaults("Trident");
+                i[26].SetDefaults("Dark Lance");
+                i[27].SetDefaults("Wooden Boomerang");
+                i[28].SetDefaults("Enchanted Boomerang");
+                i[29].SetDefaults("Flamarang");
+
+                // Row 4
+                i[30].SetDefaults("Thorn Chakram");
+                i[31].SetDefaults("Wooden Bow");
+                i[32].SetDefaults("Copper Bow");
+                i[33].SetDefaults("Iron Bow");
+                i[34].SetDefaults("Silver Bow");
+                i[35].SetDefaults("Gold Bow");
+                i[36].SetDefaults("Demon Bow");
+                i[37].SetDefaults("Molten Fury");
+
+                // Equipment
+                i[44].SetDefaults("Mining Helmet");
+
+                // Accessories
+                i[47].SetDefaults("Cloud in a Bottle");
+                i[48].SetDefaults("Shiny Red Balloon");
+                i[49].SetDefaults("Rocket Boots");
+                i[50].SetDefaults("Lucky Horseshoe");
+                i[51].SetDefaults("Hermes Boots");
+
+                Inventories.Add(i);
+            }
+            #endregion
+
+            #region Weapons (magic, melee)
+            {
+                Item[] i = new Item[53];
+
+                for (int it = 0; it < i.Length; it++)
+                {
+                    i[it] = new Item();
+                }
+
+                // Row 1
+                i[0].SetDefaults("Ivy Whip");
+                i[2].SetDefaults("Flower of Fire");
+                i[3].SetDefaults("Vilethorn");
+                i[4].SetDefaults("Magic Missile");
+                i[5].SetDefaults("Flamelash");
+                i[6].SetDefaults("Water Bolt");
+                i[7].SetDefaults("Demon Scythe");
+                i[8].SetDefaults("Aqua Scepter");
+
+                // Row 2
+                i[10].SetDefaults("Night's Edge");
+                i[11].SetDefaults("Light's Bane");
+                i[12].SetDefaults("Magic Missile");
+                i[13].SetDefaults("Starfury");
+                i[14].SetDefaults("Staff of Regrowth");
+                i[15].SetDefaults("The Breaker");
+                i[16].SetDefaults("War Axe of the Night");
+
+                // Row 3
+                i[20].SetDefaults("Wooden Sword");
+                i[21].SetDefaults("Copper Shortsword");
+                i[22].SetDefaults("Copper Broadsword");
+                i[23].SetDefaults("Iron Shortsword");
+                i[24].SetDefaults("Iron Broadsword");
+                i[25].SetDefaults("Silver Shortsword");
+                i[26].SetDefaults("Silver Broadsword");
+                i[27].SetDefaults("Gold Shortsword");
+                i[28].SetDefaults("Gold Broadsword");
+
+                // Row 4
+                i[30].SetDefaults("Muramasa");
+                i[31].SetDefaults("Blade of Grass");
+                i[32].SetDefaults("Fiery Greatsword");
+                i[33].SetDefaults("White Phaseblade");
+                i[34].SetDefaults("Blue Phaseblade");
+                i[35].SetDefaults("Red Phaseblade");
+                i[36].SetDefaults("Purple Phaseblade");
+                i[37].SetDefaults("Green Phaseblade");
+                i[37].SetDefaults("Yellow Phaseblade");
+
+                // Equipment
+                i[44].SetDefaults("Mining Helmet");
+
+                // Accessories
+                i[47].SetDefaults("Cloud in a Bottle");
+                i[48].SetDefaults("Shiny Red Balloon");
+                i[49].SetDefaults("Rocket Boots");
+                i[50].SetDefaults("Lucky Horseshoe");
+                i[51].SetDefaults("Hermes Boots");
+
+                Inventories.Add(i);
+            }
+            #endregion
+
+            #region Accessories / Other
+            {
+                Item[] i = new Item[53];
+
+                for (int it = 0; it < i.Length; it++)
+                {
+                    i[it] = new Item();
+                }
+
+                // Row 1
+                i[0].SetDefaults("Ivy Whip");
+                i[1].SetDefaults("Grappling Hook");
+                i[2].SetDefaults("Dirt Rod");
+                i[4].SetDefaults("Cobalt Shield");
+                i[5].SetDefaults("Feral Claws");
+                i[6].SetDefaults("Obsidian Skull");
+                i[7].SetDefaults("Shackle");
+                i[8].SetDefaults("Empty Bucket");
+                i[9].SetDefaults("Guide Voodoo Doll");
+
+                // Row 2
+                i[10].SetDefaults("Anklet of the Wind");
+                i[11].SetDefaults("Cloud in a Bottle");
+                i[12].SetDefaults("Flipper");
+                i[13].SetDefaults("Hermes Boots");
+                i[14].SetDefaults("Lucky Horseshoe");
+                i[15].SetDefaults("Rocket Boots");
+                i[16].SetDefaults("Shiny Red Balloon");
+                i[17].SetDefaults("Aglet");
+
+                // Row 3
+                i[20].SetDefaults("Depth Meter");
+                i[21].SetDefaults("Copper Watch");
+                i[22].SetDefaults("Silver Watch");
+                i[23].SetDefaults("Gold Watch");
+                i[25].SetDefaults("Mining Helmet");
+                i[27].SetDefaults("orb of Light");
+                i[28].SetDefaults("Magic Mirror");
+                i[29].SetDefaults("Breathing Reed");
+
+                // Row 4
+                i[30].SetDefaults("Band of Regeneration");
+                i[31].SetDefaults("Band of Starpower");
+                i[32].SetDefaults("Nature's Gift");
+                i[38].SetDefaults("Whoopie Cushion");
+
+                // Equipment
+                i[44].SetDefaults("Mining Helmet");
+
+                // Accessories
+                i[47].SetDefaults("Cloud in a Bottle");
+                i[48].SetDefaults("Shiny Red Balloon");
+                i[49].SetDefaults("Rocket Boots");
+                i[50].SetDefaults("Lucky Horseshoe");
+                i[51].SetDefaults("Hermes Boots");
+
+                Inventories.Add(i);
+            }
+            #endregion
+
+            #region Vanity Items
+            {
+                Item[] i = new Item[53];
+
+                for (int it = 0; it < i.Length; it++)
+                {
+                    i[it] = new Item();
+                }
+
+                // Row 1
+                i[0].SetDefaults("Ivy Whip");
+                i[1].SetDefaults("Goggles");
+                i[2].SetDefaults("Sunglasses");
+                i[3].SetDefaults("Jungle Rose");
+                i[4].SetDefaults("Fish Bowl");
+                i[5].SetDefaults("Robe");
+                i[6].SetDefaults("Mime Mask");
+                i[7].SetDefaults("Bunny Hood");
+                i[8].SetDefaults("Red Hat");
+                i[9].SetDefaults("Robot Hat");
+
+                // Row 2
+                i[10].SetDefaults("Archaeologist's Hat");
+                i[11].SetDefaults("Plumber's Hat");
+                i[12].SetDefaults("Top Hat");
+                i[13].SetDefaults("Familiar Wig");
+                i[14].SetDefaults("Summer Hat");
+                i[15].SetDefaults("Ninja Hood");
+                i[16].SetDefaults("Hero's Hat");
+                i[19].SetDefaults("Gold Crown");
+
+                // Row 3
+                i[20].SetDefaults("Archaeologist's Jacket");
+                i[21].SetDefaults("Plumber's Shirt");
+                i[22].SetDefaults("Tuxedo Shirt");
+                i[23].SetDefaults("Familiar Shirt");
+                i[24].SetDefaults("The Doctor's Shirt");
+                i[25].SetDefaults("Ninja Shirt");
+                i[26].SetDefaults("Hero's Shirt");
+
+                // Row 4
+                i[30].SetDefaults("Archaeologist's Pants");
+                i[31].SetDefaults("Plumber's Pants");
+                i[32].SetDefaults("Tuxedo Pants");
+                i[33].SetDefaults("Familiar Pants");
+                i[34].SetDefaults("The Doctor's Pants");
+                i[35].SetDefaults("Ninja Pants");
+                i[36].SetDefaults("Hero's Pants");
+
+                // Equipment
+                i[44].SetDefaults("Mining Helmet");
+
+                // Accessories
+                i[47].SetDefaults("Cloud in a Bottle");
+                i[48].SetDefaults("Shiny Red Balloon");
+                i[49].SetDefaults("Rocket Boots");
+                i[50].SetDefaults("Lucky Horseshoe");
+                i[51].SetDefaults("Hermes Boots");
+
+                Inventories.Add(i);
+            }
+            #endregion
+
+            #region Consumables
             {
                 Item[] i = new Item[53];
 
@@ -1150,7 +1414,6 @@ namespace Buildaria
                 i[6].SetDefaults("Healing Potion");
                 i[7].SetDefaults("Mana Potion");
                 i[8].SetDefaults("Restoration Potion");
-                i[9].SetDefaults(0);
 
                 // Row 2
                 i[10].SetDefaults("Archery Potion");
@@ -1173,24 +1436,19 @@ namespace Buildaria
                 i[25].SetDefaults("Swiftness Potion");
                 i[26].SetDefaults("Thorns Potion");
                 i[27].SetDefaults("Water Walking Potion");
-                i[28].SetDefaults(0);
-                i[29].SetDefaults(0);
 
                 // Row 4
-                i[30].SetDefaults(0);
-                i[31].SetDefaults(0);
-                i[32].SetDefaults(0);
-                i[33].SetDefaults(0);
-                i[34].SetDefaults(0);
-                i[35].SetDefaults(0);
-                i[36].SetDefaults(0);
-                i[37].SetDefaults(0);
-                i[38].SetDefaults(0);
+                i[30].SetDefaults("Mushroom");
+                i[31].SetDefaults("Glowing Mushroom");
+                i[32].SetDefaults("Ale");
+                i[33].SetDefaults("Bowl of Soup");
+                i[34].SetDefaults("Goldfish");
+                i[36].SetDefaults("Fallen Star");
+                i[37].SetDefaults("Life Crystal");
+                i[38].SetDefaults("Mana Crystal");
 
                 // Equipment
                 i[44].SetDefaults("Mining Helmet");
-                i[45].SetDefaults("Tuxedo Shirt");
-                i[46].SetDefaults("Tuxedo Pants");
 
                 // Accessories
                 i[47].SetDefaults("Cloud in a Bottle");
@@ -1199,14 +1457,11 @@ namespace Buildaria
                 i[50].SetDefaults("Lucky Horseshoe");
                 i[51].SetDefaults("Hermes Boots");
 
-                // Social (helmet)
-                i[52].SetDefaults("Sunglasses");
-
                 Inventories.Add(i);
             }
             #endregion
 
-            #region Alchemy 
+            #region Materials
             {
                 Item[] i = new Item[53];
 
@@ -1215,62 +1470,284 @@ namespace Buildaria
                     i[it] = new Item();
                 }
 
+                // Row 1
                 i[0].SetDefaults("Copper Pickaxe");
                 i[1].SetDefaults("Copper Hammer");
-                i[2].SetDefaults(0xc6);
+                i[2].SetDefaults("Blue Phaseblade");
                 i[2].useStyle = 0;
-                i[3].SetDefaults(275);
 
-                i[4].SetDefaults(307);
-                i[5].SetDefaults(308);
-                i[6].SetDefaults(309);
-                i[7].SetDefaults(310);
-                i[8].SetDefaults(311);
-                i[9].SetDefaults(312);
+                i[3].SetDefaults("Copper Bar");
+                i[4].SetDefaults("Iron Bar");
+                i[5].SetDefaults("Silver Bar");
+                i[6].SetDefaults("Gold Bar");
+                i[7].SetDefaults("Demonite Bar");
+                i[8].SetDefaults("Meteorite Bar");
+                i[9].SetDefaults("Hellstone Bar");
 
-                i[10].SetDefaults(313);
-                i[11].SetDefaults(314);
-                i[12].SetDefaults(315);
-                i[13].SetDefaults(316);
-                i[14].SetDefaults(317);
-                i[15].SetDefaults(318);
-                i[16].SetDefaults(319);
-                i[17].SetDefaults(320);
-                i[18].SetDefaults(323);
-                i[19].SetDefaults(276);
+                // Row 2
+                i[10].SetDefaults("Amethyst");
+                i[11].SetDefaults("Diamond");
+                i[12].SetDefaults("Emerald");
+                i[13].SetDefaults("Ruby");
+                i[14].SetDefaults("Sapphire");
+                i[15].SetDefaults("Topaz");
+                i[16].SetDefaults("Gel");
+                i[17].SetDefaults("Cobweb");
+                i[18].SetDefaults("Silk");
+                i[19].SetDefaults("Cactus");
 
-                i[20].SetDefaults(31);
-                i[21].SetDefaults(32);
-                i[22].SetDefaults(36);
-                i[23].SetDefaults(283);
-                i[24].SetDefaults(27);
-                i[25].SetDefaults(38);
-                i[26].SetDefaults(59);
-                i[27].SetDefaults(60);
-                i[28].SetDefaults(62);
-                i[29].SetDefaults(63);
+                // Row 3
+                i[20].SetDefaults("Lens");
+                i[21].SetDefaults("Black Lens");
+                i[22].SetDefaults("Iron Chain");
+                i[23].SetDefaults("Hook");
+                i[24].SetDefaults("Shadow Scale");
+                i[25].SetDefaults("Tattered Cloth");
+                i[26].SetDefaults("Leather");
+                i[27].SetDefaults("Rotten Chunk");
+                i[28].SetDefaults("Worm Tooth");
+                i[29].SetDefaults("Stinger");
 
-                i[30].SetDefaults(66);
-                i[31].SetDefaults(67);
-                i[32].SetDefaults(68);
-                i[33].SetDefaults(69);
-                i[34].SetDefaults(154);
-                i[35].SetDefaults(208);
-                i[36].SetDefaults(209);
-                i[37].SetDefaults(210);
-                i[38].SetDefaults(222);
+                // Row 4
+                i[30].SetDefaults("Feather");
+                i[31].SetDefaults("Vine");
+                i[32].SetDefaults("Jungle Spores");
+                i[33].SetDefaults("Shark Fin");
+                i[34].SetDefaults("Antlion Mandible");
+                i[35].SetDefaults("Illegal Gun Parts");
+                i[36].SetDefaults("Glowstick");
+                i[37].SetDefaults("Green Dye");
+                i[38].SetDefaults("Black Dye");
 
-                i[44].SetDefaults(88);
-                i[45].SetDefaults("Tuxedo Shirt");
-                i[46].SetDefaults("Tuxedo Pants");
+                // Equipment
+                i[44].SetDefaults("Mining Helmet");
 
-                i[47].SetDefaults(0x35);
-                i[48].SetDefaults(0x9f);
-                i[49].SetDefaults(0x80);
-                i[50].SetDefaults(0x9e);
-                i[51].SetDefaults(0x36);
+                // Accessories
+                i[47].SetDefaults("Cloud in a Bottle");
+                i[48].SetDefaults("Shiny Red Balloon");
+                i[49].SetDefaults("Rocket Boots");
+                i[50].SetDefaults("Lucky Horseshoe");
+                i[51].SetDefaults("Hermes Boots");
 
-                i[52].SetDefaults("Sunglasses");
+                Inventories.Add(i);
+            }
+            #endregion
+
+            #region Ammo / Unknown
+            {
+                Item[] i = new Item[53];
+
+                for (int it = 0; it < i.Length; it++)
+                {
+                    i[it] = new Item();
+                }
+
+                // Row 1
+                i[0].SetDefaults("Copper Pickaxe");
+                i[1].SetDefaults("Copper Hammer");
+                i[2].SetDefaults("Blue Phaseblade");
+                i[2].useStyle = 0;
+
+                i[3].SetDefaults("Ivy Whip");
+
+                // Row 2
+                i[10].SetDefaults("Wooden Arrow");
+                i[11].SetDefaults("Flaming Arrow");
+                i[12].SetDefaults("Unholy Arrow");
+                i[13].SetDefaults("Jester's Arrow");
+                i[14].SetDefaults("Hellfire Arrow");
+                i[15].SetDefaults("Musket Ball");
+                i[16].SetDefaults("Silver Bullet");
+                i[17].SetDefaults("Meteor Shot");
+                i[18].SetDefaults("Seed");
+
+                // Row 3
+                i[20].SetDefaults("Suspicious Looking Eye");
+                i[21].SetDefaults("Worm Food");
+                i[22].SetDefaults("Goblin Battle Standard");
+                i[23].SetDefaults("Angel Statue");
+                i[24].SetDefaults("Golden Key");
+                i[25].SetDefaults("Shadow Key");
+
+                // Row 4
+                i[30].SetDefaults("Copper Coin");
+                i[31].SetDefaults("Silver Coin");
+                i[32].SetDefaults("Gold Coin");
+                i[33].SetDefaults("Platinum Coin");
+
+                // Equipment
+                i[44].SetDefaults("Mining Helmet");
+
+                // Accessories
+                i[47].SetDefaults("Cloud in a Bottle");
+                i[48].SetDefaults("Shiny Red Balloon");
+                i[49].SetDefaults("Rocket Boots");
+                i[50].SetDefaults("Lucky Horseshoe");
+                i[51].SetDefaults("Hermes Boots");
+
+                Inventories.Add(i);
+            }
+            #endregion
+
+            #region Alchemy
+            {
+                Item[] i = new Item[53];
+
+                for (int it = 0; it < i.Length; it++)
+                {
+                    i[it] = new Item();
+                }
+
+                // Row 1
+                i[0].SetDefaults("Copper Pickaxe");
+                i[1].SetDefaults("Copper Hammer");
+                i[2].SetDefaults("Blue Phaseblade");
+                i[2].useStyle = 0;
+                i[3].SetDefaults("Clay Pot");
+
+                i[4].SetDefaults("Bottled Water");
+                i[5].SetDefaults("Bottle");
+                i[8].SetDefaults("Acorn");
+                i[9].SetDefaults("Sunflower");
+
+                // Row 2
+                i[10].SetDefaults("Blinkroot Seeds");
+                i[11].SetDefaults("Daybloom Seeds");
+                i[12].SetDefaults("Fireblossom Seeds");
+                i[13].SetDefaults("Moonglow Seeds");
+                i[14].SetDefaults("Deathweed Seeds");
+                i[15].SetDefaults("Waterleaf Seeds");
+
+                // Row 3
+                i[20].SetDefaults("Blinkroot");
+                i[21].SetDefaults("Daybloom");
+                i[22].SetDefaults("Fireblossom");
+                i[23].SetDefaults("Moonglow");
+                i[24].SetDefaults("Deathweed");
+                i[25].SetDefaults("Waterleaf");
+
+                // Equipment
+                i[44].SetDefaults("Mining Helmet");
+
+                // Accessories
+                i[47].SetDefaults("Cloud in a Bottle");
+                i[48].SetDefaults("Shiny Red Balloon");
+                i[49].SetDefaults("Rocket Boots");
+                i[50].SetDefaults("Lucky Horseshoe");
+                i[51].SetDefaults("Hermes Boots");
+
+                Inventories.Add(i);
+            }
+            #endregion
+
+            #region Decor (minus lighting)
+            {
+                Item[] i = new Item[53];
+
+                for (int it = 0; it < i.Length; it++)
+                {
+                    i[it] = new Item();
+                }
+
+                // Row 1
+                i[0].SetDefaults("Copper Pickaxe");
+                i[1].SetDefaults("Copper Hammer");
+                i[2].SetDefaults("Blue Phaseblade");
+                i[2].useStyle = 0;
+
+                i[3].SetDefaults("Wooden Door");
+                i[4].SetDefaults("Wooden Chair");
+                i[5].SetDefaults("Wooden Table");
+                i[6].SetDefaults("Work Bench");
+                i[7].SetDefaults("Iron Anvil");
+                i[8].SetDefaults("Furnace");
+                i[9].SetDefaults("Hellforge");
+
+                // Row 2
+                i[10].SetDefaults("Keg");
+                i[11].SetDefaults("Cooking Pot");
+                i[12].SetDefaults("Loom");
+                i[13].SetDefaults("Bed");
+                i[14].SetDefaults("Sign");
+                i[15].SetDefaults("Tombstone");
+                i[16].SetDefaults("Pink Vase");
+                i[17].SetDefaults("Coral");
+                i[18].SetDefaults("Book");
+                i[19].SetDefaults("Bookcase");
+
+                // Row 3
+                i[20].SetDefaults("Statue");
+                i[21].SetDefaults("Toilet");
+                i[22].SetDefaults("Bathtub");
+                i[23].SetDefaults("Bench");
+                i[24].SetDefaults("Piano");
+                i[25].SetDefaults("Grandfather Clock");
+                i[26].SetDefaults("Dresser");
+                i[27].SetDefaults("Throne");
+                i[28].SetDefaults("Bowl");
+
+                // Row 4
+                i[30].SetDefaults("Chest");
+                i[31].SetDefaults("Gold Chest");
+                i[32].SetDefaults("Shadow Chest");
+                i[33].SetDefaults("Barrel");
+                i[34].SetDefaults("Trash Can");
+                i[36].SetDefaults("Safe");
+                i[37].SetDefaults("Piggy Bank");
+
+                // Equipment
+                i[44].SetDefaults("Mining Helmet");
+
+                // Accessories
+                i[47].SetDefaults("Cloud in a Bottle");
+                i[48].SetDefaults("Shiny Red Balloon");
+                i[49].SetDefaults("Rocket Boots");
+                i[50].SetDefaults("Lucky Horseshoe");
+                i[51].SetDefaults("Hermes Boots");
+
+                Inventories.Add(i);
+            }
+            #endregion
+
+            #region Decor (lighting)
+            {
+                Item[] i = new Item[53];
+
+                for (int it = 0; it < i.Length; it++)
+                {
+                    i[it] = new Item();
+                }
+
+                // Row 1
+                i[0].SetDefaults("Copper Pickaxe");
+                i[1].SetDefaults("Copper Hammer");
+                i[2].SetDefaults("Blue Phaseblade");
+                i[2].useStyle = 0;
+
+                i[3].SetDefaults("Torch");
+                i[4].SetDefaults("Candle");
+                i[5].SetDefaults("Water Candle");
+                i[6].SetDefaults("Candelabra");
+                i[7].SetDefaults("Skull Lantern");
+                i[8].SetDefaults("Tiki Torch");
+                i[9].SetDefaults("Lamp Post");
+
+                // Row 2
+                i[10].SetDefaults("Copper Chandelier");
+                i[11].SetDefaults("Silver Chandelier");
+                i[12].SetDefaults("Gold Chandelier");
+                i[13].SetDefaults("Chain Lantern");
+                i[14].SetDefaults("Chinese Lantern");
+
+                // Equipment
+                i[44].SetDefaults("Mining Helmet");
+
+                // Accessories
+                i[47].SetDefaults("Cloud in a Bottle");
+                i[48].SetDefaults("Shiny Red Balloon");
+                i[49].SetDefaults("Rocket Boots");
+                i[50].SetDefaults("Lucky Horseshoe");
+                i[51].SetDefaults("Hermes Boots");
 
                 Inventories.Add(i);
             }
@@ -1296,9 +1773,6 @@ namespace Buildaria
                 i[5].SetDefaults("Wood Wall");
                 i[6].SetDefaults("Gray Brick Wall");
                 i[7].SetDefaults("Red Brick Wall");
-                i[8].SetDefaults(0);
-                i[9].SetDefaults(0);
-
 
                 // Row 2
                 i[10].SetDefaults("Copper Brick Wall");
@@ -1308,37 +1782,9 @@ namespace Buildaria
                 i[14].SetDefaults("Pink Brick Wall");
                 i[15].SetDefaults("Green Brick Wall");
                 i[16].SetDefaults("Blue Brick Wall");
-                i[17].SetDefaults(0);
-                i[18].SetDefaults(0);
-                i[19].SetDefaults(0);
-
-                // Row 3
-                i[20].SetDefaults(0);
-                i[21].SetDefaults(0);
-                i[22].SetDefaults(0);
-                i[23].SetDefaults(0);
-                i[24].SetDefaults(0);
-                i[25].SetDefaults(0);
-                i[26].SetDefaults(0);
-                i[27].SetDefaults(0);
-                i[28].SetDefaults(0);
-                i[29].SetDefaults(0);
-
-                // Row 4
-                i[30].SetDefaults(0);
-                i[31].SetDefaults(0);
-                i[32].SetDefaults(0);
-                i[33].SetDefaults(0);
-                i[34].SetDefaults(0);
-                i[35].SetDefaults(0);
-                i[36].SetDefaults(0);
-                i[37].SetDefaults(0);
-                i[38].SetDefaults(0);
 
                 // Equipment
                 i[44].SetDefaults("Mining Helmet");
-                i[45].SetDefaults("Tuxedo Shirt");
-                i[46].SetDefaults("Tuxedo Pants");
 
                 // Accessories
                 i[47].SetDefaults("Cloud in a Bottle");
@@ -1347,153 +1793,9 @@ namespace Buildaria
                 i[50].SetDefaults("Lucky Horseshoe");
                 i[51].SetDefaults("Hermes Boots");
 
-                // Social (helmet)
-                i[52].SetDefaults("Sunglasses");
-
                 Inventories.Add(i);
             }
             #endregion
-
-            #region Decor
-            {
-                Item[] i = new Item[53];
-
-                for (int it = 0; it < i.Length; it++)
-                {
-                    i[it] = new Item();
-                }
-                i[0].SetDefaults("Copper Pickaxe");
-                i[1].SetDefaults("Copper Hammer");
-                i[2].SetDefaults(0xc6);
-                i[2].useStyle = 0;
-
-                i[3].SetDefaults(0x19);
-                i[4].SetDefaults(0x1f);
-                i[5].SetDefaults(0x20);
-                i[6].SetDefaults(0x21);
-                i[7].SetDefaults(0x22);
-                i[8].SetDefaults(0x23);
-                i[9].SetDefaults(0x24);
-
-                i[10].SetDefaults("Gold Chest");
-                i[11].SetDefaults(0x30);
-                i[12].SetDefaults(0x57);
-                i[13].SetDefaults("Water Candle");
-                i[14].SetDefaults(0x69);
-                i[15].SetDefaults(0x6a);
-                i[16].SetDefaults(0x6b);
-                i[17].SetDefaults(0x6c);
-                i[18].SetDefaults(0x88);
-                i[19].SetDefaults(0x93);
-
-                i[20].SetDefaults(0x95);
-                i[21].SetDefaults(150);
-                i[22].SetDefaults(0xab);
-                i[23].SetDefaults(0xb1);
-                i[24].SetDefaults(0xb2);
-                i[25].SetDefaults(0xb3);
-                i[26].SetDefaults(180);
-                i[27].SetDefaults(0xb5);
-                i[28].SetDefaults(0xb6);
-                i[29].SetDefaults(0xdd);
-
-                i[30].SetDefaults(0xde);
-                i[31].SetDefaults(0xe0);
-                i[32].SetDefaults(0x3f);
-                i[33].SetDefaults(50);
-                i[33].mana = 0;
-                i[34].SetDefaults(0);
-                i[35].SetDefaults(0);
-                i[36].SetDefaults(0);
-                i[37].SetDefaults(0);
-                i[38].SetDefaults(0);
-
-                i[44].SetDefaults(88);
-                i[45].SetDefaults("Tuxedo Shirt");
-                i[46].SetDefaults("Tuxedo Pants");
-
-                i[47].SetDefaults(0x35);
-                i[48].SetDefaults(0x9f);
-                i[49].SetDefaults(0x80);
-                i[50].SetDefaults(0x9e);
-                i[51].SetDefaults(0x36);
-
-                i[52].SetDefaults("Sunglasses");
-
-                Inventories.Add(i);
-            }
-            #endregion
-
-            #region 1.0.6 items
-            {
-                Item[] i = new Item[53];
-
-                for (int it = 0; it < i.Length; it++)
-                {
-                    i[it] = new Item();
-                }
-                i[0].SetDefaults("Copper Pickaxe");
-                i[1].SetDefaults("Copper Hammer");
-                i[2].SetDefaults(0xc6);
-                i[2].useStyle = 0;
-
-                i[3].SetDefaults("Loom");
-                i[4].SetDefaults("Keg");
-                i[5].SetDefaults("Cooking Pot");
-                i[6].SetDefaults("Lamp Post");
-                i[7].SetDefaults("Candelabra");
-                i[8].SetDefaults("Tiki Torch");
-                i[9].SetDefaults("Skull Lantern");
-
-                i[10].SetDefaults("Chinese Lantern");
-                i[11].SetDefaults("Barrel");
-                i[12].SetDefaults("Trash Can");
-                i[13].SetDefaults("Bathtub");
-                i[14].SetDefaults("Dresser");
-                i[15].SetDefaults("Bookcase");
-                i[16].SetDefaults("Bench");
-                i[17].SetDefaults("Toilet");
-                i[18].SetDefaults("Throne");
-                i[19].SetDefaults("Tombstone");
-
-                i[20].SetDefaults("Grandfather Clock");
-                i[21].SetDefaults("Statue");
-                i[22].SetDefaults("Piano");
-                i[23].SetDefaults("Goblin Battle Standard");
-                i[24].SetDefaults("Red Banner");
-                i[25].SetDefaults("Yellow Banner");
-                i[26].SetDefaults("Green Banner");
-                i[27].SetDefaults("Blue Banner");
-                i[28].SetDefaults("Bowl");
-                i[29].SetDefaults("Safe");
-
-                i[30].SetDefaults("Shadow Key");
-                i[31].SetDefaults("Golden Key");
-                i[32].SetDefaults("Shadow Chest");
-                i[33].SetDefaults("Tattered Cloth");
-                i[34].SetDefaults("Jungle Spore");
-                i[35].SetDefaults(0);
-                i[36].SetDefaults(0);
-                i[37].SetDefaults(0);
-                i[38].SetDefaults(0);
-
-                i[44].SetDefaults(88);
-                i[45].SetDefaults("Tuxedo Shirt");
-                i[46].SetDefaults("Tuxedo Pants");
-
-                i[47].SetDefaults(0x35);
-                i[48].SetDefaults(0x9f);
-                i[49].SetDefaults(0x80);
-                i[50].SetDefaults(0x9e);
-                i[51].SetDefaults(0x36);
-
-                i[52].SetDefaults("Sunglasses");
-
-                Inventories.Add(i);
-            }
-            #endregion
-
-            // I recommend adding new inventories here!
 
             #region Building Items
             {
@@ -1530,7 +1832,6 @@ namespace Buildaria
                 i[18].SetDefaults("Green Brick");
                 i[19].SetDefaults("Blue Brick");
 
-
                 // Row 3
                 i[20].SetDefaults("Mud Block");
                 i[21].SetDefaults("Ash Block");
@@ -1556,8 +1857,6 @@ namespace Buildaria
 
                 // Equipment
                 i[44].SetDefaults("Mining Helmet");
-                i[45].SetDefaults("Tuxedo Shirt");
-                i[46].SetDefaults("Tuxedo Pants");
 
                 // Accessories
                 i[47].SetDefaults("Cloud in a Bottle");
@@ -1565,9 +1864,6 @@ namespace Buildaria
                 i[49].SetDefaults("Rocket Boots");
                 i[50].SetDefaults("Lucky Horseshoe");
                 i[51].SetDefaults("Hermes Boots");
-
-                // Social (helmet)
-                i[52].SetDefaults("Sunglasses");
 
                 Inventories.Add(i);
             }
