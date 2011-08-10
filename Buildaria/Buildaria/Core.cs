@@ -44,7 +44,6 @@ namespace Buildaria
         public static string VersionString { get; set; } // Contains the version information as a simple string
         public static Color SelectionOverlay { get; set; } // The color of the drawn selection overlay
         public static Vector2 TileSize { get; set; } // The size of the tiles... I don't know why I use this
-        public static List<Item[]> Inventories = new List<Item[]>(); // The list of inventories
 
         public static Type WorldGenWrapper { get; set; } // For accessing WorldGen functions
         public static Type MainWrapper { get; set; } // For accessing private Main members
@@ -69,20 +68,8 @@ namespace Buildaria
 
         #endregion
 
-        #region BuildMode
+        #region buildMode
 
-        bool buildMode = true;
-        public bool BuildMode
-        {
-            set
-            {
-                buildMode = value;
-            }
-            get
-            {
-                return buildMode;
-            }
-        }
 
         #endregion
 
@@ -90,12 +77,14 @@ namespace Buildaria
 
         int inventoryType = 0;
         int oldMenuMode = 0;
-        bool hover = false;
         Vector2 lastPosition = Vector2.Zero;
         KeyboardState oldKeyState = Keyboard.GetState();
+
         bool itemHax = true;
         bool b_godMode = true; // I just put the suffix there since my 1.0.6 test version has an existing "godMode"
         bool npcsEnabled = false;
+        bool hover = false;
+        bool buildMode = true;
 
         #endregion
 
@@ -134,22 +123,15 @@ namespace Buildaria
             Assembly asm = Assembly.Load(new AssemblyName("Terraria"));
             WorldGenWrapper = asm.GetType("Terraria.WorldGen");
             MainWrapper = asm.GetType("Terraria.Main");
-            CreateInventories();
+
+            Inventory.LoadInventories();
         }
 
         protected override void Update(GameTime gameTime)
         {
-            #region BuildMode + Item Hax
+            #region buildMode + Item Hax
 
-            if (!editSign)
-            {
-                if (keyState.IsKeyDown(Keys.T) && oldKeyState.IsKeyUp(Keys.T))
-                {
-                    itemHax = !itemHax;
-                }
-            }
-
-            if (BuildMode && itemHax)
+            if (buildMode && itemHax)
             {
                 try
                 {
@@ -161,30 +143,26 @@ namespace Buildaria
                     for (int i = 0; i < player[myPlayer].inventory.Length; i++)
                     {
                         Item it = player[myPlayer].inventory[i];
-
-                        if (i == 39)
-                        {
-                            player[myPlayer].inventory[i].SetDefaults(0);
-                            player[myPlayer].inventory[i].name = "";
-                            player[myPlayer].inventory[i].stack = 0;
-                            player[myPlayer].inventory[i].UpdateItem(0);
-                        }
-                        else if (it.name != "Magic Mirror")
+                        
+                        if (it.name != "Magic Mirror") // Prevent Magic Mirror being hax'd, which prevents it from working.
                         {
                             it.SetDefaults(it.type);
-                            it.stack = 255;
-                            if (itemHax)
+                            if (it.name != "")
                             {
-                                it.autoReuse = true;
-                                it.useTime = 0;
+                                it.stack = 255;
+                                if (itemHax)
+                                {
+                                    it.autoReuse = true;
+                                    it.useTime = 0;
+                                }
+                                if (it.hammer > 0 || it.axe > 0)
+                                {
+                                    it.hammer = 100;
+                                    it.axe = 100;
+                                }
+                                if (it.pick > 0)
+                                    it.pick = 100;
                             }
-                            if (it.hammer > 0 || it.axe > 0)
-                            {
-                                it.hammer = 100;
-                                it.axe = 100;
-                            }
-                            if (it.pick > 0)
-                                it.pick = 100;
                         }
                         else
                         {
@@ -230,7 +208,16 @@ namespace Buildaria
                 }
             }
 
-            base.Update(gameTime);
+            try
+            {
+                base.Update(gameTime);
+            }
+            catch (Exception e)
+            {
+                Main.NewText(e.Message);
+                LoadInventory(0);
+                base.Update(gameTime);
+            }
 
             if (gamePaused)
                 return;
@@ -254,18 +241,7 @@ namespace Buildaria
                 }
             }
 
-            #endregion
-
-            #region Multiplayer Block
-
-            if (menuMultiplayer)
-            {
-                // Disabling this code still won't let you map edit in multiplayer worlds.
-                // You'll be able to toss items everywhere, but don't spoil the game for others!
-                // However, sharing basic building materials shouldn't have that effect.
-                menuMultiplayer = false;
-                menuMode = 0;
-            }
+            trashItem.SetDefaults(0);
 
             #endregion
 
@@ -274,6 +250,8 @@ namespace Buildaria
             if (keyState.IsKeyDown(Keys.C) && oldKeyState.IsKeyUp(Keys.C))
             {
                 npcsEnabled = !npcsEnabled;
+
+                Main.NewText("NPCs = " + npcsEnabled, 255, 255, 255);
             }
 
             if (!npcsEnabled)
@@ -290,22 +268,162 @@ namespace Buildaria
 
             #endregion
 
+            if (!editSign)
+            {
+                if (keyState.IsKeyDown(Keys.T) && oldKeyState.IsKeyUp(Keys.T))
+                {
+                    itemHax = !itemHax;
+
+                    Main.NewText("ItemHax = " + itemHax, 255, 255, 255);
+                }
+            }
+
             if (menuMode != oldMenuMode && menuMode == 10)
             {
-                LoadInventory(Inventories.Count - 1);
+                LoadInventory(Inventory.Inventories.Count - 1);
             }
 
             else if (menuMode == 10) // if in-game ...
             {
+                #region Modifier Keys
+
+                // Detect modifier keys
+                bool shift = keyState.IsKeyDown(Keys.LeftShift) || keyState.IsKeyDown(Keys.RightShift);
+                bool alt = keyState.IsKeyDown(Keys.LeftAlt) || keyState.IsKeyDown(Keys.RightAlt);
+                bool ctrl = keyState.IsKeyDown(Keys.LeftControl) || keyState.IsKeyDown(Keys.RightControl);
+
+                #endregion
+
+                #region Save/Load Inventories File
+
+                if (ctrl && shift && keyState.IsKeyDown(Keys.S) && oldKeyState.IsKeyUp(Keys.S))
+                {
+                    SaveInventory(inventoryType);
+                    Inventory.SaveInventories();
+                }
+
+                if (ctrl && shift && keyState.IsKeyDown(Keys.O) && oldKeyState.IsKeyUp(Keys.O))
+                    Inventory.LoadInventories();
+
+                #endregion 
+
+                #region Ghost/Hover Mode
+
+                if (hover)
+                {
+                    player[myPlayer].position = lastPosition;
+                    float magnitude = 6f;
+                    if (shift)
+                    {
+                        magnitude *= 4;
+                    }
+                    if (player[myPlayer].controlUp || player[myPlayer].controlJump)
+                    {
+                        player[myPlayer].position = new Vector2(player[myPlayer].position.X, player[myPlayer].position.Y - magnitude);
+                    }
+                    if (player[myPlayer].controlDown)
+                    {
+                        player[myPlayer].position = new Vector2(player[myPlayer].position.X, player[myPlayer].position.Y + magnitude);
+                    }
+                    if (player[myPlayer].controlLeft)
+                    {
+                        player[myPlayer].position = new Vector2(player[myPlayer].position.X - magnitude, player[myPlayer].position.Y);
+                    }
+                    if (player[myPlayer].controlRight)
+                    {
+                        player[myPlayer].position = new Vector2(player[myPlayer].position.X + magnitude, player[myPlayer].position.Y);
+                    }
+                }
+
+                if (keyState.IsKeyDown(Keys.P) && !oldKeyState.IsKeyDown(Keys.P) && !editSign)
+                {
+                    hover = !hover;
+                    player[myPlayer].fallStart = (int)player[myPlayer].position.Y;
+                    player[myPlayer].immune = true;
+                    player[myPlayer].immuneTime = 1000;
+
+                    Main.NewText("NoClip = " + hover, 255, 255, 255);
+                }
+
+                #endregion
+
+                #region God Mode
+
+                if (keyState.IsKeyDown(Keys.G) && oldKeyState.IsKeyUp(Keys.G) && !editSign)
+                {
+                    b_godMode = !b_godMode;
+
+                    Main.NewText("God Mode = " + b_godMode, 255, 255, 255);
+                }
+
+                if (b_godMode)
+                {
+                    player[myPlayer].accWatch = 3;
+                    player[myPlayer].accDepthMeter = 3;
+                    player[myPlayer].statLife = 400;
+                    player[myPlayer].statMana = 200;
+                    player[myPlayer].dead = false;
+                    player[myPlayer].rocketTimeMax = 1000000;
+                    player[myPlayer].rocketTime = 1000;
+                    player[myPlayer].canRocket = true;
+                    player[myPlayer].fallStart = (int)player[myPlayer].position.Y;
+                    player[myPlayer].accFlipper = true;
+                }
+                else
+                {
+
+                }
+
+                #endregion
+                                
                 bool allowStuff = true; // Disallows most buildaria functionality in-game
                 // Set to true if the user may not want certain functions to be happening
                 try
                 {
+                    #region Place Anywhere
+
+                    if (mouseState.LeftButton == ButtonState.Pressed && player[myPlayer].inventory[player[myPlayer].selectedItem].createTile >= 0 && itemHax)
+                    {
+                        int x = (int)((Main.mouseState.X + Main.screenPosition.X) / 16f);
+                        int y = (int)((Main.mouseState.Y + Main.screenPosition.Y) / 16f);
+
+                        if (Main.tile[x, y].active == false)
+                        {
+                            byte wall = Main.tile[x, y].wall;
+                            Main.tile[x, y] = new Tile();
+                            Main.tile[x, y].type = (byte)player[myPlayer].inventory[player[myPlayer].selectedItem].createTile;
+                            Main.tile[x, y].wall = wall;
+                            Main.tile[x, y].active = true;
+                            TileFrame(x, y);
+                            SquareWallFrame(x, y, true);
+                        }
+                    }
+                    else if (mouseState.LeftButton == ButtonState.Pressed && player[myPlayer].inventory[player[myPlayer].selectedItem].createWall >= 0 && itemHax)
+                    {
+                        int x = (int)((Main.mouseState.X + Main.screenPosition.X) / 16f);
+                        int y = (int)((Main.mouseState.Y + Main.screenPosition.Y) / 16f);
+
+                        if (Main.tile[x, y].wall == 0)
+                        {
+                            if (Main.tile[x, y] == null)
+                            {
+                                Main.tile[x, y] = new Tile();
+                                Main.tile[x, y].type = 0;
+                            }
+
+                            Main.tile[x, y].wall = (byte)player[myPlayer].inventory[player[myPlayer].selectedItem].createWall;
+                            TileFrame(x, y);
+                            SquareWallFrame(x, y, true);
+                        }
+                    }
+
+                    #endregion
+
                     #region Inventory Change
 
                     if (!editSign)
                     {
-                        if (keyState.IsKeyDown(Keys.OemOpenBrackets) && !oldKeyState.IsKeyDown(Keys.OemOpenBrackets))
+                        if (keyState.IsKeyDown(Keys.OemOpenBrackets) && !oldKeyState.IsKeyDown(Keys.OemOpenBrackets) && !editSign)
                         {
                             SaveInventory(inventoryType);
                             /*for (int i = 0; i < Inventories[inventoryType].Length; i++)
@@ -314,7 +432,7 @@ namespace Buildaria
                             }*/
                             LoadInventory(inventoryType - 1);
                         }
-                        if (keyState.IsKeyDown(Keys.OemCloseBrackets) && !oldKeyState.IsKeyDown(Keys.OemCloseBrackets))
+                        if (keyState.IsKeyDown(Keys.OemCloseBrackets) && !oldKeyState.IsKeyDown(Keys.OemCloseBrackets) && !editSign)
                         {
                             SaveInventory(inventoryType);
                             /*for (int i = 0; i < Inventories[inventoryType].Length; i++)
@@ -324,15 +442,6 @@ namespace Buildaria
                             LoadInventory(inventoryType + 1);
                         }
                     }
-
-                    #endregion
-
-                    #region Modifier Keys
-
-                    // Detect modifier keys
-                    bool shift = keyState.IsKeyDown(Keys.LeftShift) || keyState.IsKeyDown(Keys.RightShift);
-                    bool alt = keyState.IsKeyDown(Keys.LeftAlt) || keyState.IsKeyDown(Keys.RightAlt);
-                    bool ctrl = keyState.IsKeyDown(Keys.LeftControl) || keyState.IsKeyDown(Keys.RightControl);
 
                     #endregion
 
@@ -351,46 +460,8 @@ namespace Buildaria
                             break;
                         }
                     }
-                    if (playerInventory || !BuildMode || editSign) // Inventory is open
+                    if (playerInventory || !buildMode || editSign) // Inventory is open
                         allowStuff = false;
-
-                    #endregion
-
-                    #region Ghost/Hover Mode
-
-                    if (hover)
-                    {
-                        player[myPlayer].position = lastPosition;
-                        float magnitude = 6f;
-                        if (shift)
-                        {
-                            magnitude *= 4;
-                        }
-                        if (player[myPlayer].controlUp || player[myPlayer].controlJump)
-                        {
-                            player[myPlayer].position = new Vector2(player[myPlayer].position.X, player[myPlayer].position.Y - magnitude);
-                        }
-                        if (player[myPlayer].controlDown)
-                        {
-                            player[myPlayer].position = new Vector2(player[myPlayer].position.X, player[myPlayer].position.Y + magnitude);
-                        }
-                        if (player[myPlayer].controlLeft)
-                        {
-                            player[myPlayer].position = new Vector2(player[myPlayer].position.X - magnitude, player[myPlayer].position.Y);
-                        }
-                        if (player[myPlayer].controlRight)
-                        {
-                            player[myPlayer].position = new Vector2(player[myPlayer].position.X + magnitude, player[myPlayer].position.Y);
-                        }
-                    }
-
-                    if (keyState.IsKeyDown(Keys.P) && !oldKeyState.IsKeyDown(Keys.P) && allowStuff)
-                    {
-                        hover = !hover;
-                        player[myPlayer].fallStart = (int)player[myPlayer].position.Y;
-                        player[myPlayer].immune = true;
-                        player[myPlayer].immuneTime = 1000;
-                    }
 
                     #endregion
 
@@ -515,77 +586,17 @@ namespace Buildaria
 
                         #region Day/Night Skip
 
-                        if (keyState.IsKeyDown(Keys.N) && !oldKeyState.IsKeyDown(Keys.N))
+                        if (keyState.IsKeyDown(Keys.N) && !oldKeyState.IsKeyDown(Keys.N) && !editSign)
                         {
                             if (dayTime)
+                            {
                                 time = dayLength + 1;
-                            else
-                                time = nightLength;
-                        }
-
-                        #endregion
-
-                        #region God Mode
-
-                        if (keyState.IsKeyDown(Keys.G) && oldKeyState.IsKeyUp(Keys.G))
-                        {
-                            b_godMode = !b_godMode;
-                        }
-
-                        if (b_godMode)
-                        {
-                            player[myPlayer].accWatch = 3;
-                            player[myPlayer].accDepthMeter = 3;
-                            player[myPlayer].statLife = 400;
-                            player[myPlayer].statMana = 200;
-                            player[myPlayer].dead = false;
-                            player[myPlayer].rocketTimeMax = 1000000;
-                            player[myPlayer].rocketTime = 1000;
-                            player[myPlayer].canRocket = true;
-                            player[myPlayer].fallStart = (int)player[myPlayer].position.Y;
-                            player[myPlayer].accFlipper = true;
-                        }
-                        else
-                        {
-                            
-                        }
-
-                        #endregion
-
-                        #region Place Anywhere
-
-                        if (mouseState.LeftButton == ButtonState.Pressed && player[myPlayer].inventory[player[myPlayer].selectedItem].createTile >= 0 && itemHax)
-                        {
-                            int x = (int)((Main.mouseState.X + Main.screenPosition.X) / 16f);
-                            int y = (int)((Main.mouseState.Y + Main.screenPosition.Y) / 16f);
-
-                            if (Main.tile[x, y].active == false)
-                            {
-                                byte wall = Main.tile[x, y].wall;
-                                Main.tile[x, y] = new Tile();
-                                Main.tile[x, y].type = (byte)player[myPlayer].inventory[player[myPlayer].selectedItem].createTile;
-                                Main.tile[x, y].wall = wall;
-                                Main.tile[x, y].active = true;
-                                TileFrame(x, y);
-                                SquareWallFrame(x, y, true);
+                                Main.NewText("Skipped to Dusk", 255, 255, 255);
                             }
-                        }
-                        else if (mouseState.LeftButton == ButtonState.Pressed && player[myPlayer].inventory[player[myPlayer].selectedItem].createWall >= 0 && itemHax)
-                        {
-                            int x = (int)((Main.mouseState.X + Main.screenPosition.X) / 16f);
-                            int y = (int)((Main.mouseState.Y + Main.screenPosition.Y) / 16f);
-
-                            if (Main.tile[x, y].wall == 0)
+                            else
                             {
-                                if (Main.tile[x, y] == null)
-                                {
-                                    Main.tile[x, y] = new Tile();
-                                    Main.tile[x, y].type = 0;
-                                }
-
-                                Main.tile[x, y].wall = (byte)player[myPlayer].inventory[player[myPlayer].selectedItem].createWall;
-                                TileFrame(x, y);
-                                SquareWallFrame(x, y, true);
+                                Main.NewText("Skipped to Dawn", 255, 255, 255);
+                                time = nightLength;
                             }
                         }
 
@@ -595,7 +606,7 @@ namespace Buildaria
 
                         #region Copy/Paste
 
-                        if (ctrl && keyState.IsKeyDown(Keys.C) && oldKeyState.IsKeyUp(Keys.C))
+                        if (ctrl && keyState.IsKeyDown(Keys.C) && oldKeyState.IsKeyUp(Keys.C) && !editSign)
                         {
                             Copied = new Tile[SelectionSize.X, SelectionSize.Y];
                             CopiedSize = new Point(SelectionSize.X, SelectionSize.Y);
@@ -603,17 +614,29 @@ namespace Buildaria
                             {
                                 for (int y = 0; y < SelectionSize.Y; y++)
                                 {
-                                    Copied[x, y] = new Tile();
-                                    Copied[x, y].type = tile[x + SelectionPosition.X, y + SelectionPosition.Y].type;
-                                    Copied[x, y].active = tile[x + SelectionPosition.X, y + SelectionPosition.Y].active;
-                                    Copied[x, y].wall = tile[x + SelectionPosition.X, y + SelectionPosition.Y].wall;
-                                    Copied[x, y].liquid = tile[x + SelectionPosition.X, y + SelectionPosition.Y].liquid;
-                                    Copied[x, y].lava = tile[x + SelectionPosition.X, y + SelectionPosition.Y].lava;
+                                    int copyX = x;
+                                    int copyY = y;
+                                    if (shift)
+                                    {
+                                        copyX = Math.Abs(copyX - SelectionSize.X);
+                                    }
+                                    if (alt)
+                                    {
+                                        copyY = Math.Abs(copyY - SelectionSize.Y);
+                                    }
+                                    Copied[copyX, copyY] = new Tile();
+                                    Copied[copyX, copyY].type = tile[x + SelectionPosition.X, y + SelectionPosition.Y].type;
+                                    Copied[copyX, copyY].active = tile[x + SelectionPosition.X, y + SelectionPosition.Y].active;
+                                    Copied[copyX, copyY].wall = tile[x + SelectionPosition.X, y + SelectionPosition.Y].wall;
+                                    Copied[copyX, copyY].liquid = tile[x + SelectionPosition.X, y + SelectionPosition.Y].liquid;
+                                    Copied[copyX, copyY].lava = tile[x + SelectionPosition.X, y + SelectionPosition.Y].lava;
                                 }
                             }
+
+                            Main.NewText("Copied Selection", 255, 255, 255);
                         }
 
-                        if (ctrl && keyState.IsKeyDown(Keys.V) && oldKeyState.IsKeyUp(Keys.V))
+                        if (ctrl && keyState.IsKeyDown(Keys.V) && oldKeyState.IsKeyUp(Keys.V) && !editSign)
                         {
                             if (sel1 != -Vector2.One && sel2 != -Vector2.One)
                             {
@@ -641,12 +664,22 @@ namespace Buildaria
                                                 Undo[x, y].active = Main.tile[x, y].active;
                                             }
 
+                                            int copyX = x;
+                                            int copyY = y;
+                                            if (shift)
+                                            {
+                                                copyX = Math.Abs(copyX - CopiedSize.X);
+                                            }
+                                            if (alt)
+                                            {
+                                                copyY = Math.Abs(copyY - CopiedSize.Y);
+                                            }
                                             tile[(int)sel1.X + x, (int)sel1.Y + y] = new Tile();
-                                            tile[(int)sel1.X + x, (int)sel1.Y + y].type = Copied[x, y].type;
-                                            tile[(int)sel1.X + x, (int)sel1.Y + y].active = Copied[x, y].active;
-                                            tile[(int)sel1.X + x, (int)sel1.Y + y].wall = Copied[x, y].wall;
-                                            tile[(int)sel1.X + x, (int)sel1.Y + y].liquid = Copied[x, y].liquid;
-                                            tile[(int)sel1.X + x, (int)sel1.Y + y].lava = Copied[x, y].lava;
+                                            tile[(int)sel1.X + x, (int)sel1.Y + y].type = Copied[copyX, copyY].type;
+                                            tile[(int)sel1.X + x, (int)sel1.Y + y].active = Copied[copyX, copyY].active;
+                                            tile[(int)sel1.X + x, (int)sel1.Y + y].wall = Copied[copyX, copyY].wall;
+                                            tile[(int)sel1.X + x, (int)sel1.Y + y].liquid = Copied[copyX, copyY].liquid;
+                                            tile[(int)sel1.X + x, (int)sel1.Y + y].lava = Copied[copyX, copyY].lava;
                                             TileFrame((int)sel1.X + x, (int)sel1.Y + y);
                                             SquareWallFrame((int)sel1.X + x, (int)sel1.Y + y);
                                         }
@@ -657,6 +690,8 @@ namespace Buildaria
                                     }
                                 }
                             }
+
+                            Main.NewText("Pasted Selection", 255, 255, 255);
                         }
 
                         #endregion
@@ -704,6 +739,9 @@ namespace Buildaria
                                     }
                                 }
                             }
+
+                            if (sel1 != -Vector2.One && sel2 != -Vector2.One)
+                                Main.NewText("Cleared Selection of Blocks", 255, 255, 255);
                         }
                         else if (mouseState.RightButton == ButtonState.Pressed && oldMouseState.RightButton == ButtonState.Released && player[myPlayer].inventory[player[myPlayer].selectedItem].hammer >= 55)
                         {
@@ -743,6 +781,8 @@ namespace Buildaria
                                     }
                                 }
                             }
+
+                            Main.NewText("Cleared Selection of Walls", 255, 255, 255);
                         }
 
                         #endregion
@@ -783,7 +823,9 @@ namespace Buildaria
                                         SquareWallFrame(x, y, true);
                                     }
                                 }
-                            }
+                            } 
+                            
+                            Main.NewText("Filled Selection with Lava", 255, 255, 255);
                         }
                         else if (mouseState.RightButton == ButtonState.Pressed && oldMouseState.RightButton == ButtonState.Released && player[myPlayer].inventory[player[myPlayer].selectedItem].type == 0xce)
                         {
@@ -820,6 +862,8 @@ namespace Buildaria
                                     }
                                 }
                             }
+
+                            Main.NewText("Filled Selection with Water", 255, 255, 255);
                         }
                         else if (mouseState.RightButton == ButtonState.Pressed && oldMouseState.RightButton == ButtonState.Released && player[myPlayer].inventory[player[myPlayer].selectedItem].type == 0xcd)
                         {
@@ -856,6 +900,8 @@ namespace Buildaria
                                     }
                                 }
                             }
+
+                            Main.NewText("Drained Selection of Liquid", 255, 255, 255);
                         }
 
                         #endregion
@@ -899,6 +945,8 @@ namespace Buildaria
                                     }
                                 }
                             }
+
+                            Main.NewText("Filled Selection with Block " + player[myPlayer].inventory[player[myPlayer].selectedItem].createTile, 255, 255, 255);
                         }
                         else if (mouseState.RightButton == ButtonState.Pressed && oldMouseState.RightButton == ButtonState.Released && player[myPlayer].inventory[player[myPlayer].selectedItem].createWall >= 0)
                         {
@@ -940,13 +988,15 @@ namespace Buildaria
                                     }
                                 }
                             }
+
+                            Main.NewText("Filled Selection with Wall " + player[myPlayer].inventory[player[myPlayer].selectedItem].createWall, 255, 255, 255);
                         }
 
                         #endregion
 
                         #region Undo
 
-                        if (ctrl && keyState.IsKeyDown(Keys.Z) && oldKeyState.IsKeyUp(Keys.Z))
+                        if (ctrl && keyState.IsKeyDown(Keys.Z) && oldKeyState.IsKeyUp(Keys.Z) && !editSign)
                         {
                             for (int xp = 0; xp < UndoSize.X; xp++)
                             {
@@ -969,7 +1019,9 @@ namespace Buildaria
                                         SquareWallFrame(x, y);
                                     }
                                 }
-                            }
+                            } 
+                            
+                            Main.NewText("Undo Complete", 255, 255, 255);
                         }
 
                         #endregion 
@@ -1075,9 +1127,9 @@ namespace Buildaria
 
         #region Inventory Functions
 
-        public void CreateInventories()
+        public static void CreateInventories()
         {
-            #region Tester
+            #region Blank
             {
                 Item[] i = new Item[53];
 
@@ -1085,54 +1137,24 @@ namespace Buildaria
                 {
                     i[it] = new Item();
                 }
-                i[0].SetDefaults(84);
-                i[1].SetDefaults(114);
-                i[2].SetDefaults(87);
+                i[0].SetDefaults("Copper Pickaxe");
+                i[1].SetDefaults("Copper Hammer");
+                i[2].SetDefaults("Blue Phaseblade");
+                i[2].useStyle = 0;
+                i[4].SetDefaults("Ivy Whip");
 
-                i[4].SetDefaults(205);
-                i[5].SetDefaults(185);
-                i[6].SetDefaults(0);
-                i[7].SetDefaults(0);
-                i[8].SetDefaults(0);
-                i[9].SetDefaults(285);
+                Inventory inv = new Inventory(i, "Blank");
 
-                i[10].SetDefaults(49);
-                i[11].SetDefaults(50);
-                i[12].SetDefaults(53);
-                i[13].SetDefaults(111);
-                i[14].SetDefaults(88);
-                i[15].SetDefaults(54);
-                i[16].SetDefaults(128);
-                i[17].SetDefaults(186);
-                i[18].SetDefaults(187);
-                i[19].SetDefaults(233);
+                inv.ItemHax = true;
+                inv.GodMode = true;
+                inv.NPCs = false;
+                inv.BuildMode = true;
 
-                i[20].SetDefaults(211);
-                i[21].SetDefaults(212);
-                i[22].SetDefaults(100);
-                i[23].SetDefaults(101);
-                i[24].SetDefaults(102);
-                i[25].SetDefaults(123);
-                i[26].SetDefaults(124);
-                i[27].SetDefaults(125);
-                i[28].SetDefaults(151);
-                i[29].SetDefaults(152);
-
-                i[30].SetDefaults(153);
-                i[31].SetDefaults(156);
-                i[32].SetDefaults(213);
-                i[33].SetDefaults(223);
-                i[34].SetDefaults(228);
-                i[35].SetDefaults(229);
-                i[36].SetDefaults(230);
-                i[37].SetDefaults(231);
-                i[38].SetDefaults(232);
-
-                Inventories.Add(i);
+                Inventory.AddInventory(inv);
             }
             #endregion
 
-            #region Potions
+            #region Armor
             {
                 Item[] i = new Item[53];
 
@@ -1141,64 +1163,64 @@ namespace Buildaria
                     i[it] = new Item();
                 }
 
-                i[0].SetDefaults("Copper Pickaxe");
-                i[1].SetDefaults("Copper Hammer");
-                i[2].SetDefaults(0xc6);
-                i[2].useStyle = 0;
-                i[3].SetDefaults(0);
+                // Row 1
+                i[0].SetDefaults("Ivy Whip");
 
-                i[4].SetDefaults(291);
-                i[5].SetDefaults(292);
-                i[6].SetDefaults(293);
-                i[7].SetDefaults(294);
-                i[8].SetDefaults(295);
-                i[9].SetDefaults(296);
+                // Row 2
+                i[10].SetDefaults("Copper Helmet");
+                i[11].SetDefaults("Iron Helmet");
+                i[12].SetDefaults("Silver Helmet");
+                i[13].SetDefaults("Gold Helmet");
+                i[14].SetDefaults("Meteor Helmet");
+                i[15].SetDefaults("Shadow Helmet");
+                i[16].SetDefaults("Necro Helmet");
+                i[17].SetDefaults("Jungle Hat");
+                i[18].SetDefaults("Molten Helmet");
 
-                i[10].SetDefaults(297);
-                i[11].SetDefaults(298);
-                i[12].SetDefaults(299);
-                i[13].SetDefaults(300);
-                i[14].SetDefaults(301);
-                i[15].SetDefaults(302);
-                i[16].SetDefaults(303);
-                i[17].SetDefaults(304);
-                i[18].SetDefaults(305);
-                i[19].SetDefaults(288);
+                // Row 3
+                i[20].SetDefaults("Copper Chainmail");
+                i[21].SetDefaults("Iron Chainmail");
+                i[22].SetDefaults("Silver Chainmail");
+                i[23].SetDefaults("Gold Chainmail");
+                i[24].SetDefaults("Meteor Suit");
+                i[25].SetDefaults("Shadow Scalemail");
+                i[26].SetDefaults("Necro Breastplate");
+                i[27].SetDefaults("Jungle Shirt");
+                i[28].SetDefaults("Molten Breastplate");
 
-                i[20].SetDefaults(289);
-                i[21].SetDefaults(290);
-                i[22].SetDefaults(291);
-                i[23].SetDefaults(0);
-                i[24].SetDefaults(0);
-                i[25].SetDefaults(0);
-                i[26].SetDefaults(0);
-                i[27].SetDefaults(0);
-                i[28].SetDefaults(0);
-                i[29].SetDefaults(0);
+                // Row 4
+                i[30].SetDefaults("Copper Greaves");
+                i[31].SetDefaults("Iron Greaves");
+                i[32].SetDefaults("Silver Greaves");
+                i[33].SetDefaults("Gold Greaves");
+                i[34].SetDefaults("Meteor Leggings");
+                i[35].SetDefaults("Shadow Greaves");
+                i[36].SetDefaults("Necro Greaves");
+                i[37].SetDefaults("Jungle Pants");
+                i[38].SetDefaults("Molten Greaves");
 
-                i[30].SetDefaults(0);
-                i[31].SetDefaults(0);
-                i[32].SetDefaults(0);
-                i[33].SetDefaults(0);
-                i[34].SetDefaults(0);
-                i[35].SetDefaults(0);
-                i[36].SetDefaults(0);
-                i[37].SetDefaults(0);
-                i[38].SetDefaults(0);
+                // Equipment
+                i[44].SetDefaults("Mining Helmet");
 
-                i[44].SetDefaults(88);
+                // Accessories
+                i[47].SetDefaults("Cloud in a Bottle");
+                i[48].SetDefaults("Shiny Red Balloon");
+                i[49].SetDefaults("Rocket Boots");
+                i[50].SetDefaults("Lucky Horseshoe");
+                i[51].SetDefaults("Hermes Boots");
 
-                i[46].SetDefaults(0x36);
-                i[47].SetDefaults(0x35);
-                i[48].SetDefaults(0x9f);
-                i[49].SetDefaults(0x80);
-                i[50].SetDefaults(0x9e);
+                Inventory inv = new Inventory(i, "Armor");
 
-                Inventories.Add(i);
+                inv.ItemHax = true;
+                inv.GodMode = true;
+                inv.NPCs = false;
+                inv.BuildMode = true;
+
+                Inventory.AddInventory(inv);
             }
             #endregion
 
-            #region Alchemy 
+            #region Weapons (throwable, explosive, flails, spears, bows, guns)
             {
                 Item[] i = new Item[53];
 
@@ -1207,60 +1229,680 @@ namespace Buildaria
                     i[it] = new Item();
                 }
 
+                // Row 1
+                i[0].SetDefaults("Ivy Whip");
+                i[1].SetDefaults("Blowpipe");
+                i[2].SetDefaults("Flintlock Pistol");
+                i[3].SetDefaults("Musket");
+                i[4].SetDefaults("Handgun");
+                i[5].SetDefaults("Minishark");
+                i[6].SetDefaults("Space Gun");
+                i[7].SetDefaults("Phoenix Blaster");
+                i[8].SetDefaults("Sandgun");
+                i[9].SetDefaults("Star Cannon");
+
+                // Row 2
+                i[10].SetDefaults("Vile Powder");
+                i[11].SetDefaults("Shuriken");
+                i[12].SetDefaults("Bone");
+                i[13].SetDefaults("Spiky Ball");
+                i[14].SetDefaults("Throwing Knife");
+                i[15].SetDefaults("Poisoned Knife");
+                i[16].SetDefaults("Grenade");
+                i[17].SetDefaults("Bomb");
+                i[18].SetDefaults("Sticky Bomb");
+                i[19].SetDefaults("Dynamite");
+
+                // Row 3
+                i[20].SetDefaults("Harpoon");
+                i[21].SetDefaults("Ball 'O Hurt");
+                i[22].SetDefaults("Blue Moon");
+                i[23].SetDefaults("Sunfury");
+                i[24].SetDefaults("Spear");
+                i[25].SetDefaults("Trident");
+                i[26].SetDefaults("Dark Lance");
+                i[27].SetDefaults("Wooden Boomerang");
+                i[28].SetDefaults("Enchanted Boomerang");
+                i[29].SetDefaults("Flamarang");
+
+                // Row 4
+                i[30].SetDefaults("Thorn Chakrum");
+                i[31].SetDefaults("Wooden Bow");
+                i[32].SetDefaults("Copper Bow");
+                i[33].SetDefaults("Iron Bow");
+                i[34].SetDefaults("Silver Bow");
+                i[35].SetDefaults("Gold Bow");
+                i[36].SetDefaults("Demon Bow");
+                i[37].SetDefaults("Molten Fury");
+
+                // Equipment
+                i[44].SetDefaults("Mining Helmet");
+
+                // Accessories
+                i[47].SetDefaults("Cloud in a Bottle");
+                i[48].SetDefaults("Shiny Red Balloon");
+                i[49].SetDefaults("Rocket Boots");
+                i[50].SetDefaults("Lucky Horseshoe");
+                i[51].SetDefaults("Hermes Boots");
+
+                Inventory inv = new Inventory(i, "Misc Weapons");
+
+                inv.ItemHax = true;
+                inv.GodMode = true;
+                inv.NPCs = false;
+                inv.BuildMode = true;
+
+                Inventory.AddInventory(inv);
+            }
+            #endregion
+
+            #region Weapons (magic, melee)
+            {
+                Item[] i = new Item[53];
+
+                for (int it = 0; it < i.Length; it++)
+                {
+                    i[it] = new Item();
+                }
+
+                // Row 1
+                i[0].SetDefaults("Ivy Whip");
+                i[2].SetDefaults("Flower of Fire");
+                i[3].SetDefaults("Vilethorn");
+                i[4].SetDefaults("Magic Missile");
+                i[5].SetDefaults("Flamelash");
+                i[6].SetDefaults("Water Bolt");
+                i[7].SetDefaults("Demon Scythe");
+                i[8].SetDefaults("Aqua Scepter");
+
+                // Row 2
+                i[10].SetDefaults("Night's Edge");
+                i[11].SetDefaults("Light's Bane");
+                i[12].SetDefaults("Magic Missile");
+                i[13].SetDefaults("Starfury");
+                i[14].SetDefaults("Staff of Regrowth");
+                i[15].SetDefaults("The Breaker");
+                i[16].SetDefaults("War Axe of the Night");
+
+                // Row 3
+                i[20].SetDefaults("Wooden Sword");
+                i[21].SetDefaults("Copper Shortsword");
+                i[22].SetDefaults("Copper Broadsword");
+                i[23].SetDefaults("Iron Shortsword");
+                i[24].SetDefaults("Iron Broadsword");
+                i[25].SetDefaults("Silver Shortsword");
+                i[26].SetDefaults("Silver Broadsword");
+                i[27].SetDefaults("Gold Shortsword");
+                i[28].SetDefaults("Gold Broadsword");
+
+                // Row 4
+                i[30].SetDefaults("Muramasa");
+                i[31].SetDefaults("Blade of Grass");
+                i[32].SetDefaults("Fiery Greatsword");
+                i[33].SetDefaults("White Phaseblade");
+                i[34].SetDefaults("Blue Phaseblade");
+                i[35].SetDefaults("Red Phaseblade");
+                i[36].SetDefaults("Purple Phaseblade");
+                i[37].SetDefaults("Green Phaseblade");
+                i[37].SetDefaults("Yellow Phaseblade");
+
+                // Equipment
+                i[44].SetDefaults("Mining Helmet");
+
+                // Accessories
+                i[47].SetDefaults("Cloud in a Bottle");
+                i[48].SetDefaults("Shiny Red Balloon");
+                i[49].SetDefaults("Rocket Boots");
+                i[50].SetDefaults("Lucky Horseshoe");
+                i[51].SetDefaults("Hermes Boots");
+
+                Inventory inv = new Inventory(i, "Melee/Magic Weapons");
+
+                inv.ItemHax = true;
+                inv.GodMode = true;
+                inv.NPCs = false;
+                inv.BuildMode = true;
+
+                Inventory.AddInventory(inv);
+            }
+            #endregion
+
+            #region Accessories / Other
+            {
+                Item[] i = new Item[53];
+
+                for (int it = 0; it < i.Length; it++)
+                {
+                    i[it] = new Item();
+                }
+
+                // Row 1
+                i[0].SetDefaults("Ivy Whip");
+                i[1].SetDefaults("Grappling Hook");
+                i[2].SetDefaults("Dirt Rod");
+                i[4].SetDefaults("Cobalt Shield");
+                i[5].SetDefaults("Feral Claws");
+                i[6].SetDefaults("Obsidian Skull");
+                i[7].SetDefaults("Shackle");
+                i[8].SetDefaults("Empty Bucket");
+                i[9].SetDefaults("Guide Voodoo Doll");
+
+                // Row 2
+                i[10].SetDefaults("Anklet of the Wind");
+                i[11].SetDefaults("Cloud in a Bottle");
+                i[12].SetDefaults("Flipper");
+                i[13].SetDefaults("Hermes Boots");
+                i[14].SetDefaults("Lucky Horseshoe");
+                i[15].SetDefaults("Rocket Boots");
+                i[16].SetDefaults("Shiny Red Balloon");
+                i[17].SetDefaults("Aglet");
+
+                // Row 3
+                i[20].SetDefaults("Depth Meter");
+                i[21].SetDefaults("Copper Watch");
+                i[22].SetDefaults("Silver Watch");
+                i[23].SetDefaults("Gold Watch");
+                i[25].SetDefaults("Mining Helmet");
+                i[27].SetDefaults("orb of Light");
+                i[28].SetDefaults("Magic Mirror");
+                i[29].SetDefaults("Breathing Reed");
+
+                // Row 4
+                i[30].SetDefaults("Band of Regeneration");
+                i[31].SetDefaults("Band of Starpower");
+                i[32].SetDefaults("Nature's Gift");
+                i[38].SetDefaults("Whoopie Cushion");
+
+                // Equipment
+                i[44].SetDefaults("Mining Helmet");
+
+                // Accessories
+                i[47].SetDefaults("Cloud in a Bottle");
+                i[48].SetDefaults("Shiny Red Balloon");
+                i[49].SetDefaults("Rocket Boots");
+                i[50].SetDefaults("Lucky Horseshoe");
+                i[51].SetDefaults("Hermes Boots");
+
+                Inventory inv = new Inventory(i, "Misc + Accessories");
+
+                inv.ItemHax = true;
+                inv.GodMode = true;
+                inv.NPCs = false;
+                inv.BuildMode = true;
+
+                Inventory.AddInventory(inv);
+            }
+            #endregion
+
+            #region Vanity Items
+            {
+                Item[] i = new Item[53];
+
+                for (int it = 0; it < i.Length; it++)
+                {
+                    i[it] = new Item();
+                }
+
+                // Row 1
+                i[0].SetDefaults("Ivy Whip");
+                i[1].SetDefaults("Goggles");
+                i[2].SetDefaults("Sunglasses");
+                i[3].SetDefaults("Jungle Rose");
+                i[4].SetDefaults("Fish Bowl");
+                i[5].SetDefaults("Robe");
+                i[6].SetDefaults("Mime Mask");
+                i[7].SetDefaults("Bunny Hood");
+                i[8].SetDefaults("Red Hat");
+                i[9].SetDefaults("Robot Hat");
+
+                // Row 2
+                i[10].SetDefaults("Archaeologist's Hat");
+                i[11].SetDefaults("Plumber's Hat");
+                i[12].SetDefaults("Top Hat");
+                i[13].SetDefaults("Familiar Wig");
+                i[14].SetDefaults("Summer Hat");
+                i[15].SetDefaults("Ninja Hood");
+                i[16].SetDefaults("Hero's Hat");
+                i[19].SetDefaults("Gold Crown");
+
+                // Row 3
+                i[20].SetDefaults("Archaeologist's Jacket");
+                i[21].SetDefaults("Plumber's Shirt");
+                i[22].SetDefaults("Tuxedo Shirt");
+                i[23].SetDefaults("Familiar Shirt");
+                i[24].SetDefaults("The Doctor's Shirt");
+                i[25].SetDefaults("Ninja Shirt");
+                i[26].SetDefaults("Hero's Shirt");
+
+                // Row 4
+                i[30].SetDefaults("Archaeologist's Pants");
+                i[31].SetDefaults("Plumber's Pants");
+                i[32].SetDefaults("Tuxedo Pants");
+                i[33].SetDefaults("Familiar Pants");
+                i[34].SetDefaults("The Doctor's Pants");
+                i[35].SetDefaults("Ninja Pants");
+                i[36].SetDefaults("Hero's Pants");
+
+                // Equipment
+                i[44].SetDefaults("Mining Helmet");
+
+                // Accessories
+                i[47].SetDefaults("Cloud in a Bottle");
+                i[48].SetDefaults("Shiny Red Balloon");
+                i[49].SetDefaults("Rocket Boots");
+                i[50].SetDefaults("Lucky Horseshoe");
+                i[51].SetDefaults("Hermes Boots");
+
+                Inventory inv = new Inventory(i, "Vanity");
+
+                inv.ItemHax = true;
+                inv.GodMode = true;
+                inv.NPCs = false;
+                inv.BuildMode = true;
+
+                Inventory.AddInventory(inv);
+            }
+            #endregion
+
+            #region Consumables
+            {
+                Item[] i = new Item[53];
+
+                for (int it = 0; it < i.Length; it++)
+                {
+                    i[it] = new Item();
+                }
+
+                // Row 1
                 i[0].SetDefaults("Copper Pickaxe");
                 i[1].SetDefaults("Copper Hammer");
-                i[2].SetDefaults(0xc6);
+                i[2].SetDefaults("Blue Phaseblade");
                 i[2].useStyle = 0;
-                i[3].SetDefaults(275);
 
-                i[4].SetDefaults(307);
-                i[5].SetDefaults(308);
-                i[6].SetDefaults(309);
-                i[7].SetDefaults(310);
-                i[8].SetDefaults(311);
-                i[9].SetDefaults(312);
+                i[3].SetDefaults("Lesser Healing Potion");
+                i[4].SetDefaults("Lesser Mana Potion");
+                i[5].SetDefaults("Lesser Restoration Potion");
+                i[6].SetDefaults("Healing Potion");
+                i[7].SetDefaults("Mana Potion");
+                i[8].SetDefaults("Restoration Potion");
 
-                i[10].SetDefaults(313);
-                i[11].SetDefaults(314);
-                i[12].SetDefaults(315);
-                i[13].SetDefaults(316);
-                i[14].SetDefaults(317);
-                i[15].SetDefaults(318);
-                i[16].SetDefaults(319);
-                i[17].SetDefaults(320);
-                i[18].SetDefaults(323);
-                i[19].SetDefaults(276);
+                // Row 2
+                i[10].SetDefaults("Archery Potion");
+                i[11].SetDefaults("Battle Potion");
+                i[12].SetDefaults("Featherfall Potion");
+                i[13].SetDefaults("Gills Potion"); // 291
+                i[14].SetDefaults("Gravitation Potion");
+                i[15].SetDefaults("Hunter Potion");
+                i[16].SetDefaults("Invisibility Potion");
+                i[17].SetDefaults("Ironskin Potion");
+                i[18].SetDefaults("Magic Power Potion");
+                i[19].SetDefaults("Mana Regeneration Potion");
 
-                i[20].SetDefaults(31);
-                i[21].SetDefaults(32);
-                i[22].SetDefaults(36);
-                i[23].SetDefaults(283);
-                i[24].SetDefaults(27);
-                i[25].SetDefaults(38);
-                i[26].SetDefaults(59);
-                i[27].SetDefaults(60);
-                i[28].SetDefaults(62);
-                i[29].SetDefaults(63);
+                // Row 3
+                i[20].SetDefaults("Night Owl Potion");
+                i[21].SetDefaults("Obsidian Skin Potion");
+                i[22].SetDefaults("Regeneration Potion");
+                i[23].SetDefaults("Shine Potion");
+                i[24].SetDefaults("Spelunker Potion");
+                i[25].SetDefaults("Swiftness Potion");
+                i[26].SetDefaults("Thorns Potion");
+                i[27].SetDefaults("Water Walking Potion");
 
-                i[30].SetDefaults(66);
-                i[31].SetDefaults(67);
-                i[32].SetDefaults(68);
-                i[33].SetDefaults(69);
-                i[34].SetDefaults(154);
-                i[35].SetDefaults(208);
-                i[36].SetDefaults(209);
-                i[37].SetDefaults(210);
-                i[38].SetDefaults(222);
+                // Row 4
+                i[30].SetDefaults("Mushroom");
+                i[31].SetDefaults("Glowing Mushroom");
+                i[32].SetDefaults("Ale");
+                i[33].SetDefaults("Bowl of Soup");
+                i[34].SetDefaults("Goldfish");
+                i[36].SetDefaults("Fallen Star");
+                i[37].SetDefaults("Life Crystal");
+                i[38].SetDefaults("Mana Crystal");
 
-                i[44].SetDefaults(88);
+                // Equipment
+                i[44].SetDefaults("Mining Helmet");
 
-                i[46].SetDefaults(0x36);
-                i[47].SetDefaults(0x35);
-                i[48].SetDefaults(0x9f);
-                i[49].SetDefaults(0x80);
-                i[50].SetDefaults(0x9e);
+                // Accessories
+                i[47].SetDefaults("Cloud in a Bottle");
+                i[48].SetDefaults("Shiny Red Balloon");
+                i[49].SetDefaults("Rocket Boots");
+                i[50].SetDefaults("Lucky Horseshoe");
+                i[51].SetDefaults("Hermes Boots");
 
-                Inventories.Add(i);
+                Inventory inv = new Inventory(i, "Consumables");
+
+                inv.ItemHax = true;
+                inv.GodMode = true;
+                inv.NPCs = false;
+                inv.BuildMode = true;
+
+                Inventory.AddInventory(inv);
+            }
+            #endregion
+
+            #region Materials
+            {
+                Item[] i = new Item[53];
+
+                for (int it = 0; it < i.Length; it++)
+                {
+                    i[it] = new Item();
+                }
+
+                // Row 1
+                i[0].SetDefaults("Copper Pickaxe");
+                i[1].SetDefaults("Copper Hammer");
+                i[2].SetDefaults("Blue Phaseblade");
+                i[2].useStyle = 0;
+
+                i[3].SetDefaults("Copper Bar");
+                i[4].SetDefaults("Iron Bar");
+                i[5].SetDefaults("Silver Bar");
+                i[6].SetDefaults("Gold Bar");
+                i[7].SetDefaults("Demonite Bar");
+                i[8].SetDefaults("Meteorite Bar");
+                i[9].SetDefaults("Hellstone Bar");
+
+                // Row 2
+                i[10].SetDefaults("Amethyst");
+                i[11].SetDefaults("Diamond");
+                i[12].SetDefaults("Emerald");
+                i[13].SetDefaults("Ruby");
+                i[14].SetDefaults("Sapphire");
+                i[15].SetDefaults("Topaz");
+                i[16].SetDefaults("Gel");
+                i[17].SetDefaults("Cobweb");
+                i[18].SetDefaults("Silk");
+                i[19].SetDefaults("Cactus");
+
+                // Row 3
+                i[20].SetDefaults("Lens");
+                i[21].SetDefaults("Black Lens");
+                i[22].SetDefaults("Iron Chain");
+                i[23].SetDefaults("Hook");
+                i[24].SetDefaults("Shadow Scale");
+                i[25].SetDefaults("Tattered Cloth");
+                i[26].SetDefaults("Leather");
+                i[27].SetDefaults("Rotten Chunk");
+                i[28].SetDefaults("Worm Tooth");
+                i[29].SetDefaults("Stinger");
+
+                // Row 4
+                i[30].SetDefaults("Feather");
+                i[31].SetDefaults("Vine");
+                i[32].SetDefaults("Jungle Spores");
+                i[33].SetDefaults("Shark Fin");
+                i[34].SetDefaults("Antlion Mandible");
+                i[35].SetDefaults("Illegal Gun Parts");
+                i[36].SetDefaults("Glowstick");
+                i[37].SetDefaults("Green Dye");
+                i[38].SetDefaults("Black Dye");
+
+                // Equipment
+                i[44].SetDefaults("Mining Helmet");
+
+                // Accessories
+                i[47].SetDefaults("Cloud in a Bottle");
+                i[48].SetDefaults("Shiny Red Balloon");
+                i[49].SetDefaults("Rocket Boots");
+                i[50].SetDefaults("Lucky Horseshoe");
+                i[51].SetDefaults("Hermes Boots");
+
+                Inventory inv = new Inventory(i, "Crafting Materials");
+
+                inv.ItemHax = true;
+                inv.GodMode = true;
+                inv.NPCs = false;
+                inv.BuildMode = true;
+
+                Inventory.AddInventory(inv);
+            }
+            #endregion
+
+            #region Ammo / Unknown
+            {
+                Item[] i = new Item[53];
+
+                for (int it = 0; it < i.Length; it++)
+                {
+                    i[it] = new Item();
+                }
+
+                // Row 1
+                i[0].SetDefaults("Copper Pickaxe");
+                i[1].SetDefaults("Copper Hammer");
+                i[2].SetDefaults("Blue Phaseblade");
+                i[2].useStyle = 0;
+
+                i[3].SetDefaults("Ivy Whip");
+
+                // Row 2
+                i[10].SetDefaults("Wooden Arrow");
+                i[11].SetDefaults("Flaming Arrow");
+                i[12].SetDefaults("Unholy Arrow");
+                i[13].SetDefaults("Jester's Arrow");
+                i[14].SetDefaults("Hellfire Arrow");
+                i[15].SetDefaults("Musket Ball");
+                i[16].SetDefaults("Silver Bullet");
+                i[17].SetDefaults("Meteor Shot");
+                i[18].SetDefaults("Seed");
+
+                // Row 3
+                i[20].SetDefaults("Suspicious Looking Eye");
+                i[21].SetDefaults("Worm Food");
+                i[22].SetDefaults("Goblin Battle Standard");
+                i[23].SetDefaults("Angel Statue");
+                i[24].SetDefaults("Golden Key");
+                i[25].SetDefaults("Shadow Key");
+
+                // Row 4
+                i[30].SetDefaults("Copper Coin");
+                i[31].SetDefaults("Silver Coin");
+                i[32].SetDefaults("Gold Coin");
+                i[33].SetDefaults("Platinum Coin");
+
+                // Equipment
+                i[44].SetDefaults("Mining Helmet");
+
+                // Accessories
+                i[47].SetDefaults("Cloud in a Bottle");
+                i[48].SetDefaults("Shiny Red Balloon");
+                i[49].SetDefaults("Rocket Boots");
+                i[50].SetDefaults("Lucky Horseshoe");
+                i[51].SetDefaults("Hermes Boots");
+
+                Inventory inv = new Inventory(i, "Misc + Ammo");
+
+                inv.ItemHax = true;
+                inv.GodMode = true;
+                inv.NPCs = false;
+                inv.BuildMode = true;
+
+                Inventory.AddInventory(inv); ;
+            }
+            #endregion
+
+            #region Alchemy
+            {
+                Item[] i = new Item[53];
+
+                for (int it = 0; it < i.Length; it++)
+                {
+                    i[it] = new Item();
+                }
+
+                // Row 1
+                i[0].SetDefaults("Copper Pickaxe");
+                i[1].SetDefaults("Copper Hammer");
+                i[2].SetDefaults("Blue Phaseblade");
+                i[2].useStyle = 0;
+                i[3].SetDefaults("Clay Pot");
+
+                i[4].SetDefaults("Bottled Water");
+                i[5].SetDefaults("Bottle");
+                i[8].SetDefaults("Acorn");
+                i[9].SetDefaults("Sunflower");
+
+                // Row 2
+                i[10].SetDefaults("Blinkroot Seeds");
+                i[11].SetDefaults("Daybloom Seeds");
+                i[12].SetDefaults("Fireblossom Seeds");
+                i[13].SetDefaults("Moonglow Seeds");
+                i[14].SetDefaults("Deathweed Seeds");
+                i[15].SetDefaults("Waterleaf Seeds");
+
+                // Row 3
+                i[20].SetDefaults("Blinkroot");
+                i[21].SetDefaults("Daybloom");
+                i[22].SetDefaults("Fireblossom");
+                i[23].SetDefaults("Moonglow");
+                i[24].SetDefaults("Deathweed");
+                i[25].SetDefaults("Waterleaf");
+
+                // Equipment
+                i[44].SetDefaults("Mining Helmet");
+
+                // Accessories
+                i[47].SetDefaults("Cloud in a Bottle");
+                i[48].SetDefaults("Shiny Red Balloon");
+                i[49].SetDefaults("Rocket Boots");
+                i[50].SetDefaults("Lucky Horseshoe");
+                i[51].SetDefaults("Hermes Boots");
+
+                Inventory inv = new Inventory(i, "Alchemy");
+
+                inv.ItemHax = true;
+                inv.GodMode = true;
+                inv.NPCs = false;
+                inv.BuildMode = true;
+
+                Inventory.AddInventory(inv);
+            }
+            #endregion
+
+            #region Decor (minus lighting)
+            {
+                Item[] i = new Item[53];
+
+                for (int it = 0; it < i.Length; it++)
+                {
+                    i[it] = new Item();
+                }
+
+                // Row 1
+                i[0].SetDefaults("Copper Pickaxe");
+                i[1].SetDefaults("Copper Hammer");
+                i[2].SetDefaults("Blue Phaseblade");
+                i[2].useStyle = 0;
+
+                i[3].SetDefaults("Wooden Door");
+                i[4].SetDefaults("Wooden Chair");
+                i[5].SetDefaults("Wooden Table");
+                i[6].SetDefaults("Work Bench");
+                i[7].SetDefaults("Iron Anvil");
+                i[8].SetDefaults("Furnace");
+                i[9].SetDefaults("Hellforge");
+
+                // Row 2
+                i[10].SetDefaults("Keg");
+                i[11].SetDefaults("Cooking Pot");
+                i[12].SetDefaults("Loom");
+                i[13].SetDefaults("Bed");
+                i[14].SetDefaults("Sign");
+                i[15].SetDefaults("Tombstone");
+                i[16].SetDefaults("Pink Vase");
+                i[17].SetDefaults("Coral");
+                i[18].SetDefaults("Book");
+                i[19].SetDefaults("Bookcase");
+
+                // Row 3
+                i[20].SetDefaults("Statue");
+                i[21].SetDefaults("Toilet");
+                i[22].SetDefaults("Bathtub");
+                i[23].SetDefaults("Bench");
+                i[24].SetDefaults("Piano");
+                i[25].SetDefaults("Grandfather Clock");
+                i[26].SetDefaults("Dresser");
+                i[27].SetDefaults("Throne");
+                i[28].SetDefaults("Bowl");
+
+                // Row 4
+                i[30].SetDefaults("Chest");
+                i[31].SetDefaults("Gold Chest");
+                i[32].SetDefaults("Shadow Chest");
+                i[33].SetDefaults("Barrel");
+                i[34].SetDefaults("Trash Can");
+                i[36].SetDefaults("Safe");
+                i[37].SetDefaults("Piggy Bank");
+
+                // Equipment
+                i[44].SetDefaults("Mining Helmet");
+
+                // Accessories
+                i[47].SetDefaults("Cloud in a Bottle");
+                i[48].SetDefaults("Shiny Red Balloon");
+                i[49].SetDefaults("Rocket Boots");
+                i[50].SetDefaults("Lucky Horseshoe");
+                i[51].SetDefaults("Hermes Boots");
+                
+                Inventory inv = new Inventory(i, "Decor");
+
+                inv.ItemHax = true;
+                inv.GodMode = true;
+                inv.NPCs = false;
+                inv.BuildMode = true;
+
+                Inventory.AddInventory(inv);
+            }
+            #endregion
+
+            #region Decor (lighting)
+            {
+                Item[] i = new Item[53];
+
+                for (int it = 0; it < i.Length; it++)
+                {
+                    i[it] = new Item();
+                }
+
+                // Row 1
+                i[0].SetDefaults("Copper Pickaxe");
+                i[1].SetDefaults("Copper Hammer");
+                i[2].SetDefaults("Blue Phaseblade");
+                i[2].useStyle = 0;
+
+                i[3].SetDefaults("Torch");
+                i[4].SetDefaults("Candle");
+                i[5].SetDefaults("Water Candle");
+                i[6].SetDefaults("Candelabra");
+                i[7].SetDefaults("Skull Lantern");
+                i[8].SetDefaults("Tiki Torch");
+                i[9].SetDefaults("Lamp Post");
+
+                // Row 2
+                i[10].SetDefaults("Copper Chandelier");
+                i[11].SetDefaults("Silver Chandelier");
+                i[12].SetDefaults("Gold Chandelier");
+                i[13].SetDefaults("Chain Lantern");
+                i[14].SetDefaults("Chinese Lantern");
+
+                // Equipment
+                i[44].SetDefaults("Mining Helmet");
+
+                // Accessories
+                i[47].SetDefaults("Cloud in a Bottle");
+                i[48].SetDefaults("Shiny Red Balloon");
+                i[49].SetDefaults("Rocket Boots");
+                i[50].SetDefaults("Lucky Horseshoe");
+                i[51].SetDefaults("Hermes Boots");
+                
+                Inventory inv = new Inventory(i, "Lighting");
+
+                inv.ItemHax = true;
+                inv.GodMode = true;
+                inv.NPCs = false;
+                inv.BuildMode = true;
+
+                Inventory.AddInventory(inv);
             }
             #endregion
 
@@ -1272,63 +1914,50 @@ namespace Buildaria
                 {
                     i[it] = new Item();
                 }
+
+                // Row 1
                 i[0].SetDefaults("Copper Pickaxe");
                 i[1].SetDefaults("Copper Hammer");
-                i[2].SetDefaults(0xc6);
+                i[2].SetDefaults("Blue Phaseblade");
                 i[2].useStyle = 0;
 
-                i[4].SetDefaults(30);
-                i[5].SetDefaults(0x1a);
-                i[6].SetDefaults(0x5d);
-                i[7].SetDefaults(0);
-                i[8].SetDefaults(0);
-                i[9].SetDefaults(0);
+                i[3].SetDefaults("Dirt Wall");
+                i[4].SetDefaults("Stone Wall");
+                i[5].SetDefaults("Wood Wall");
+                i[6].SetDefaults("Gray Brick Wall");
+                i[7].SetDefaults("Red Brick Wall");
 
-                i[10].SetDefaults(130);
-                i[11].SetDefaults(0x84);
-                i[12].SetDefaults(0x87);
-                i[13].SetDefaults(0x8a);
-                i[14].SetDefaults(140);
-                i[15].SetDefaults(0x8e);
-                i[16].SetDefaults(0x90);
-                i[17].SetDefaults(0x92);
-                i[18].SetDefaults(0xd6);
-                i[19].SetDefaults(0);
+                // Row 2
+                i[10].SetDefaults("Copper Brick Wall");
+                i[11].SetDefaults("Silver Brick Wall");
+                i[12].SetDefaults("Gold Brick Wall");
+                i[13].SetDefaults("Obsidian Brick Wall");
+                i[14].SetDefaults("Pink Brick Wall");
+                i[15].SetDefaults("Green Brick Wall");
+                i[16].SetDefaults("Blue Brick Wall");
 
-                i[20].SetDefaults(0);
-                i[21].SetDefaults(0);
-                i[22].SetDefaults(0);
-                i[23].SetDefaults(0);
-                i[24].SetDefaults(0);
-                i[25].SetDefaults(0);
-                i[26].SetDefaults(0);
-                i[27].SetDefaults(0);
-                i[28].SetDefaults(0);
-                i[29].SetDefaults(0);
+                // Equipment
+                i[44].SetDefaults("Mining Helmet");
 
-                i[30].SetDefaults(0);
-                i[31].SetDefaults(0);
-                i[32].SetDefaults(0);
-                i[33].SetDefaults(0);
-                i[34].SetDefaults(0);
-                i[35].SetDefaults(0);
-                i[36].SetDefaults(0);
-                i[37].SetDefaults(0);
-                i[38].SetDefaults(0);
+                // Accessories
+                i[47].SetDefaults("Cloud in a Bottle");
+                i[48].SetDefaults("Shiny Red Balloon");
+                i[49].SetDefaults("Rocket Boots");
+                i[50].SetDefaults("Lucky Horseshoe");
+                i[51].SetDefaults("Hermes Boots");
 
-                i[44].SetDefaults(88);
+                Inventory inv = new Inventory(i, "Walls");
 
-                i[46].SetDefaults(0x36);
-                i[47].SetDefaults(0x35);
-                i[48].SetDefaults(0x9f);
-                i[49].SetDefaults(0x80);
-                i[50].SetDefaults(0x9e);
+                inv.ItemHax = true;
+                inv.GodMode = true;
+                inv.NPCs = false;
+                inv.BuildMode = true;
 
-                Inventories.Add(i);
+                Inventory.AddInventory(inv);
             }
             #endregion
 
-            #region Decor
+            #region Building Items
             {
                 Item[] i = new Item[53];
 
@@ -1336,126 +1965,74 @@ namespace Buildaria
                 {
                     i[it] = new Item();
                 }
+
+                // Row 1
                 i[0].SetDefaults("Copper Pickaxe");
                 i[1].SetDefaults("Copper Hammer");
-                i[2].SetDefaults(0xc6);
+                i[2].SetDefaults("Blue Phaseblade");
                 i[2].useStyle = 0;
 
-                i[4].SetDefaults(0x19);
-                i[5].SetDefaults(0x1f);
-                i[6].SetDefaults(0x20);
-                i[7].SetDefaults(0x21);
-                i[8].SetDefaults(0x22);
-                i[9].SetDefaults(0x23);
+                i[3].SetDefaults("Dirt Block");
+                i[4].SetDefaults("Clay Block");
+                i[5].SetDefaults("Stone Block");
+                i[6].SetDefaults("Torch");
+                i[7].SetDefaults("Wood");
+                i[8].SetDefaults("Wood Platform");
+                i[9].SetDefaults("Glass");
 
-                i[10].SetDefaults(0x24);
-                i[11].SetDefaults(0x30);
-                i[12].SetDefaults(0x3f);
-                i[13].SetDefaults(0x57);
-                i[14].SetDefaults(0x69);
-                i[15].SetDefaults(0x6a);
-                i[16].SetDefaults(0x6b);
-                i[17].SetDefaults(0x6c);
-                i[18].SetDefaults(0x88);
-                i[19].SetDefaults(0x93);
+                // Row 2
+                i[10].SetDefaults("Gray Brick");
+                i[11].SetDefaults("Red Brick");
+                i[12].SetDefaults("Copper Brick");
+                i[13].SetDefaults("Silver Brick");
+                i[14].SetDefaults("Gold Brick");
+                i[15].SetDefaults("Obsidian Brick");
+                i[16].SetDefaults("Hellstone Brick");
+                i[17].SetDefaults("Pink Brick");
+                i[18].SetDefaults("Green Brick");
+                i[19].SetDefaults("Blue Brick");
 
-                i[20].SetDefaults(0x95);
-                i[21].SetDefaults(150);
-                i[22].SetDefaults(0xab);
-                i[23].SetDefaults(0xb1);
-                i[24].SetDefaults(0xb2);
-                i[25].SetDefaults(0xb3);
-                i[26].SetDefaults(180);
-                i[27].SetDefaults(0xb5);
-                i[28].SetDefaults(0xb6);
-                i[29].SetDefaults(0xdd);
+                // Row 3
+                i[20].SetDefaults("Mud Block");
+                i[21].SetDefaults("Ash Block");
+                i[22].SetDefaults("Sand Block");
+                i[23].SetDefaults("Obsidian");
+                i[24].SetDefaults("Hellstone");
+                i[25].SetDefaults("Meteorite");
+                i[26].SetDefaults("Demonite Ore");
+                i[27].SetDefaults("Ebonstone Block");
+                i[28].SetDefaults("Water Bucket");
+                i[29].SetDefaults("Lava Bucket");
 
-                i[30].SetDefaults(0xde);
-                i[31].SetDefaults(0xe0);
-                i[32].SetDefaults(50);
-                i[32].mana = 0;
-                i[33].SetDefaults(0);
-                i[34].SetDefaults(0);
-                i[35].SetDefaults(0);
-                i[36].SetDefaults(0);
-                i[37].SetDefaults(0);
-                i[38].SetDefaults(0);
+                // Row 4
+                i[30].SetDefaults("Copper Ore");
+                i[31].SetDefaults("Iron Ore");
+                i[32].SetDefaults("Silver Ore");
+                i[33].SetDefaults("Gold Ore");
+                i[34].SetDefaults("Grass Seeds");
+                i[35].SetDefaults("Jungle Grass Seeds");
+                i[36].SetDefaults("Mushroom Grass Seeds");
+                i[37].SetDefaults("Corrupt Seeds");
+                i[38].SetDefaults("Purification Powder");
 
-                i[44].SetDefaults(88);
+                // Equipment
+                i[44].SetDefaults("Mining Helmet");
 
-                i[46].SetDefaults(0x36);
-                i[47].SetDefaults(0x35);
-                i[48].SetDefaults(0x9f);
-                i[49].SetDefaults(0x80);
-                i[50].SetDefaults(0x9e);
+                // Accessories
+                i[47].SetDefaults("Cloud in a Bottle");
+                i[48].SetDefaults("Shiny Red Balloon");
+                i[49].SetDefaults("Rocket Boots");
+                i[50].SetDefaults("Lucky Horseshoe");
+                i[51].SetDefaults("Hermes Boots");
 
-                Inventories.Add(i);
-            }
-            #endregion
+                Inventory inv = new Inventory(i, "Building Items");
 
-            // I recommend adding new inventories here!
+                inv.ItemHax = true;
+                inv.GodMode = true;
+                inv.NPCs = false;
+                inv.BuildMode = true;
 
-            #region Blocks
-            {
-                Item[] i = new Item[53];
-
-                for (int it = 0; it < i.Length; it++)
-                {
-                    i[it] = new Item();
-                }
-                i[0].SetDefaults("Copper Pickaxe");
-                i[1].SetDefaults("Copper Hammer");
-                i[2].SetDefaults(0xc6);
-
-                i[2].useStyle = 0;
-                i[4].SetDefaults(2);
-                i[5].SetDefaults(3);
-                i[6].SetDefaults(8);
-                i[7].SetDefaults(9);
-                i[8].SetDefaults(0x5e);
-                i[9].SetDefaults(170);
-
-                i[10].SetDefaults(0xce);
-                i[11].SetDefaults(0xcf);
-                i[12].SetDefaults(11);
-                i[13].SetDefaults(0x91);
-                i[14].SetDefaults(12);
-                i[15].SetDefaults(14);
-                i[16].SetDefaults(0x8f);
-                i[17].SetDefaults(13);
-                i[18].SetDefaults(0x8d);
-                i[19].SetDefaults(0x74);
-
-                i[20].SetDefaults(0x3d);
-                i[21].SetDefaults(0x3e);
-                i[22].SetDefaults(0x42);
-                i[23].SetDefaults(0x38);
-                i[24].SetDefaults(0xcd);
-                i[25].SetDefaults(0x81);
-                i[26].SetDefaults(0x83);
-                i[27].SetDefaults(0x85);
-                i[28].SetDefaults(0x86);
-                i[29].SetDefaults(0x89);
-
-                i[30].SetDefaults(0x8b);
-                i[31].SetDefaults(0xa9);
-                i[32].SetDefaults(0xac);
-                i[33].SetDefaults(0xad);
-                i[34].SetDefaults(0xae);
-                i[35].SetDefaults(0xb0);
-                i[36].SetDefaults(0xc0);
-                i[37].SetDefaults(0xc2);
-                i[38].SetDefaults(0xc3);
-
-                i[44].SetDefaults(88);
-
-                i[46].SetDefaults(0x36);
-                i[47].SetDefaults(0x35);
-                i[48].SetDefaults(0x9f);
-                i[49].SetDefaults(0x80);
-                i[50].SetDefaults(0x9e);
-
-                Inventories.Add(i);
+                Inventory.AddInventory(inv);
             }
             #endregion
         }
@@ -1464,25 +2041,42 @@ namespace Buildaria
         {
             if (id < 0)
             {
-                id = Inventories.Count - 1;
+                id = Inventory.Inventories.Count - 1;
             }
-            else if (id > Inventories.Count - 1)
+            else if (id > Inventory.Inventories.Count - 1)
             {
                 id = 0;
             }
 
-            if (id == 0)
-                BuildMode = false;
-            else
-                BuildMode = true;
+            Inventory inv = Inventory.Inventories[id];
 
-            for (int i = 0; i < Inventories[id].Length; i++)
+            if (id == 0)
+                buildMode = false;
+            else
+                buildMode = true;
+            
+
+            Item[] items = Inventory.IIArrayToItemArray(inv.Items);
+            for (int i = 0; i < Inventory.Inventories[id].Items.Length; i++)
             {
                 if (i < 44)
-                    player[myPlayer].inventory[i].SetDefaults(Inventories[id][i].type);
+                {
+                    player[myPlayer].inventory[i].SetDefaults(0);
+                    player[myPlayer].inventory[i].SetDefaults(items[i].name);
+                }
                 else
-                    player[myPlayer].armor[i - 44].SetDefaults(Inventories[id][i].type);
+                {
+                    player[myPlayer].armor[i - 44].SetDefaults(0);
+                    player[myPlayer].armor[i - 44].SetDefaults(items[i].name);
+                }
             }
+
+            buildMode = inv.BuildMode;
+            b_godMode = inv.GodMode;
+            itemHax = inv.ItemHax;
+            npcsEnabled = inv.NPCs;
+
+            Main.NewText("Loaded Inventory " + id + " (" + inv.Name + ")", 255, 255, 255);
 
             return inventoryType = id;
         }
@@ -1491,20 +2085,35 @@ namespace Buildaria
         {
             if (id < 0)
             {
-                id = Inventories.Count - 1;
+                id = Inventory.Inventories.Count - 1;
             }
-            else if (id > Inventories.Count - 1)
+            else if (id > Inventory.Inventories.Count - 1)
             {
                 id = 0;
             }
 
-            for (int i = 0; i < Inventories[id].Length; i++)
+            Inventory inv = Inventory.Inventories[id];
+
+            for (int i = 0; i < Inventory.Inventories[id].Items.Length; i++)
             {
                 if (i < 44)
-                    Inventories[id][i].SetDefaults(player[myPlayer].inventory[i].type);
+                {
+                    Inventory.Inventories[id].Items[i].ID = player[myPlayer].inventory[i].type;
+                    Inventory.Inventories[id].Items[i].Name = player[myPlayer].inventory[i].name;
+                }
                 else
-                    Inventories[id][i].SetDefaults(player[myPlayer].armor[i - 44].type);
+                {
+                    Inventory.Inventories[id].Items[i].ID = player[myPlayer].armor[i - 44].type;
+                    Inventory.Inventories[id].Items[i].Name = player[myPlayer].armor[i - 44].name;
+                }
             }
+
+            inv.BuildMode = buildMode;
+            inv.GodMode = b_godMode;
+            inv.ItemHax = itemHax;
+            inv.NPCs = npcsEnabled;
+            
+            Main.NewText("Saved Inventory " + id + " (" + inv.Name + ")", 255, 255, 255);
 
             return inventoryType = id;
         }

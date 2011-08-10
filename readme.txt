@@ -62,10 +62,12 @@ Features:
 Controls:
 	Right-click - Fills the current selection with whatever the current item normally fills/destroys. 
 
-	Alt - Transforms the current selection in an ellipse (oval or circle). 
+	Alt - Transforms the current selection in an ellipse (oval or circle). Also causes Paste to paste
+		upside-down, or flipped vertically. 
 
 	Shift - Transforms the current selection into an outline. Works with Alt for a circle outline. 
-		Also, super-speed when in ghost mode.
+		Also, super-speed when in ghost mode. Also causes Paste to paste backwards, or flipped 
+		horizontally. 
 
 	Ctrl-C - Copy the currently selected tiles.
 
