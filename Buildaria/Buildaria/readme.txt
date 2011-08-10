@@ -41,7 +41,7 @@ Build:
 
 	9. In the dialog box, click "Browse" and open your newly pasted "Terraria.exe".
 
-	8. Build!
+	10. Build!
 
 Features:
 	- Easy-to-use selection system that supports multiple shapes, copy, paste, and an undo.
