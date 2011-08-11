@@ -143,8 +143,15 @@ namespace Buildaria
                     for (int i = 0; i < player[myPlayer].inventory.Length; i++)
                     {
                         Item it = player[myPlayer].inventory[i];
-                        
-                        if (it.name != "Magic Mirror") // Prevent Magic Mirror being hax'd, which prevents it from working.
+
+                        if (i == 10)
+                        {
+                            player[myPlayer].inventory[i].SetDefaults(0);
+                            player[myPlayer].inventory[i].name = "";
+                            player[myPlayer].inventory[i].stack = 0;
+                            player[myPlayer].inventory[i].UpdateItem(0);
+                        }
+                        else if (it.name != "Magic Mirror") // Prevent Magic Mirror being hax'd, which prevents it from working.
                         {
                             it.SetDefaults(it.type);
                             if (it.name != "")
@@ -1129,6 +1136,8 @@ namespace Buildaria
 
         public static void CreateInventories()
         {
+            // i[10] is now the trash slot. DO NOT place an item there, it will get overwritten and will cause you frustration!!
+
             #region Blank
             {
                 Item[] i = new Item[53];
@@ -1167,37 +1176,37 @@ namespace Buildaria
                 i[0].SetDefaults("Ivy Whip");
 
                 // Row 2
-                i[10].SetDefaults("Copper Helmet");
-                i[11].SetDefaults("Iron Helmet");
-                i[12].SetDefaults("Silver Helmet");
-                i[13].SetDefaults("Gold Helmet");
-                i[14].SetDefaults("Meteor Helmet");
-                i[15].SetDefaults("Shadow Helmet");
-                i[16].SetDefaults("Necro Helmet");
-                i[17].SetDefaults("Jungle Hat");
-                i[18].SetDefaults("Molten Helmet");
+                i[11].SetDefaults("Copper Helmet");
+                i[12].SetDefaults("Iron Helmet");
+                i[13].SetDefaults("Silver Helmet");
+                i[14].SetDefaults("Gold Helmet");
+                i[15].SetDefaults("Meteor Helmet");
+                i[16].SetDefaults("Shadow Helmet");
+                i[17].SetDefaults("Necro Helmet");
+                i[18].SetDefaults("Jungle Hat");
+                i[19].SetDefaults("Molten Helmet");
 
                 // Row 3
-                i[20].SetDefaults("Copper Chainmail");
-                i[21].SetDefaults("Iron Chainmail");
-                i[22].SetDefaults("Silver Chainmail");
-                i[23].SetDefaults("Gold Chainmail");
-                i[24].SetDefaults("Meteor Suit");
-                i[25].SetDefaults("Shadow Scalemail");
-                i[26].SetDefaults("Necro Breastplate");
-                i[27].SetDefaults("Jungle Shirt");
-                i[28].SetDefaults("Molten Breastplate");
+                i[21].SetDefaults("Copper Chainmail");
+                i[22].SetDefaults("Iron Chainmail");
+                i[23].SetDefaults("Silver Chainmail");
+                i[24].SetDefaults("Gold Chainmail");
+                i[25].SetDefaults("Meteor Suit");
+                i[26].SetDefaults("Shadow Scalemail");
+                i[27].SetDefaults("Necro Breastplate");
+                i[28].SetDefaults("Jungle Shirt");
+                i[29].SetDefaults("Molten Breastplate");
 
                 // Row 4
-                i[30].SetDefaults("Copper Greaves");
-                i[31].SetDefaults("Iron Greaves");
-                i[32].SetDefaults("Silver Greaves");
-                i[33].SetDefaults("Gold Greaves");
-                i[34].SetDefaults("Meteor Leggings");
-                i[35].SetDefaults("Shadow Greaves");
-                i[36].SetDefaults("Necro Greaves");
-                i[37].SetDefaults("Jungle Pants");
-                i[38].SetDefaults("Molten Greaves");
+                i[31].SetDefaults("Copper Greaves");
+                i[32].SetDefaults("Iron Greaves");
+                i[33].SetDefaults("Silver Greaves");
+                i[34].SetDefaults("Gold Greaves");
+                i[35].SetDefaults("Meteor Leggings");
+                i[36].SetDefaults("Shadow Greaves");
+                i[37].SetDefaults("Necro Greaves");
+                i[38].SetDefaults("Jungle Pants");
+                i[39].SetDefaults("Molten Greaves");
 
                 // Equipment
                 i[44].SetDefaults("Mining Helmet");
@@ -1242,38 +1251,38 @@ namespace Buildaria
                 i[9].SetDefaults("Star Cannon");
 
                 // Row 2
-                i[10].SetDefaults("Vile Powder");
-                i[11].SetDefaults("Shuriken");
-                i[12].SetDefaults("Bone");
-                i[13].SetDefaults("Spiky Ball");
-                i[14].SetDefaults("Throwing Knife");
-                i[15].SetDefaults("Poisoned Knife");
-                i[16].SetDefaults("Grenade");
-                i[17].SetDefaults("Bomb");
-                i[18].SetDefaults("Sticky Bomb");
-                i[19].SetDefaults("Dynamite");
+                i[11].SetDefaults("Vile Powder");
+                i[12].SetDefaults("Shuriken");
+                i[13].SetDefaults("Bone");
+                i[14].SetDefaults("Spiky Ball");
+                i[15].SetDefaults("Throwing Knife");
+                i[16].SetDefaults("Poisoned Knife");
+                i[17].SetDefaults("Grenade");
+                i[18].SetDefaults("Bomb");
+                i[19].SetDefaults("Sticky Bomb");
 
                 // Row 3
-                i[20].SetDefaults("Harpoon");
-                i[21].SetDefaults("Ball 'O Hurt");
-                i[22].SetDefaults("Blue Moon");
-                i[23].SetDefaults("Sunfury");
-                i[24].SetDefaults("Spear");
-                i[25].SetDefaults("Trident");
-                i[26].SetDefaults("Dark Lance");
-                i[27].SetDefaults("Wooden Boomerang");
-                i[28].SetDefaults("Enchanted Boomerang");
-                i[29].SetDefaults("Flamarang");
+                i[20].SetDefaults("Dynamite");
+                i[21].SetDefaults("Harpoon");
+                i[22].SetDefaults("Ball 'O Hurt");
+                i[23].SetDefaults("Blue Moon");
+                i[24].SetDefaults("Sunfury");
+                i[25].SetDefaults("Spear");
+                i[26].SetDefaults("Trident");
+                i[27].SetDefaults("Dark Lance");
+                i[28].SetDefaults("Wooden Boomerang");
+                i[29].SetDefaults("Enchanted Boomerang");
 
                 // Row 4
-                i[30].SetDefaults("Thorn Chakrum");
-                i[31].SetDefaults("Wooden Bow");
-                i[32].SetDefaults("Copper Bow");
-                i[33].SetDefaults("Iron Bow");
-                i[34].SetDefaults("Silver Bow");
-                i[35].SetDefaults("Gold Bow");
-                i[36].SetDefaults("Demon Bow");
-                i[37].SetDefaults("Molten Fury");
+                i[30].SetDefaults("Flamarang");
+                i[31].SetDefaults("Thorn Chakrum");
+                i[32].SetDefaults("Wooden Bow");
+                i[33].SetDefaults("Copper Bow");
+                i[34].SetDefaults("Iron Bow");
+                i[35].SetDefaults("Silver Bow");
+                i[36].SetDefaults("Gold Bow");
+                i[37].SetDefaults("Demon Bow");
+                i[38].SetDefaults("Molten Fury");
 
                 // Equipment
                 i[44].SetDefaults("Mining Helmet");
@@ -1316,9 +1325,8 @@ namespace Buildaria
                 i[8].SetDefaults("Aqua Scepter");
 
                 // Row 2
-                i[10].SetDefaults("Night's Edge");
-                i[11].SetDefaults("Light's Bane");
-                i[12].SetDefaults("Magic Missile");
+                i[11].SetDefaults("Night's Edge");
+                i[12].SetDefaults("Light's Bane");
                 i[13].SetDefaults("Starfury");
                 i[14].SetDefaults("Staff of Regrowth");
                 i[15].SetDefaults("The Breaker");
@@ -1388,14 +1396,14 @@ namespace Buildaria
                 i[9].SetDefaults("Guide Voodoo Doll");
 
                 // Row 2
-                i[10].SetDefaults("Anklet of the Wind");
-                i[11].SetDefaults("Cloud in a Bottle");
-                i[12].SetDefaults("Flipper");
-                i[13].SetDefaults("Hermes Boots");
-                i[14].SetDefaults("Lucky Horseshoe");
-                i[15].SetDefaults("Rocket Boots");
-                i[16].SetDefaults("Shiny Red Balloon");
-                i[17].SetDefaults("Aglet");
+                i[11].SetDefaults("Anklet of the Wind");
+                i[12].SetDefaults("Cloud in a Bottle");
+                i[13].SetDefaults("Flipper");
+                i[14].SetDefaults("Hermes Boots");
+                i[15].SetDefaults("Lucky Horseshoe");
+                i[16].SetDefaults("Rocket Boots");
+                i[17].SetDefaults("Shiny Red Balloon");
+                i[18].SetDefaults("Aglet");
 
                 // Row 3
                 i[20].SetDefaults("Depth Meter");
@@ -1456,32 +1464,32 @@ namespace Buildaria
                 i[9].SetDefaults("Robot Hat");
 
                 // Row 2
-                i[10].SetDefaults("Archaeologist's Hat");
-                i[11].SetDefaults("Plumber's Hat");
-                i[12].SetDefaults("Top Hat");
-                i[13].SetDefaults("Familiar Wig");
-                i[14].SetDefaults("Summer Hat");
-                i[15].SetDefaults("Ninja Hood");
-                i[16].SetDefaults("Hero's Hat");
+                i[11].SetDefaults("Archaeologist's Hat");
+                i[12].SetDefaults("Plumber's Hat");
+                i[13].SetDefaults("Top Hat");
+                i[14].SetDefaults("Familiar Wig");
+                i[15].SetDefaults("Summer Hat");
+                i[16].SetDefaults("Ninja Hood");
+                i[17].SetDefaults("Hero's Hat");
                 i[19].SetDefaults("Gold Crown");
 
                 // Row 3
-                i[20].SetDefaults("Archaeologist's Jacket");
-                i[21].SetDefaults("Plumber's Shirt");
-                i[22].SetDefaults("Tuxedo Shirt");
-                i[23].SetDefaults("Familiar Shirt");
-                i[24].SetDefaults("The Doctor's Shirt");
-                i[25].SetDefaults("Ninja Shirt");
-                i[26].SetDefaults("Hero's Shirt");
+                i[21].SetDefaults("Archaeologist's Jacket");
+                i[22].SetDefaults("Plumber's Shirt");
+                i[23].SetDefaults("Tuxedo Shirt");
+                i[24].SetDefaults("Familiar Shirt");
+                i[25].SetDefaults("The Doctor's Shirt");
+                i[26].SetDefaults("Ninja Shirt");
+                i[27].SetDefaults("Hero's Shirt");
 
                 // Row 4
-                i[30].SetDefaults("Archaeologist's Pants");
-                i[31].SetDefaults("Plumber's Pants");
-                i[32].SetDefaults("Tuxedo Pants");
-                i[33].SetDefaults("Familiar Pants");
-                i[34].SetDefaults("The Doctor's Pants");
-                i[35].SetDefaults("Ninja Pants");
-                i[36].SetDefaults("Hero's Pants");
+                i[31].SetDefaults("Archaeologist's Pants");
+                i[32].SetDefaults("Plumber's Pants");
+                i[33].SetDefaults("Tuxedo Pants");
+                i[34].SetDefaults("Familiar Pants");
+                i[35].SetDefaults("The Doctor's Pants");
+                i[36].SetDefaults("Ninja Pants");
+                i[37].SetDefaults("Hero's Pants");
 
                 // Equipment
                 i[44].SetDefaults("Mining Helmet");
@@ -1527,26 +1535,26 @@ namespace Buildaria
                 i[8].SetDefaults("Restoration Potion");
 
                 // Row 2
-                i[10].SetDefaults("Archery Potion");
-                i[11].SetDefaults("Battle Potion");
-                i[12].SetDefaults("Featherfall Potion");
-                i[13].SetDefaults("Gills Potion"); // 291
-                i[14].SetDefaults("Gravitation Potion");
-                i[15].SetDefaults("Hunter Potion");
-                i[16].SetDefaults("Invisibility Potion");
-                i[17].SetDefaults("Ironskin Potion");
-                i[18].SetDefaults("Magic Power Potion");
-                i[19].SetDefaults("Mana Regeneration Potion");
+                i[11].SetDefaults("Archery Potion");
+                i[12].SetDefaults("Battle Potion");
+                i[13].SetDefaults("Featherfall Potion");
+                i[14].SetDefaults("Gills Potion"); // 291
+                i[15].SetDefaults("Gravitation Potion");
+                i[16].SetDefaults("Hunter Potion");
+                i[17].SetDefaults("Invisibility Potion");
+                i[18].SetDefaults("Ironskin Potion");
+                i[19].SetDefaults("Magic Power Potion");
 
                 // Row 3
-                i[20].SetDefaults("Night Owl Potion");
-                i[21].SetDefaults("Obsidian Skin Potion");
-                i[22].SetDefaults("Regeneration Potion");
-                i[23].SetDefaults("Shine Potion");
-                i[24].SetDefaults("Spelunker Potion");
-                i[25].SetDefaults("Swiftness Potion");
-                i[26].SetDefaults("Thorns Potion");
-                i[27].SetDefaults("Water Walking Potion");
+                i[20].SetDefaults("Mana Regeneration Potion");
+                i[21].SetDefaults("Night Owl Potion");
+                i[22].SetDefaults("Obsidian Skin Potion");
+                i[23].SetDefaults("Regeneration Potion");
+                i[24].SetDefaults("Shine Potion");
+                i[25].SetDefaults("Spelunker Potion");
+                i[26].SetDefaults("Swiftness Potion");
+                i[27].SetDefaults("Thorns Potion");
+                i[28].SetDefaults("Water Walking Potion");
 
                 // Row 4
                 i[30].SetDefaults("Mushroom");
@@ -1603,16 +1611,15 @@ namespace Buildaria
                 i[9].SetDefaults("Hellstone Bar");
 
                 // Row 2
-                i[10].SetDefaults("Amethyst");
-                i[11].SetDefaults("Diamond");
-                i[12].SetDefaults("Emerald");
-                i[13].SetDefaults("Ruby");
-                i[14].SetDefaults("Sapphire");
-                i[15].SetDefaults("Topaz");
-                i[16].SetDefaults("Gel");
-                i[17].SetDefaults("Cobweb");
-                i[18].SetDefaults("Silk");
-                i[19].SetDefaults("Cactus");
+                i[11].SetDefaults("Amethyst");
+                i[12].SetDefaults("Diamond");
+                i[13].SetDefaults("Emerald");
+                i[14].SetDefaults("Ruby");
+                i[15].SetDefaults("Sapphire");
+                i[16].SetDefaults("Topaz");
+                i[17].SetDefaults("Gel");
+                i[18].SetDefaults("Cobweb");
+                i[19].SetDefaults("Silk");
 
                 // Row 3
                 i[20].SetDefaults("Lens");
@@ -1624,18 +1631,19 @@ namespace Buildaria
                 i[26].SetDefaults("Leather");
                 i[27].SetDefaults("Rotten Chunk");
                 i[28].SetDefaults("Worm Tooth");
-                i[29].SetDefaults("Stinger");
+                i[29].SetDefaults("Cactus");
 
                 // Row 4
-                i[30].SetDefaults("Feather");
-                i[31].SetDefaults("Vine");
-                i[32].SetDefaults("Jungle Spores");
-                i[33].SetDefaults("Shark Fin");
-                i[34].SetDefaults("Antlion Mandible");
-                i[35].SetDefaults("Illegal Gun Parts");
-                i[36].SetDefaults("Glowstick");
-                i[37].SetDefaults("Green Dye");
-                i[38].SetDefaults("Black Dye");
+                i[30].SetDefaults("Stinger");
+                i[31].SetDefaults("Feather");
+                i[32].SetDefaults("Vine");
+                i[33].SetDefaults("Jungle Spores");
+                i[34].SetDefaults("Shark Fin");
+                i[35].SetDefaults("Antlion Mandible");
+                i[36].SetDefaults("Illegal Gun Parts");
+                i[37].SetDefaults("Glowstick");
+                i[38].SetDefaults("Green Dye");
+                i[39].SetDefaults("Black Dye");
 
                 // Equipment
                 i[44].SetDefaults("Mining Helmet");
@@ -1676,15 +1684,15 @@ namespace Buildaria
                 i[3].SetDefaults("Ivy Whip");
 
                 // Row 2
-                i[10].SetDefaults("Wooden Arrow");
-                i[11].SetDefaults("Flaming Arrow");
-                i[12].SetDefaults("Unholy Arrow");
-                i[13].SetDefaults("Jester's Arrow");
-                i[14].SetDefaults("Hellfire Arrow");
-                i[15].SetDefaults("Musket Ball");
-                i[16].SetDefaults("Silver Bullet");
-                i[17].SetDefaults("Meteor Shot");
-                i[18].SetDefaults("Seed");
+                i[11].SetDefaults("Wooden Arrow");
+                i[12].SetDefaults("Flaming Arrow");
+                i[13].SetDefaults("Unholy Arrow");
+                i[14].SetDefaults("Jester's Arrow");
+                i[15].SetDefaults("Hellfire Arrow");
+                i[16].SetDefaults("Musket Ball");
+                i[17].SetDefaults("Silver Bullet");
+                i[18].SetDefaults("Meteor Shot");
+                i[19].SetDefaults("Seed");
 
                 // Row 3
                 i[20].SetDefaults("Suspicious Looking Eye");
@@ -1743,20 +1751,20 @@ namespace Buildaria
                 i[9].SetDefaults("Sunflower");
 
                 // Row 2
-                i[10].SetDefaults("Blinkroot Seeds");
-                i[11].SetDefaults("Daybloom Seeds");
-                i[12].SetDefaults("Fireblossom Seeds");
-                i[13].SetDefaults("Moonglow Seeds");
-                i[14].SetDefaults("Deathweed Seeds");
-                i[15].SetDefaults("Waterleaf Seeds");
+                i[11].SetDefaults("Blinkroot Seeds");
+                i[12].SetDefaults("Daybloom Seeds");
+                i[13].SetDefaults("Fireblossom Seeds");
+                i[14].SetDefaults("Moonglow Seeds");
+                i[15].SetDefaults("Deathweed Seeds");
+                i[16].SetDefaults("Waterleaf Seeds");
 
                 // Row 3
-                i[20].SetDefaults("Blinkroot");
-                i[21].SetDefaults("Daybloom");
-                i[22].SetDefaults("Fireblossom");
-                i[23].SetDefaults("Moonglow");
-                i[24].SetDefaults("Deathweed");
-                i[25].SetDefaults("Waterleaf");
+                i[21].SetDefaults("Blinkroot");
+                i[22].SetDefaults("Daybloom");
+                i[23].SetDefaults("Fireblossom");
+                i[24].SetDefaults("Moonglow");
+                i[25].SetDefaults("Deathweed");
+                i[26].SetDefaults("Waterleaf");
 
                 // Equipment
                 i[44].SetDefaults("Mining Helmet");
@@ -1803,14 +1811,13 @@ namespace Buildaria
                 i[9].SetDefaults("Hellforge");
 
                 // Row 2
-                i[10].SetDefaults("Keg");
-                i[11].SetDefaults("Cooking Pot");
-                i[12].SetDefaults("Loom");
-                i[13].SetDefaults("Bed");
-                i[14].SetDefaults("Sign");
-                i[15].SetDefaults("Tombstone");
-                i[16].SetDefaults("Pink Vase");
-                i[17].SetDefaults("Coral");
+                i[11].SetDefaults("Keg");
+                i[12].SetDefaults("Cooking Pot");
+                i[13].SetDefaults("Loom");
+                i[14].SetDefaults("Bed");
+                i[15].SetDefaults("Sign");
+                i[16].SetDefaults("Tombstone");
+                i[17].SetDefaults("Pink Vase");
                 i[18].SetDefaults("Book");
                 i[19].SetDefaults("Bookcase");
 
@@ -1824,6 +1831,7 @@ namespace Buildaria
                 i[26].SetDefaults("Dresser");
                 i[27].SetDefaults("Throne");
                 i[28].SetDefaults("Bowl");
+                i[29].SetDefaults("Coral");
 
                 // Row 4
                 i[30].SetDefaults("Chest");
@@ -1879,11 +1887,11 @@ namespace Buildaria
                 i[9].SetDefaults("Lamp Post");
 
                 // Row 2
-                i[10].SetDefaults("Copper Chandelier");
-                i[11].SetDefaults("Silver Chandelier");
-                i[12].SetDefaults("Gold Chandelier");
-                i[13].SetDefaults("Chain Lantern");
-                i[14].SetDefaults("Chinese Lantern");
+                i[11].SetDefaults("Copper Chandelier");
+                i[12].SetDefaults("Silver Chandelier");
+                i[13].SetDefaults("Gold Chandelier");
+                i[14].SetDefaults("Chain Lantern");
+                i[15].SetDefaults("Chinese Lantern");
 
                 // Equipment
                 i[44].SetDefaults("Mining Helmet");
@@ -1928,13 +1936,13 @@ namespace Buildaria
                 i[7].SetDefaults("Red Brick Wall");
 
                 // Row 2
-                i[10].SetDefaults("Copper Brick Wall");
-                i[11].SetDefaults("Silver Brick Wall");
-                i[12].SetDefaults("Gold Brick Wall");
-                i[13].SetDefaults("Obsidian Brick Wall");
-                i[14].SetDefaults("Pink Brick Wall");
-                i[15].SetDefaults("Green Brick Wall");
-                i[16].SetDefaults("Blue Brick Wall");
+                i[11].SetDefaults("Copper Brick Wall");
+                i[12].SetDefaults("Silver Brick Wall");
+                i[13].SetDefaults("Gold Brick Wall");
+                i[14].SetDefaults("Obsidian Brick Wall");
+                i[15].SetDefaults("Pink Brick Wall");
+                i[16].SetDefaults("Green Brick Wall");
+                i[17].SetDefaults("Blue Brick Wall");
 
                 // Equipment
                 i[44].SetDefaults("Mining Helmet");
@@ -1973,15 +1981,14 @@ namespace Buildaria
                 i[2].useStyle = 0;
 
                 i[3].SetDefaults("Dirt Block");
-                i[4].SetDefaults("Clay Block");
-                i[5].SetDefaults("Stone Block");
+                i[4].SetDefaults("Stone Block");
+                i[5].SetDefaults("Gray Brick");
                 i[6].SetDefaults("Torch");
                 i[7].SetDefaults("Wood");
                 i[8].SetDefaults("Wood Platform");
                 i[9].SetDefaults("Glass");
 
                 // Row 2
-                i[10].SetDefaults("Gray Brick");
                 i[11].SetDefaults("Red Brick");
                 i[12].SetDefaults("Copper Brick");
                 i[13].SetDefaults("Silver Brick");
@@ -1993,16 +2000,16 @@ namespace Buildaria
                 i[19].SetDefaults("Blue Brick");
 
                 // Row 3
-                i[20].SetDefaults("Mud Block");
-                i[21].SetDefaults("Ash Block");
-                i[22].SetDefaults("Sand Block");
-                i[23].SetDefaults("Obsidian");
-                i[24].SetDefaults("Hellstone");
-                i[25].SetDefaults("Meteorite");
-                i[26].SetDefaults("Demonite Ore");
-                i[27].SetDefaults("Ebonstone Block");
-                i[28].SetDefaults("Water Bucket");
-                i[29].SetDefaults("Lava Bucket");
+                i[20].SetDefaults("Clay Block");
+                i[21].SetDefaults("Mud Block");
+                i[22].SetDefaults("Ash Block");
+                i[23].SetDefaults("Sand Block");
+                i[24].SetDefaults("Obsidian");
+                i[25].SetDefaults("Hellstone");
+                i[26].SetDefaults("Meteorite");
+                i[27].SetDefaults("Demonite Ore");
+                i[28].SetDefaults("Ebonstone Block");
+                i[29].SetDefaults("Purification Powder");
 
                 // Row 4
                 i[30].SetDefaults("Copper Ore");
@@ -2013,7 +2020,8 @@ namespace Buildaria
                 i[35].SetDefaults("Jungle Grass Seeds");
                 i[36].SetDefaults("Mushroom Grass Seeds");
                 i[37].SetDefaults("Corrupt Seeds");
-                i[38].SetDefaults("Purification Powder");
+                i[38].SetDefaults("Water Bucket");
+                i[39].SetDefaults("Lava Bucket");
 
                 // Equipment
                 i[44].SetDefaults("Mining Helmet");
