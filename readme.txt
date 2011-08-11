@@ -1,11 +1,19 @@
-﻿Buildaria 1.6
+﻿Buildaria 1.6.1
+
+WARNINGS:
+	** READ FIRST **
+
+	NOTE: Joining multiplayer games is disabled while running Buildaria.
+
+	NOTE: Any character you load while running Buildaria will have 
+		his/her **INVENTORY ERASED PERMANENTLY**
+
+	NOTE: You could very possibly screw up your world. I recommend making backups often and/or using a 
+		new world.
+
+	** READ FIRST **
 
 Intro: 
-	** READ FIRST **
-	NOTE: Joining multiplayer games is disabled while running Buildaria.
-	NOTE: Any character you load while running Buildaria will have his/her **INVENTORY ERASED**
-	NOTE: You could very possible screw up your world. I recommend making backups often and/or using a new world.
-	** READ FIRST **
 
 	Buildaria is a Terraria mod geared towards map makers. Adventure/puzzle maps can now be made with much more ease! 
 
@@ -53,14 +61,16 @@ Features:
 	- Cycle forward to dawn/dusk instantly. 
 	- Optional god mode just in case you fall or ghost into lava. 
 	- A trash slot - you will always have inventory room. 
-	- NEW: Infinite rocket boots.
-	- NEW: Depth meter and watch active with god mode. 
-	- NEW: A special inventory that disables most of the "cheats", allowing you to test your map properly.
+	- Infinite rocket boots.
+	- Depth meter and watch active with god mode. 
+	- A special inventory that disables most of the "cheats", allowing you to test your map properly.
 		Also contains most items used in puzzle/adventure maps. Did I forget one? Let me know! 
-	- NEW: Inventories now include nearly every item! (Thanks to: septor)
-	- NEW: Inventories are now loaded and saved to and from an XML file, allowing you to add, remove, and
+	- Inventories now include nearly every item! (Thanks to: septor)
+	- Inventories are now loaded and saved to and from an XML file, allowing you to add, remove, and
 		customize your own inventories. 
-	- NEW: Output appears in chat area, letting you know what's going on... most of the time. 
+	- Output appears in chat area, letting you know what's going on... most of the time. 
+	- NEW: Item drops are now toggle-able. In lieu of the trash slot, I decided this was better. 'M'
+		is the key. 
 
 Controls:
 	Right-click - Fills the current selection with whatever the current item normally fills/destroys. 
@@ -73,26 +83,20 @@ Controls:
 		horizontally. 
 
 	Ctrl-C - Copy the currently selected tiles.
-
 	Ctrl-V - Paste your current copy to the selected position. 
-
 	Ctrl-Z - Undo the last selection-based modification. 
 
-	Ctrl-Shift-S - Save Inventories to file. 
-
+	Ctrl-Shift-S - Save Inventories to file.
 	Ctrl-Shift-O - Load Inventories from file. 
 
 	T - Toggles item speeds. 
-
 	G - Toggles god mode.
-
 	C - Toggles NPC spawning
-
 	P - Toggles between ghost mode. Hold Shift while in flight mode to go extra fast. Noclip! 
-
 	N - Toggles day/night time. 
+	M - Toggles item drops. 
 
-	[] (Brackets) - Switch inventories. 
+	[] (Bracket Keys) - Switch inventories. 
 
 Tools:
 	Phaseblade - Acts as the selection tool. Click and drag to select a box area. Right-click to clear selection.

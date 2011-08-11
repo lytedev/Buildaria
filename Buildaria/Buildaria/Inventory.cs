@@ -88,6 +88,7 @@ namespace Buildaria
         public bool GodMode { get; set; }
         public bool NPCs { get; set; }
         public bool BuildMode { get; set; }
+        public bool ItemDrops { get; set; }
         public InventoryItem[] Items { get; set; }
 
         public void Default()
@@ -97,6 +98,7 @@ namespace Buildaria
             GodMode = true;
             NPCs = false;
             BuildMode = true;
+            ItemDrops = false;
             Items = new InventoryItem[0];
         }
 
