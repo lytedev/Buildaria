@@ -85,6 +85,7 @@ namespace Buildaria
         bool npcsEnabled = false;
         bool hover = false;
         bool buildMode = true;
+        bool itemsEnabled = false;
 
         #endregion
 
@@ -95,6 +96,11 @@ namespace Buildaria
             // Load version information
             Version = Assembly.GetExecutingAssembly().GetName().Version;
             VersionString = Version.Major + "." + Version.Minor;
+
+            if (Version.Build != 0)
+            {
+                VersionString += "." + Version.Build;
+            }
         }
 
         #endregion
@@ -247,7 +253,7 @@ namespace Buildaria
 
             #region NPC Spawning
 
-            if (keyState.IsKeyDown(Keys.C) && oldKeyState.IsKeyUp(Keys.C))
+            if (keyState.IsKeyDown(Keys.C) && oldKeyState.IsKeyUp(Keys.C) && !editSign)
             {
                 npcsEnabled = !npcsEnabled;
 
@@ -268,6 +274,28 @@ namespace Buildaria
 
             #endregion
 
+            #region World Items
+
+            if (keyState.IsKeyDown(Keys.M) && oldKeyState.IsKeyUp(Keys.M) && !editSign)
+            {
+                itemsEnabled = !itemsEnabled;
+
+                Main.NewText("Item Drops = " + itemsEnabled, 255, 255, 255);
+            }
+
+            if (!itemsEnabled)
+            {
+                foreach (Item i in item)
+                {
+                    i.SetDefaults(0);
+                    i.stack = 0;
+                    i.name = "";
+                    i.UpdateItem(0);
+                }
+            }
+
+            #endregion
+
             if (!editSign)
             {
                 if (keyState.IsKeyDown(Keys.T) && oldKeyState.IsKeyUp(Keys.T))
@@ -278,11 +306,16 @@ namespace Buildaria
                 }
             }
 
+            if (menuMode != oldMenuMode)
+            {
+                sel1 = -Vector2.One;
+                sel2 = -Vector2.One;
+            }
+
             if (menuMode != oldMenuMode && menuMode == 10)
             {
                 LoadInventory(Inventory.Inventories.Count - 1);
             }
-
             else if (menuMode == 10) // if in-game ...
             {
                 #region Modifier Keys
@@ -305,7 +338,7 @@ namespace Buildaria
                 if (ctrl && shift && keyState.IsKeyDown(Keys.O) && oldKeyState.IsKeyUp(Keys.O))
                     Inventory.LoadInventories();
 
-                #endregion 
+                #endregion
 
                 #region Ghost/Hover Mode
 
@@ -375,14 +408,14 @@ namespace Buildaria
                 }
 
                 #endregion
-                                
+
                 bool allowStuff = true; // Disallows most buildaria functionality in-game
                 // Set to true if the user may not want certain functions to be happening
                 try
                 {
                     #region Place Anywhere
 
-                    if (mouseState.LeftButton == ButtonState.Pressed && player[myPlayer].inventory[player[myPlayer].selectedItem].createTile >= 0 && itemHax)
+                    if (mouseState.LeftButton == ButtonState.Pressed && player[myPlayer].inventory[player[myPlayer].selectedItem].createTile >= 0 && itemHax && allowStuff)
                     {
                         int x = (int)((Main.mouseState.X + Main.screenPosition.X) / 16f);
                         int y = (int)((Main.mouseState.Y + Main.screenPosition.Y) / 16f);
@@ -398,7 +431,7 @@ namespace Buildaria
                             SquareWallFrame(x, y, true);
                         }
                     }
-                    else if (mouseState.LeftButton == ButtonState.Pressed && player[myPlayer].inventory[player[myPlayer].selectedItem].createWall >= 0 && itemHax)
+                    else if (mouseState.LeftButton == ButtonState.Pressed && player[myPlayer].inventory[player[myPlayer].selectedItem].createWall >= 0 && itemHax && allowStuff)
                     {
                         int x = (int)((Main.mouseState.X + Main.screenPosition.X) / 16f);
                         int y = (int)((Main.mouseState.Y + Main.screenPosition.Y) / 16f);
@@ -823,8 +856,8 @@ namespace Buildaria
                                         SquareWallFrame(x, y, true);
                                     }
                                 }
-                            } 
-                            
+                            }
+
                             Main.NewText("Filled Selection with Lava", 255, 255, 255);
                         }
                         else if (mouseState.RightButton == ButtonState.Pressed && oldMouseState.RightButton == ButtonState.Released && player[myPlayer].inventory[player[myPlayer].selectedItem].type == 0xce)
@@ -1019,12 +1052,12 @@ namespace Buildaria
                                         SquareWallFrame(x, y);
                                     }
                                 }
-                            } 
-                            
+                            }
+
                             Main.NewText("Undo Complete", 255, 255, 255);
                         }
 
-                        #endregion 
+                        #endregion
 
                         #endregion
                     }
@@ -1149,6 +1182,7 @@ namespace Buildaria
                 inv.GodMode = true;
                 inv.NPCs = false;
                 inv.BuildMode = true;
+                inv.ItemDrops = true;
 
                 Inventory.AddInventory(inv);
             }
@@ -1215,6 +1249,7 @@ namespace Buildaria
                 inv.GodMode = true;
                 inv.NPCs = false;
                 inv.BuildMode = true;
+                inv.ItemDrops = true;
 
                 Inventory.AddInventory(inv);
             }
@@ -1291,6 +1326,7 @@ namespace Buildaria
                 inv.GodMode = true;
                 inv.NPCs = false;
                 inv.BuildMode = true;
+                inv.ItemDrops = true;
 
                 Inventory.AddInventory(inv);
             }
@@ -1362,6 +1398,7 @@ namespace Buildaria
                 inv.GodMode = true;
                 inv.NPCs = false;
                 inv.BuildMode = true;
+                inv.ItemDrops = true;
 
                 Inventory.AddInventory(inv);
             }
@@ -1429,6 +1466,7 @@ namespace Buildaria
                 inv.GodMode = true;
                 inv.NPCs = false;
                 inv.BuildMode = true;
+                inv.ItemDrops = true;
 
                 Inventory.AddInventory(inv);
             }
@@ -1499,6 +1537,7 @@ namespace Buildaria
                 inv.GodMode = true;
                 inv.NPCs = false;
                 inv.BuildMode = true;
+                inv.ItemDrops = true;
 
                 Inventory.AddInventory(inv);
             }
@@ -1574,6 +1613,7 @@ namespace Buildaria
                 inv.GodMode = true;
                 inv.NPCs = false;
                 inv.BuildMode = true;
+                inv.ItemDrops = true;
 
                 Inventory.AddInventory(inv);
             }
@@ -1653,6 +1693,7 @@ namespace Buildaria
                 inv.GodMode = true;
                 inv.NPCs = false;
                 inv.BuildMode = true;
+                inv.ItemDrops = true;
 
                 Inventory.AddInventory(inv);
             }
@@ -1716,6 +1757,7 @@ namespace Buildaria
                 inv.GodMode = true;
                 inv.NPCs = false;
                 inv.BuildMode = true;
+                inv.ItemDrops = true;
 
                 Inventory.AddInventory(inv); ;
             }
@@ -1774,6 +1816,7 @@ namespace Buildaria
                 inv.GodMode = true;
                 inv.NPCs = false;
                 inv.BuildMode = true;
+                inv.ItemDrops = true;
 
                 Inventory.AddInventory(inv);
             }
@@ -1850,6 +1893,7 @@ namespace Buildaria
                 inv.GodMode = true;
                 inv.NPCs = false;
                 inv.BuildMode = true;
+                inv.ItemDrops = false;
 
                 Inventory.AddInventory(inv);
             }
@@ -1901,6 +1945,7 @@ namespace Buildaria
                 inv.GodMode = true;
                 inv.NPCs = false;
                 inv.BuildMode = true;
+                inv.ItemDrops = false;
 
                 Inventory.AddInventory(inv);
             }
@@ -1952,6 +1997,7 @@ namespace Buildaria
                 inv.GodMode = true;
                 inv.NPCs = false;
                 inv.BuildMode = true;
+                inv.ItemDrops = false;
 
                 Inventory.AddInventory(inv);
             }
@@ -2031,6 +2077,7 @@ namespace Buildaria
                 inv.GodMode = true;
                 inv.NPCs = false;
                 inv.BuildMode = true;
+                inv.ItemDrops = false;
 
                 Inventory.AddInventory(inv);
             }
@@ -2048,13 +2095,7 @@ namespace Buildaria
                 id = 0;
             }
 
-            Inventory inv = Inventory.Inventories[id];
-
-            if (id == 0)
-                buildMode = false;
-            else
-                buildMode = true;
-            
+            Inventory inv = Inventory.Inventories[id];            
 
             Item[] items = Inventory.IIArrayToItemArray(inv.Items);
             for (int i = 0; i < Inventory.Inventories[id].Items.Length; i++)
@@ -2075,6 +2116,7 @@ namespace Buildaria
             b_godMode = inv.GodMode;
             itemHax = inv.ItemHax;
             npcsEnabled = inv.NPCs;
+            itemsEnabled = inv.ItemDrops;
 
             Main.NewText("Loaded Inventory " + id + " (" + inv.Name + ")", 255, 255, 255);
 
@@ -2112,7 +2154,8 @@ namespace Buildaria
             inv.GodMode = b_godMode;
             inv.ItemHax = itemHax;
             inv.NPCs = npcsEnabled;
-            
+            inv.ItemDrops = itemsEnabled;
+
             Main.NewText("Saved Inventory " + id + " (" + inv.Name + ")", 255, 255, 255);
 
             return inventoryType = id;
