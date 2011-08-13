@@ -1830,7 +1830,7 @@ namespace Buildaria
             }
             #endregion
 
-            #region Decor (minus lighting)
+            #region Decor (minus lighting and storage)
             {
                 Item[] i = new Item[53];
 
@@ -1877,13 +1877,10 @@ namespace Buildaria
                 i[29].SetDefaults("Coral");
 
                 // Row 4
-                i[30].SetDefaults("Chest");
-                i[31].SetDefaults("Gold Chest");
-                i[32].SetDefaults("Shadow Chest");
-                i[33].SetDefaults("Barrel");
-                i[34].SetDefaults("Trash Can");
-                i[36].SetDefaults("Safe");
-                i[37].SetDefaults("Piggy Bank");
+                i[30].SetDefaults("Red Banner");
+                i[31].SetDefaults("Green Banner");
+                i[32].SetDefaults("Blue Banner");
+                i[33].SetDefaults("Yellow Banner");
 
                 // Equipment
                 i[44].SetDefaults("Mining Helmet");
@@ -1907,7 +1904,7 @@ namespace Buildaria
             }
             #endregion
 
-            #region Decor (lighting)
+            #region Decor (lighting & storage)
             {
                 Item[] i = new Item[53];
 
@@ -1937,6 +1934,15 @@ namespace Buildaria
                 i[14].SetDefaults("Chain Lantern");
                 i[15].SetDefaults("Chinese Lantern");
 
+                // Row 3
+                i[20].SetDefaults("Chest");
+                i[21].SetDefaults("Gold Chest");
+                i[22].SetDefaults("Shadow Chest");
+                i[23].SetDefaults("Barrel");
+                i[24].SetDefaults("Trash Can");
+                i[26].SetDefaults("Safe");
+                i[27].SetDefaults("Piggy Bank");
+
                 // Equipment
                 i[44].SetDefaults("Mining Helmet");
 
@@ -1947,7 +1953,7 @@ namespace Buildaria
                 i[50].SetDefaults("Lucky Horseshoe");
                 i[51].SetDefaults("Hermes Boots");
                 
-                Inventory inv = new Inventory(i, "Lighting");
+                Inventory inv = new Inventory(i, "Lighting/Storage");
 
                 inv.ItemHax = true;
                 inv.GodMode = true;
