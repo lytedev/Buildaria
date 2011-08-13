@@ -1299,7 +1299,7 @@ namespace Buildaria
                 // Row 3
                 i[20].SetDefaults("Dynamite");
                 i[21].SetDefaults("Harpoon");
-                i[22].SetDefaults("Ball 'O Hurt");
+                i[22].SetDefaults("Ball O' Hurt");
                 i[23].SetDefaults("Blue Moon");
                 i[24].SetDefaults("Sunfury");
                 i[25].SetDefaults("Spear");
@@ -1310,7 +1310,7 @@ namespace Buildaria
 
                 // Row 4
                 i[30].SetDefaults("Flamarang");
-                i[31].SetDefaults("Thorn Chakrum");
+                i[31].SetDefaults("Thorn Chakram");
                 i[32].SetDefaults("Wooden Bow");
                 i[33].SetDefaults("Copper Bow");
                 i[34].SetDefaults("Iron Bow");
@@ -1388,7 +1388,7 @@ namespace Buildaria
                 i[35].SetDefaults("Red Phaseblade");
                 i[36].SetDefaults("Purple Phaseblade");
                 i[37].SetDefaults("Green Phaseblade");
-                i[37].SetDefaults("Yellow Phaseblade");
+                i[38].SetDefaults("Yellow Phaseblade");
 
                 // Equipment
                 i[44].SetDefaults("Mining Helmet");
@@ -1448,7 +1448,7 @@ namespace Buildaria
                 i[22].SetDefaults("Silver Watch");
                 i[23].SetDefaults("Gold Watch");
                 i[25].SetDefaults("Mining Helmet");
-                i[27].SetDefaults("orb of Light");
+                i[27].SetDefaults("Orb of Light");
                 i[28].SetDefaults("Magic Mirror");
                 i[29].SetDefaults("Breathing Reed");
 
