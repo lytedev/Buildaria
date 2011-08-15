@@ -1877,10 +1877,11 @@ namespace Buildaria
                 i[29].SetDefaults("Coral");
 
                 // Row 4
-                i[30].SetDefaults("Red Banner");
-                i[31].SetDefaults("Green Banner");
-                i[32].SetDefaults("Blue Banner");
-                i[33].SetDefaults("Yellow Banner");
+                i[30].SetDefaults("Spike");
+                i[32].SetDefaults("Red Banner");
+                i[33].SetDefaults("Green Banner");
+                i[34].SetDefaults("Blue Banner");
+                i[35].SetDefaults("Yellow Banner");
 
                 // Equipment
                 i[44].SetDefaults("Mining Helmet");
