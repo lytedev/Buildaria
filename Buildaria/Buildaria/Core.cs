@@ -1,6 +1,7 @@
 #region .NET References
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Diagnostics;
@@ -162,7 +163,249 @@ namespace Buildaria
                             it.SetDefaults(it.type);
                             if (it.name != "")
                             {
-                                it.stack = 255;
+                                #region Unstackable Items
+
+                                // The 1.0.6 patch added in right-click to equip functionaility that has killed unstacking
+                                // normally non-stackable items. Since it is pointless to stack the below items at all, let's not.
+
+                                // You can allow the stacking of normally non-stackable items by setting the below boolean to true.
+                                bool allowStacking = false;
+
+                                ArrayList usItems = new ArrayList(new string[] {
+                                #region Armor
+
+                                "Copper Helmet",
+                                "Iron Helmet",
+                                "Silver Helmet",
+                                "Gold Helmet",
+                                "Meteor Helmet",
+                                "Shadow Helmet",
+                                "Necro Helmet",
+                                "Jungle Hat",
+                                "Molten Helmet",
+
+                                "Copper Chainmail",
+                                "Iron Chainmail",
+                                "Silver Chainmail",
+                                "Gold Chainmail",
+                                "Meteor Suit",
+                                "Shadow Scalemail",
+                                "Necro Breastplate",
+                                "Jungle Shirt",
+                                "Molten Breastplate",
+
+                                "Copper Greaves",
+                                "Iron Greaves",
+                                "Silver Greaves",
+                                "Gold Greaves",
+                                "Meteor Leggings",
+                                "Shadow Greaves",
+                                "Necro Greaves",
+                                "Jungle Pants",
+                                "Molten Greaves",
+
+                                #endregion
+
+                                #region Weapons & Tools
+
+                                "Blowpipe",
+                                "Flintlock Pistol",
+                                "Musket",
+                                "Handgun",
+                                "Minishark",
+                                "Space Gun",
+                                "Phoenix Blaster",
+                                "Sandgun",
+                                "Star Cannon",
+
+                                "Wooden Boomerang",
+                                "Enchanted Boomerang",
+                                "Thorn Chakram",
+                                "Flamarang",
+
+                                "Wooden Bow",
+                                "Copper Bow",
+                                "Iron Bow",
+                                "Silver Bow",
+                                "Gold Bow",
+                                "Demon Bow",
+                                "Molten Fury",
+
+                                "Flower of Fire",
+                                "Vilethorn",
+                                "Magic Missile",
+                                "Flamelash",
+                                "Water Bolt",
+                                "Demon Scythe",
+                                "Aqua Scepter",
+
+                                "Harpoon",
+                                "Ball O' Hurt",
+                                "Blue Moon",
+                                "Sunfury",
+
+                                "Spear",
+                                "Trident",
+                                "Dark Lance",
+
+                                "Night's Edge",
+                                "Light's Bane",
+                                "Starfury",
+                                "Staff of Regrowth",
+                                "The Breaker",
+                                "War Axe of the Night",
+
+                                "Wooden Sword",
+                                "Copper Shortsword",
+                                "Copper Broadsword",
+                                "Iron Shortsword",
+                                "Iron Broadsword",
+                                "Silver Shortsword",
+                                "Silver Broadsword",
+                                "Gold Shortsword",
+                                "Gold Broadsword",
+                                "Muramasa",
+                                "Blade of Grass",
+                                "Fiery Greatsword",
+                                "White Phaseblade",
+                                "Blue Phaseblade",
+                                "Red Phaseblade",
+                                "Purple Phaseblade",
+                                "Green Phaseblade",
+                                "Yellow Phaseblade",
+
+                                "Copper Pickaxe",
+                                "Iron Pickaxe",
+                                "Silver Pickaxe",
+                                "Gold Pickaxe",
+                                "Nightmare Pickaxe",
+                                "Molten Pickaxe",
+
+                                "Copper Axe",
+                                "Iron Axe",
+                                "Silver Axe",
+                                "Gold Axe",
+
+                                "Wooden Hammer",
+                                "Copper Hammer",
+                                "Iron Hammer",
+                                "Silver Hammer",
+                                "Gold Hammer",
+
+                                "Meteor Hamaxe",
+                                "Molten Hamaxe",
+
+                                "Dirt Rod",
+                                "Grappling Hook",
+                                "Ivy Whip",
+
+                                #endregion
+
+                                #region Accessories & Other
+
+                                "Cobalt Shield",
+                                "Feral Claws",
+                                "Obsidian Skull",
+                                "Shackle",
+                                "Anklet of the Wind",
+                                "Cloud in a Bottle",
+                                "Flipper",
+                                "Hermes Boots",
+                                "Lucky Horseshoe",
+                                "Rocket Boots",
+                                "Shiny Red Balloon",
+                                "Aglet",
+                                "Band of Regeneration",
+                                "Band of Starpower",
+                                "Nature's Gift",
+                                "Breathing Reed",
+                                "Empty Bucket",
+
+                                "Copper Watch",
+                                "Silver Watch",
+                                "Gold Watch",
+                                "Depth Meter",
+
+                                "Orb of Light",
+                                "Guide Voodoo Doll",
+                                "Whoopie Cushion",
+
+                                "Mining Helmet",
+
+                                #endregion
+
+                                #region Vanity Items
+
+                                "Goggles",
+                                "Sunglasses",
+                                "Jungle Rose",
+                                "Fish Bowl",
+                                "Mime Mask",
+                                "Bunny Hood",
+                                "Red Hat",
+                                "Robot Hat",
+                                "Summer Hat",
+                                "Gold Crown",
+
+                                "Robe",
+
+                                "Archaeologist's Hat",
+                                "Archaeologist's Jacket",
+                                "Archaeologist's Pants",
+
+                                "Plumber's Hat",
+                                "Plumber's Shirt",
+                                "Plumber's Pants",
+
+                                "Top Hat",
+                                "Tuxedo Shirt",
+                                "Tuxedo Pants",
+
+                                "Familiar Wig",
+                                "Familiar Shirt",
+                                "Familiar Pants",
+
+                                "The Doctor's Shirt",
+                                "The Doctor's Pants",
+
+                                "Ninja Hood",
+                                "Ninja Shirt",
+                                "Ninja Pants",
+
+                                "Hero's Hat",
+                                "Hero's Shirt",
+                                "Hero's Pants",
+
+                                #endregion
+
+                                #region Unknown
+
+                                "Shadow Key",
+                                "Goblin Battle Standard",
+                                "Suspicious Looking Eye",
+                                "Worm Food"
+
+                                #endregion
+                                });
+
+                                #endregion
+
+                                if (allowStacking)
+                                {
+                                    it.stack = 255;
+                                }
+                                else
+                                {
+                                    if (usItems.Contains(it.name))
+                                    {
+                                        it.stack = 1;
+                                    }
+                                    else
+                                    {
+                                        it.stack = 255;
+                                    }
+                                }
+
                                 if (itemHax)
                                 {
                                     it.autoReuse = true;
@@ -1849,18 +2092,19 @@ namespace Buildaria
                 i[4].SetDefaults("Wooden Chair");
                 i[5].SetDefaults("Wooden Table");
                 i[6].SetDefaults("Work Bench");
-                i[7].SetDefaults("Iron Anvil");
-                i[8].SetDefaults("Furnace");
-                i[9].SetDefaults("Hellforge");
+                i[7].SetDefaults("Sawmill");
+                i[8].SetDefaults("Iron Anvil");
+                i[9].SetDefaults("Furnace");
+
 
                 // Row 2
-                i[11].SetDefaults("Keg");
-                i[12].SetDefaults("Cooking Pot");
-                i[13].SetDefaults("Loom");
-                i[14].SetDefaults("Bed");
-                i[15].SetDefaults("Sign");
-                i[16].SetDefaults("Tombstone");
-                i[17].SetDefaults("Pink Vase");
+                i[11].SetDefaults("Hellforge");
+                i[12].SetDefaults("Keg");
+                i[13].SetDefaults("Cooking Pot");
+                i[14].SetDefaults("Loom");
+                i[15].SetDefaults("Bed");
+                i[16].SetDefaults("Sign");
+                i[17].SetDefaults("Tombstone");
                 i[18].SetDefaults("Book");
                 i[19].SetDefaults("Bookcase");
 
@@ -1873,15 +2117,16 @@ namespace Buildaria
                 i[25].SetDefaults("Grandfather Clock");
                 i[26].SetDefaults("Dresser");
                 i[27].SetDefaults("Throne");
-                i[28].SetDefaults("Bowl");
-                i[29].SetDefaults("Coral");
+                i[28].SetDefaults("Pink Vase");
+                i[29].SetDefaults("Bowl");
 
                 // Row 4
-                i[30].SetDefaults("Spike");
-                i[32].SetDefaults("Red Banner");
-                i[33].SetDefaults("Green Banner");
-                i[34].SetDefaults("Blue Banner");
-                i[35].SetDefaults("Yellow Banner");
+                i[30].SetDefaults("Coral");
+                i[31].SetDefaults("Spike");
+                i[33].SetDefaults("Red Banner");
+                i[34].SetDefaults("Green Banner");
+                i[35].SetDefaults("Blue Banner");
+                i[36].SetDefaults("Yellow Banner");
 
                 // Equipment
                 i[44].SetDefaults("Mining Helmet");
