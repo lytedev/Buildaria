@@ -420,6 +420,26 @@ namespace Buildaria
                 // Set to true if the user may not want certain functions to be happening
                 try
                 {
+                    #region Allow Stuff Detection
+
+                    // Detect if mouse is on a hotbar or inventory is open
+                    for (int i = 0; i < 11; i++)
+                    {
+                        int x = (int)(20f + ((i * 0x38) * inventoryScale));
+                        int y = (int)(20f + ((0 * 0x38) * inventoryScale));
+                        int index = x;
+                        if (((mouseState.X >= x) && (mouseState.X <= (x + (inventoryBackTexture.Width * inventoryScale)))) && ((mouseState.Y >= y) && (mouseState.Y <= (y + (inventoryBackTexture.Height * inventoryScale) + 2))))
+                        {
+                            i = 11;
+                            allowStuff = false;
+                            break;
+                        }
+                    }
+                    if (playerInventory || !buildMode || editSign) // Inventory is open
+                        allowStuff = false;
+
+                    #endregion
+
                     #region Place Anywhere
 
                     if (mouseState.LeftButton == ButtonState.Pressed && player[myPlayer].inventory[player[myPlayer].selectedItem].createTile >= 0 && itemHax && allowStuff)
@@ -482,26 +502,6 @@ namespace Buildaria
                             LoadInventory(inventoryType + 1);
                         }
                     }
-
-                    #endregion
-
-                    #region Allow Stuff Detection
-
-                    // Detect if mouse is on a hotbar or inventory is open
-                    for (int i = 0; i < 11; i++)
-                    {
-                        int x = (int)(20f + ((i * 0x38) * inventoryScale));
-                        int y = (int)(20f + ((0 * 0x38) * inventoryScale));
-                        int index = x;
-                        if (((mouseState.X >= x) && (mouseState.X <= (x + (inventoryBackTexture.Width * inventoryScale)))) && ((mouseState.Y >= y) && (mouseState.Y <= (y + (inventoryBackTexture.Height * inventoryScale) + 2))))
-                        {
-                            i = 11;
-                            allowStuff = false;
-                            break;
-                        }
-                    }
-                    if (playerInventory || !buildMode || editSign) // Inventory is open
-                        allowStuff = false;
 
                     #endregion
 
