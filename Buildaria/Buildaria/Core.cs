@@ -320,6 +320,8 @@ namespace Buildaria
                                 "Nature's Gift",
                                 "Breathing Reed",
                                 "Empty Bucket",
+                                "Water Bucket",
+                                "Lava Bucket",
 
                                 "Copper Watch",
                                 "Silver Watch",
