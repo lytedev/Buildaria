@@ -2123,12 +2123,13 @@ namespace Buildaria
                 i[29].SetDefaults("Bowl");
 
                 // Row 4
-                i[30].SetDefaults("Coral");
-                i[31].SetDefaults("Spike");
-                i[33].SetDefaults("Red Banner");
-                i[34].SetDefaults("Green Banner");
-                i[35].SetDefaults("Blue Banner");
-                i[36].SetDefaults("Yellow Banner");
+                i[30].SetDefaults("Mug");
+                i[31].SetDefaults("Coral");
+                i[32].SetDefaults("Spike");
+                i[36].SetDefaults("Red Banner");
+                i[37].SetDefaults("Green Banner");
+                i[38].SetDefaults("Blue Banner");
+                i[39].SetDefaults("Yellow Banner");
 
                 // Equipment
                 i[44].SetDefaults("Mining Helmet");
