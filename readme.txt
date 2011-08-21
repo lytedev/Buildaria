@@ -68,7 +68,7 @@ Features:
 	- Inventories now include nearly every item! (Thanks to: septor)
 	- Inventories are now loaded and saved to and from an XML file, allowing you to add, remove, and
 		customize your own inventories. 
-	- Output appears in chat area, letting you know what's going on... most of the time. 
+	- Output appears in chat area, letting you know what's going on... most of the time. (can be toggled off in-game)
 	- NEW: Item drops are now toggle-able. In lieu of the trash slot, I decided this was better. 'M'
 		is the key. 
 
@@ -96,9 +96,10 @@ Controls:
 	T - Toggles item speeds. 
 	G - Toggles god mode.
 	C - Toggles NPC spawning
-	P - Toggles between ghost mode. Hold Shift while in flight mode to go extra fast. Noclip! 
+	P - Toggles between ghost mode. Noclip! Hold Shift while in flight mode to go extra fast. Hold Shift+Alt to go super extra fast! 
 	N - Toggles day/night time. 
-	M - Toggles item drops. 
+	M - Toggles item drops.
+	K - Toggles output chat messages.
 
 	[] (Bracket Keys) - Switch inventories. 
 

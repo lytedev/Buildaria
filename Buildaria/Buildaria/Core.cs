@@ -87,6 +87,7 @@ namespace Buildaria
         bool hover = false;
         bool buildMode = true;
         bool itemsEnabled = false;
+        bool displayMessages = true;
 
         #endregion
 
@@ -509,7 +510,10 @@ namespace Buildaria
             {
                 npcsEnabled = !npcsEnabled;
 
-                Main.NewText("NPCs = " + npcsEnabled, 255, 255, 255);
+                if (displayMessages)
+                {
+                    Main.NewText("NPCs = " + npcsEnabled, 255, 255, 255);
+                }
             }
 
             if (!npcsEnabled)
@@ -532,7 +536,10 @@ namespace Buildaria
             {
                 itemsEnabled = !itemsEnabled;
 
-                Main.NewText("Item Drops = " + itemsEnabled, 255, 255, 255);
+                if (displayMessages)
+                {
+                    Main.NewText("Item Drops = " + itemsEnabled, 255, 255, 255);
+                }
             }
 
             if (!itemsEnabled)
@@ -554,8 +561,12 @@ namespace Buildaria
                 {
                     itemHax = !itemHax;
 
-                    Main.NewText("ItemHax = " + itemHax, 255, 255, 255);
+                    if (displayMessages)
+                    {
+                        Main.NewText("ItemHax = " + itemHax, 255, 255, 255);
+                    }
                 }
+
             }
 
             if (menuMode != oldMenuMode)
@@ -576,6 +587,17 @@ namespace Buildaria
                 bool shift = keyState.IsKeyDown(Keys.LeftShift) || keyState.IsKeyDown(Keys.RightShift);
                 bool alt = keyState.IsKeyDown(Keys.LeftAlt) || keyState.IsKeyDown(Keys.RightAlt);
                 bool ctrl = keyState.IsKeyDown(Keys.LeftControl) || keyState.IsKeyDown(Keys.RightControl);
+
+                #endregion
+
+                #region Display Chat Messages
+
+                if (keyState.IsKeyDown(Keys.K) && oldKeyState.IsKeyUp(Keys.K))
+                {
+                    displayMessages = !displayMessages;
+
+                    Main.NewText("DisplayMessages = " + displayMessages, 255, 255, 255);
+                }
 
                 #endregion
 
@@ -631,7 +653,10 @@ namespace Buildaria
                     player[myPlayer].immune = true;
                     player[myPlayer].immuneTime = 1000;
 
-                    Main.NewText("NoClip = " + hover, 255, 255, 255);
+                    if (displayMessages)
+                    {
+                        Main.NewText("NoClip = " + hover, 255, 255, 255);
+                    }
                 }
 
                 #endregion
@@ -642,7 +667,10 @@ namespace Buildaria
                 {
                     b_godMode = !b_godMode;
 
-                    Main.NewText("God Mode = " + b_godMode, 255, 255, 255);
+                    if (displayMessages)
+                    {
+                        Main.NewText("God Mode = " + b_godMode, 255, 255, 255);
+                    }
                 }
 
                 if (b_godMode)
@@ -661,6 +689,24 @@ namespace Buildaria
                 else
                 {
 
+                }
+
+                #endregion
+
+                #region Set Default Spawn Location
+
+                if (ctrl && keyState.IsKeyDown(Keys.S) && oldKeyState.IsKeyUp(Keys.S) && !editSign)
+                {
+                    int x = (int)((Main.mouseState.X + Main.screenPosition.X) / 16f);
+                    int y = (int)((Main.mouseState.Y + Main.screenPosition.Y) / 16f);
+
+                    Main.spawnTileX = x;
+                    Main.spawnTileY = y;
+
+                    if (displayMessages)
+                    {
+                        Main.NewText("Spawn Location Set", 255, 255, 255);
+                    }
                 }
 
                 #endregion
@@ -750,21 +796,6 @@ namespace Buildaria
                             }*/
                             LoadInventory(inventoryType + 1);
                         }
-                    }
-
-                    #endregion
-
-                    #region Set Default Spawn Location
-
-                    if (ctrl && keyState.IsKeyDown(Keys.S) && oldKeyState.IsKeyUp(Keys.S) && !editSign)
-                    {
-                        int x = (int)((Main.mouseState.X + Main.screenPosition.X) / 16f);
-                        int y = (int)((Main.mouseState.Y + Main.screenPosition.Y) / 16f);
-
-                        Main.spawnTileX = x;
-                        Main.spawnTileY = y;
-
-                        Main.NewText("Spawn Location Set", 255, 255, 255);
                     }
 
                     #endregion
@@ -895,11 +926,18 @@ namespace Buildaria
                             if (dayTime)
                             {
                                 time = dayLength + 1;
-                                Main.NewText("Skipped to Dusk", 255, 255, 255);
+
+                                if (displayMessages)
+                                {
+                                    Main.NewText("Skipped to Dusk", 255, 255, 255);
+                                }
                             }
                             else
                             {
-                                Main.NewText("Skipped to Dawn", 255, 255, 255);
+                                if (displayMessages)
+                                {
+                                    Main.NewText("Skipped to Dawn", 255, 255, 255);
+                                }
                                 time = nightLength;
                             }
                         }
@@ -937,7 +975,10 @@ namespace Buildaria
                                 }
                             }
 
-                            Main.NewText("Copied Selection", 255, 255, 255);
+                            if (displayMessages)
+                            {
+                                Main.NewText("Copied Selection", 255, 255, 255);
+                            }
                         }
 
                         if (ctrl && keyState.IsKeyDown(Keys.V) && oldKeyState.IsKeyUp(Keys.V) && !editSign)
@@ -995,7 +1036,10 @@ namespace Buildaria
                                 }
                             }
 
-                            Main.NewText("Pasted Selection", 255, 255, 255);
+                            if (displayMessages)
+                            {
+                                Main.NewText("Pasted Selection", 255, 255, 255);
+                            }
                         }
 
                         #endregion
@@ -1044,7 +1088,7 @@ namespace Buildaria
                                 }
                             }
 
-                            if (sel1 != -Vector2.One && sel2 != -Vector2.One)
+                            if (sel1 != -Vector2.One && sel2 != -Vector2.One && displayMessages)
                                 Main.NewText("Cleared Selection of Blocks", 255, 255, 255);
                         }
                         else if (mouseState.RightButton == ButtonState.Pressed && oldMouseState.RightButton == ButtonState.Released && player[myPlayer].inventory[player[myPlayer].selectedItem].hammer >= 55)
@@ -1086,7 +1130,10 @@ namespace Buildaria
                                 }
                             }
 
-                            Main.NewText("Cleared Selection of Walls", 255, 255, 255);
+                            if (displayMessages)
+                            {
+                                Main.NewText("Cleared Selection of Walls", 255, 255, 255);
+                            }
                         }
 
                         #endregion
@@ -1129,7 +1176,10 @@ namespace Buildaria
                                 }
                             }
 
-                            Main.NewText("Filled Selection with Lava", 255, 255, 255);
+                            if (displayMessages)
+                            {
+                                Main.NewText("Filled Selection with Lava", 255, 255, 255);
+                            }
                         }
                         else if (mouseState.RightButton == ButtonState.Pressed && oldMouseState.RightButton == ButtonState.Released && player[myPlayer].inventory[player[myPlayer].selectedItem].type == 0xce)
                         {
@@ -1167,7 +1217,10 @@ namespace Buildaria
                                 }
                             }
 
-                            Main.NewText("Filled Selection with Water", 255, 255, 255);
+                            if (displayMessages)
+                            {
+                                Main.NewText("Filled Selection with Water", 255, 255, 255);
+                            }
                         }
                         else if (mouseState.RightButton == ButtonState.Pressed && oldMouseState.RightButton == ButtonState.Released && player[myPlayer].inventory[player[myPlayer].selectedItem].type == 0xcd)
                         {
@@ -1205,7 +1258,10 @@ namespace Buildaria
                                 }
                             }
 
-                            Main.NewText("Drained Selection of Liquid", 255, 255, 255);
+                            if (displayMessages)
+                            {
+                                Main.NewText("Drained Selection of Liquid", 255, 255, 255);
+                            }
                         }
 
                         #endregion
@@ -1250,7 +1306,10 @@ namespace Buildaria
                                 }
                             }
 
-                            Main.NewText("Filled Selection with Block " + player[myPlayer].inventory[player[myPlayer].selectedItem].createTile, 255, 255, 255);
+                            if (displayMessages)
+                            {
+                                Main.NewText("Filled Selection with Block " + player[myPlayer].inventory[player[myPlayer].selectedItem].createTile, 255, 255, 255);
+                            }
                         }
                         else if (mouseState.RightButton == ButtonState.Pressed && oldMouseState.RightButton == ButtonState.Released && player[myPlayer].inventory[player[myPlayer].selectedItem].createWall >= 0)
                         {
@@ -1293,7 +1352,10 @@ namespace Buildaria
                                 }
                             }
 
-                            Main.NewText("Filled Selection with Wall " + player[myPlayer].inventory[player[myPlayer].selectedItem].createWall, 255, 255, 255);
+                            if (displayMessages)
+                            {
+                                Main.NewText("Filled Selection with Wall " + player[myPlayer].inventory[player[myPlayer].selectedItem].createWall, 255, 255, 255);
+                            }
                         }
 
                         #endregion
@@ -1325,7 +1387,10 @@ namespace Buildaria
                                 }
                             }
 
-                            Main.NewText("Undo Complete", 255, 255, 255);
+                            if (displayMessages)
+                            {
+                                Main.NewText("Undo Complete", 255, 255, 255);
+                            }
                         }
 
                         #endregion
@@ -2400,7 +2465,10 @@ namespace Buildaria
             npcsEnabled = inv.NPCs;
             itemsEnabled = inv.ItemDrops;
 
-            Main.NewText("Loaded Inventory " + id + " (" + inv.Name + ")", 255, 255, 255);
+            if (displayMessages)
+            {
+                Main.NewText("Loaded Inventory " + id + " (" + inv.Name + ")", 255, 255, 255);
+            }
 
             return inventoryType = id;
         }
@@ -2438,7 +2506,10 @@ namespace Buildaria
             inv.NPCs = npcsEnabled;
             inv.ItemDrops = itemsEnabled;
 
-            Main.NewText("Saved Inventory " + id + " (" + inv.Name + ")", 255, 255, 255);
+            if (displayMessages)
+            {
+                Main.NewText("Saved Inventory " + id + " (" + inv.Name + ")", 255, 255, 255);
+            }
 
             return inventoryType = id;
         }
