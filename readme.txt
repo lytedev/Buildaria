@@ -82,6 +82,8 @@ Controls:
 		Also, super-speed when in ghost mode. Also causes Paste to paste backwards, or flipped 
 		horizontally. 
 
+	Alt-Shift - Double-super-speed when in ghost mode.
+
 	Ctrl-C - Copy the currently selected tiles.
 	Ctrl-V - Paste your current copy to the selected position. 
 	Ctrl-Z - Undo the last selection-based modification. 
@@ -89,7 +91,7 @@ Controls:
 	Ctrl-Shift-S - Save Inventories to file.
 	Ctrl-Shift-O - Load Inventories from file.
 	
-	Ctrl-A - Set the currently moused-over area as the default spawn location.
+	Ctrl-S - Set the currently moused-over area as the default spawn location.
 
 	T - Toggles item speeds. 
 	G - Toggles god mode.

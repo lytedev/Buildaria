@@ -602,6 +602,10 @@ namespace Buildaria
                     {
                         magnitude *= 4;
                     }
+                    if (alt && shift)
+                    {
+                        magnitude *= 8;
+                    }
                     if (player[myPlayer].controlUp || player[myPlayer].controlJump)
                     {
                         player[myPlayer].position = new Vector2(player[myPlayer].position.X, player[myPlayer].position.Y - magnitude);
@@ -752,7 +756,7 @@ namespace Buildaria
 
                     #region Set Default Spawn Location
 
-                    if (ctrl && keyState.IsKeyDown(Keys.A) && oldKeyState.IsKeyUp(Keys.A) && !editSign)
+                    if (ctrl && keyState.IsKeyDown(Keys.S) && oldKeyState.IsKeyUp(Keys.S) && !editSign)
                     {
                         int x = (int)((Main.mouseState.X + Main.screenPosition.X) / 16f);
                         int y = (int)((Main.mouseState.Y + Main.screenPosition.Y) / 16f);
