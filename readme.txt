@@ -87,7 +87,9 @@ Controls:
 	Ctrl-Z - Undo the last selection-based modification. 
 
 	Ctrl-Shift-S - Save Inventories to file.
-	Ctrl-Shift-O - Load Inventories from file. 
+	Ctrl-Shift-O - Load Inventories from file.
+	
+	Ctrl-A - Set the currently moused-over area as the default spawn location.
 
 	T - Toggles item speeds. 
 	G - Toggles god mode.
