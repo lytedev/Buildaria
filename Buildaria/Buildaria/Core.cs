@@ -1311,6 +1311,21 @@ namespace Buildaria
 
                         #endregion
 
+                        #region Set Spawn
+
+                        if (ctrl && keyState.IsKeyDown(Keys.A) && oldKeyState.IsKeyUp(Keys.A) && !editSign)
+                        {
+                            int x = (int)((Main.mouseState.X + Main.screenPosition.X) / 16f);
+                            int y = (int)((Main.mouseState.Y + Main.screenPosition.Y) / 16f);
+
+                            Main.spawnTileX = x;
+                            Main.spawnTileY = y;
+
+                            Main.NewText("Spawn Location Set", 255, 255, 255);
+                        }
+
+                        #endregion
+
                         #endregion
                     }
                 }
