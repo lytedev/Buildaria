@@ -1,23 +1,17 @@
 #region .NET References
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Reflection;
-using System.Diagnostics;
 using System.IO;
 
-#endregion 
+#endregion
 
 #region XNA References
 
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
+
 
 #endregion
 
@@ -69,11 +63,6 @@ namespace Buildaria
 
         #endregion
 
-        #region buildMode
-
-
-        #endregion
-
         #region Various Private Fields
 
         int inventoryType = 0;
@@ -82,7 +71,7 @@ namespace Buildaria
         KeyboardState oldKeyState = Keyboard.GetState();
 
         bool itemHax = true;
-        bool b_godMode = true; // I just put the suffix there since my 1.0.6 test version has an existing "godMode"
+        bool godMode = true;
         bool npcsEnabled = false;
         bool hover = false;
         bool buildMode = true;
@@ -122,8 +111,8 @@ namespace Buildaria
             DefaultTexture = t;
             TileSize = new Vector2(16, 16);
 
-            Window.Title = "Buildaria " + VersionString + "";
-            Main.versionNumber = "Running on Terraria " + Main.versionNumber + " =)";
+            Window.Title = "Buildaria v" + VersionString;
+            Main.versionNumber = Window.Title + " on Terraria " + Main.versionNumber;
 
             SelectionOverlay = new Color(255, 100, 0, 50);
 
@@ -137,9 +126,9 @@ namespace Buildaria
 
         protected override void Update(GameTime gameTime)
         {
-            #region buildMode + Item Hax
+            #region buildMode
 
-            if (buildMode && itemHax)
+            if (buildMode)
             {
                 try
                 {
@@ -161,266 +150,94 @@ namespace Buildaria
                         }
                         else if (it.name != "Magic Mirror") // Prevent Magic Mirror being hax'd, which prevents it from working.
                         {
-                            it.SetDefaults(it.type);
                             if (it.name != "")
                             {
-                                #region Unstackable Items
+                                it.stack = 255;
 
-                                // The 1.0.6 patch added in right-click to equip functionaility that has killed unstacking
-                                // normally non-stackable items. Since it is pointless to stack the below items at all, let's not.
-
-                                // You can allow the stacking of normally non-stackable items by setting the below boolean to true.
-                                bool allowStacking = false;
-
-                                ArrayList usItems = new ArrayList(new string[] {
-                                #region Armor
-
-                                "Copper Helmet",
-                                "Iron Helmet",
-                                "Silver Helmet",
-                                "Gold Helmet",
-                                "Meteor Helmet",
-                                "Shadow Helmet",
-                                "Necro Helmet",
-                                "Jungle Hat",
-                                "Molten Helmet",
-
-                                "Copper Chainmail",
-                                "Iron Chainmail",
-                                "Silver Chainmail",
-                                "Gold Chainmail",
-                                "Meteor Suit",
-                                "Shadow Scalemail",
-                                "Necro Breastplate",
-                                "Jungle Shirt",
-                                "Molten Breastplate",
-
-                                "Copper Greaves",
-                                "Iron Greaves",
-                                "Silver Greaves",
-                                "Gold Greaves",
-                                "Meteor Leggings",
-                                "Shadow Greaves",
-                                "Necro Greaves",
-                                "Jungle Pants",
-                                "Molten Greaves",
-
-                                #endregion
-
-                                #region Weapons & Tools
-
-                                "Blowpipe",
-                                "Flintlock Pistol",
-                                "Musket",
-                                "Handgun",
-                                "Minishark",
-                                "Space Gun",
-                                "Phoenix Blaster",
-                                "Sandgun",
-                                "Star Cannon",
-
-                                "Wooden Boomerang",
-                                "Enchanted Boomerang",
-                                "Thorn Chakram",
-                                "Flamarang",
-
-                                "Wooden Bow",
-                                "Copper Bow",
-                                "Iron Bow",
-                                "Silver Bow",
-                                "Gold Bow",
-                                "Demon Bow",
-                                "Molten Fury",
-
-                                "Flower of Fire",
-                                "Vilethorn",
-                                "Magic Missile",
-                                "Flamelash",
-                                "Water Bolt",
-                                "Demon Scythe",
-                                "Aqua Scepter",
-
-                                "Harpoon",
-                                "Ball O' Hurt",
-                                "Blue Moon",
-                                "Sunfury",
-
-                                "Spear",
-                                "Trident",
-                                "Dark Lance",
-
-                                "Night's Edge",
-                                "Light's Bane",
-                                "Starfury",
-                                "Staff of Regrowth",
-                                "The Breaker",
-                                "War Axe of the Night",
-
-                                "Wooden Sword",
-                                "Copper Shortsword",
-                                "Copper Broadsword",
-                                "Iron Shortsword",
-                                "Iron Broadsword",
-                                "Silver Shortsword",
-                                "Silver Broadsword",
-                                "Gold Shortsword",
-                                "Gold Broadsword",
-                                "Muramasa",
-                                "Blade of Grass",
-                                "Fiery Greatsword",
-                                "White Phaseblade",
-                                "Blue Phaseblade",
-                                "Red Phaseblade",
-                                "Purple Phaseblade",
-                                "Green Phaseblade",
-                                "Yellow Phaseblade",
-
-                                "Copper Pickaxe",
-                                "Iron Pickaxe",
-                                "Silver Pickaxe",
-                                "Gold Pickaxe",
-                                "Nightmare Pickaxe",
-                                "Molten Pickaxe",
-
-                                "Copper Axe",
-                                "Iron Axe",
-                                "Silver Axe",
-                                "Gold Axe",
-
-                                "Wooden Hammer",
-                                "Copper Hammer",
-                                "Iron Hammer",
-                                "Silver Hammer",
-                                "Gold Hammer",
-
-                                "Meteor Hamaxe",
-                                "Molten Hamaxe",
-
-                                "Dirt Rod",
-                                "Grappling Hook",
-                                "Ivy Whip",
-
-                                #endregion
-
-                                #region Accessories & Other
-
-                                "Cobalt Shield",
-                                "Feral Claws",
-                                "Obsidian Skull",
-                                "Shackle",
-                                "Anklet of the Wind",
-                                "Cloud in a Bottle",
-                                "Flipper",
-                                "Hermes Boots",
-                                "Lucky Horseshoe",
-                                "Rocket Boots",
-                                "Shiny Red Balloon",
-                                "Aglet",
-                                "Band of Regeneration",
-                                "Band of Starpower",
-                                "Nature's Gift",
-                                "Breathing Reed",
-                                "Empty Bucket",
-                                "Water Bucket",
-                                "Lava Bucket",
-
-                                "Copper Watch",
-                                "Silver Watch",
-                                "Gold Watch",
-                                "Depth Meter",
-
-                                "Orb of Light",
-                                "Guide Voodoo Doll",
-                                "Whoopie Cushion",
-
-                                "Mining Helmet",
-
-                                #endregion
-
-                                #region Vanity Items
-
-                                "Goggles",
-                                "Sunglasses",
-                                "Jungle Rose",
-                                "Fish Bowl",
-                                "Mime Mask",
-                                "Bunny Hood",
-                                "Red Hat",
-                                "Robot Hat",
-                                "Summer Hat",
-                                "Gold Crown",
-
-                                "Robe",
-
-                                "Archaeologist's Hat",
-                                "Archaeologist's Jacket",
-                                "Archaeologist's Pants",
-
-                                "Plumber's Hat",
-                                "Plumber's Shirt",
-                                "Plumber's Pants",
-
-                                "Top Hat",
-                                "Tuxedo Shirt",
-                                "Tuxedo Pants",
-
-                                "Familiar Wig",
-                                "Familiar Shirt",
-                                "Familiar Pants",
-
-                                "The Doctor's Shirt",
-                                "The Doctor's Pants",
-
-                                "Ninja Hood",
-                                "Ninja Shirt",
-                                "Ninja Pants",
-
-                                "Hero's Hat",
-                                "Hero's Shirt",
-                                "Hero's Pants",
-
-                                #endregion
-
-                                #region Unknown
-
-                                "Shadow Key",
-                                "Goblin Battle Standard",
-                                "Suspicious Looking Eye",
-                                "Worm Food"
-
-                                #endregion
-                                });
-
-                                #endregion
-
-                                if (allowStacking)
+                                // Unstacking of unstackable items was removed with the 1.0.6 Terraria update. This is a work around. (thanks scaryguy334)
+                                if (it.maxStack == 1)
                                 {
-                                    it.stack = 255;
+                                    it.maxStack = 255;
                                 }
-                                else
+
+                                #region Placeable Gems!
+
+                                int[] cuitems;
+                                string[] cuitname;
+
+                                cuitems = new int[6] { 63, 64, 65, 66, 67, 68 };
+                                cuitname = new string[6]    
                                 {
-                                    if (usItems.Contains(it.name))
+                                    "Sapphire",
+                                    "Ruby",
+                                    "Emerald",
+                                    "Topaz",
+                                    "Amethyst",
+                                    "Diamond",
+                                };
+                                for (int j = 0; j < cuitname.Length; j++)
+                                {
+                                    if (cuitname[j] == it.name)
                                     {
-                                        it.stack = 1;
+                                        it.useTime = 0;
+                                        it.createTile = cuitems[j];
                                     }
-                                    else
-                                    {
-                                        it.stack = 255;
-                                    }
+
                                 }
+
+                                #endregion
+
+                                #region itemHax
 
                                 if (itemHax)
                                 {
                                     it.autoReuse = true;
                                     it.useTime = 0;
+
+                                    if (it.hammer > 0 || it.axe > 0)
+                                    {
+                                        it.hammer = 100;
+                                        it.axe = 100;
+                                    }
+                                    if (it.pick > 0)
+                                    {
+                                        it.pick = 100;
+                                    }
                                 }
-                                if (it.hammer > 0 || it.axe > 0)
+                                else
                                 {
-                                    it.hammer = 100;
-                                    it.axe = 100;
+                                    // Values equal to a Molten Hamaxe
+                                    if (it.hammer > 0 || it.axe > 0)
+                                    {
+                                        it.hammer = 70;
+                                        it.axe = 150;
+                                        it.useTime = 14;
+                                    }
+                                    // Values are between a Nightmare Pickaxe and a Molten Pickaxe, favoring each items strong points.
+                                    if (it.pick > 0)
+                                    {
+                                        it.pick = 90;
+                                        it.useTime = 12;
+                                    }
+
+                                    // Slow down, Spider Man.
+                                    if (it.name == "Ivy Whip")
+                                    {
+                                        it.autoReuse = false;
+                                        it.useTime = 20;
+                                        it.shoot = 32;
+                                        it.shootSpeed = 13;
+                                    }
+                                    if (it.name == "Grappling Hook")
+                                    {
+                                        it.autoReuse = false;
+                                        it.useTime = 20;
+                                        it.shoot = 13;
+                                        it.shootSpeed = 11;
+                                    }
                                 }
-                                if (it.pick > 0)
-                                    it.pick = 100;
+
+                                #endregion
                             }
                         }
                         else
@@ -592,7 +409,7 @@ namespace Buildaria
 
                 #region Display Chat Messages
 
-                if (keyState.IsKeyDown(Keys.K) && oldKeyState.IsKeyUp(Keys.K))
+                if (keyState.IsKeyDown(Keys.K) && oldKeyState.IsKeyUp(Keys.K) && !editSign)
                 {
                     displayMessages = !displayMessages;
 
@@ -665,15 +482,15 @@ namespace Buildaria
 
                 if (keyState.IsKeyDown(Keys.G) && oldKeyState.IsKeyUp(Keys.G) && !editSign)
                 {
-                    b_godMode = !b_godMode;
+                    godMode = !godMode;
 
                     if (displayMessages)
                     {
-                        Main.NewText("God Mode = " + b_godMode, 255, 255, 255);
+                        Main.NewText("God Mode = " + godMode, 255, 255, 255);
                     }
                 }
 
-                if (b_godMode)
+                if (godMode)
                 {
                     player[myPlayer].accWatch = 3;
                     player[myPlayer].accDepthMeter = 3;
@@ -688,14 +505,14 @@ namespace Buildaria
                 }
                 else
                 {
-
+                    player[myPlayer].respawnTimer = 1;
                 }
 
                 #endregion
 
                 #region Set Default Spawn Location
 
-                if (ctrl && keyState.IsKeyDown(Keys.S) && oldKeyState.IsKeyUp(Keys.S) && !editSign)
+                if (keyState.IsKeyDown(Keys.L) && oldKeyState.IsKeyUp(Keys.L) && !editSign)
                 {
                     int x = (int)((Main.mouseState.X + Main.screenPosition.X) / 16f);
                     int y = (int)((Main.mouseState.Y + Main.screenPosition.Y) / 16f);
@@ -737,7 +554,7 @@ namespace Buildaria
 
                     #region Place Anywhere
 
-                    if (mouseState.LeftButton == ButtonState.Pressed && player[myPlayer].inventory[player[myPlayer].selectedItem].createTile >= 0 && itemHax && allowStuff)
+                    if (mouseState.LeftButton == ButtonState.Pressed && player[myPlayer].inventory[player[myPlayer].selectedItem].createTile >= 0 && allowStuff)
                     {
                         int x = (int)((Main.mouseState.X + Main.screenPosition.X) / 16f);
                         int y = (int)((Main.mouseState.Y + Main.screenPosition.Y) / 16f);
@@ -753,7 +570,7 @@ namespace Buildaria
                             SquareWallFrame(x, y, true);
                         }
                     }
-                    else if (mouseState.LeftButton == ButtonState.Pressed && player[myPlayer].inventory[player[myPlayer].selectedItem].createWall >= 0 && itemHax && allowStuff)
+                    else if (mouseState.LeftButton == ButtonState.Pressed && player[myPlayer].inventory[player[myPlayer].selectedItem].createWall >= 0 && allowStuff)
                     {
                         int x = (int)((Main.mouseState.X + Main.screenPosition.X) / 16f);
                         int y = (int)((Main.mouseState.Y + Main.screenPosition.Y) / 16f);
@@ -778,9 +595,15 @@ namespace Buildaria
 
                     if (!editSign)
                     {
+                        // Toggle this to true if you wish for inventories to be saved everytime you switch them.
+                        bool saveInventoriesOnSwitch = false;
+
                         if (keyState.IsKeyDown(Keys.OemOpenBrackets) && !oldKeyState.IsKeyDown(Keys.OemOpenBrackets) && !editSign)
                         {
-                            SaveInventory(inventoryType);
+                            if (saveInventoriesOnSwitch)
+                            {
+                                SaveInventory(inventoryType);
+                            }
                             /*for (int i = 0; i < Inventories[inventoryType].Length; i++)
                             {
                                 player[myPlayer].inventory[i].SetDefaults(Inventories[inventoryType][i].type);
@@ -789,7 +612,10 @@ namespace Buildaria
                         }
                         if (keyState.IsKeyDown(Keys.OemCloseBrackets) && !oldKeyState.IsKeyDown(Keys.OemCloseBrackets) && !editSign)
                         {
-                            SaveInventory(inventoryType);
+                            if (saveInventoriesOnSwitch)
+                            {
+                                SaveInventory(inventoryType);
+                            }
                             /*for (int i = 0; i < Inventories[inventoryType].Length; i++)
                             {
                                 player[myPlayer].inventory[i].SetDefaults(Inventories[inventoryType][i].type);
@@ -2460,7 +2286,7 @@ namespace Buildaria
             }
 
             buildMode = inv.BuildMode;
-            b_godMode = inv.GodMode;
+            godMode = inv.GodMode;
             itemHax = inv.ItemHax;
             npcsEnabled = inv.NPCs;
             itemsEnabled = inv.ItemDrops;
@@ -2501,7 +2327,7 @@ namespace Buildaria
             }
 
             inv.BuildMode = buildMode;
-            inv.GodMode = b_godMode;
+            inv.GodMode = godMode;
             inv.ItemHax = itemHax;
             inv.NPCs = npcsEnabled;
             inv.ItemDrops = itemsEnabled;

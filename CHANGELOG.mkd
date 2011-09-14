@@ -1,0 +1,22 @@
+Buildaria’s changelog
+===================
+
+1.7 (September 14th, 2011)
+-------------------------------------------------
+* The ability to toggle the information messages has been added (default key: `K`).
+* The ability to set the default spawn location has been added (default key: `L`).
+* No more itemHax countdown of doom.
+* Hammers, pickaxes, and grapple items are now defaulted when itemHax is off.
+* Double super speed has been added. Pressing `Shift + Alt` now moves you four times as fast while in ghost mode.
+* Inventories are no longer saved when you switch them. You need to manually save them (default key: `Ctrl + Shift + S`).
+* Gems are now placeable.
+* Placing blocks or items while the inventory is open is no longer possible.
+* Swords, axes, hammers, and bows are no longer converted to Iron (unless they should be Iron) (thanks scaryguy334).
+* Added Sawmill, Mug, Banners, and Spike to the inventories.
+* Many other items now display correctly due to their names being fixed.
+* You can once again unstack previously unstackable items (thanks scaryguy334).
+* If you toggle god mode off and you die the respawn timer is now 1 second.
+
+1.6.1 (August 11th, 2011)
+-------------------------------------------------
+* Last release by wraithx2. Changes undocumented (or too much work to retrieve).
