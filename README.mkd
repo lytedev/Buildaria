@@ -1,4 +1,4 @@
-﻿# WARNINGS -- READ THIS FIRST:
+## WARNINGS -- READ THIS FIRST:
 * Joining multiplayer games is disabled while running Buildaria.
 * Any character you load while running Buildaria will have their *INVENTORY ERASED AND THEIR STATS MODIFIED PERMANENTLY*.
 * You could very possibly screw up your world. Make constant backups of your world or use a new world entirely.
