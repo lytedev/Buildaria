@@ -196,12 +196,12 @@ namespace Buildaria
 
                                     if (it.hammer > 0 || it.axe > 0)
                                     {
-                                        it.hammer = 100;
-                                        it.axe = 100;
+                                        it.hammer = 300;
+                                        it.axe = 300;
                                     }
                                     if (it.pick > 0)
                                     {
-                                        it.pick = 100;
+                                        it.pick = 300;
                                     }
                                 }
                                 else
@@ -329,7 +329,7 @@ namespace Buildaria
 
                 if (displayMessages)
                 {
-                    Main.NewText("NPCs = " + npcsEnabled, 255, 255, 255);
+                    Main.NewText("NPCs = " + npcsEnabled, 0, 255, 0);
                 }
             }
 
@@ -355,7 +355,7 @@ namespace Buildaria
 
                 if (displayMessages)
                 {
-                    Main.NewText("Item Drops = " + itemsEnabled, 255, 255, 255);
+                    Main.NewText("Item Drops = " + itemsEnabled, 0, 255, 0);
                 }
             }
 
@@ -380,7 +380,7 @@ namespace Buildaria
 
                     if (displayMessages)
                     {
-                        Main.NewText("ItemHax = " + itemHax, 255, 255, 255);
+                        Main.NewText("ItemHax = " + itemHax, 0, 255, 0);
                     }
                 }
 
@@ -472,7 +472,7 @@ namespace Buildaria
 
                     if (displayMessages)
                     {
-                        Main.NewText("NoClip = " + hover, 255, 255, 255);
+                        Main.NewText("NoClip = " + hover, 0, 255, 0);
                     }
                 }
 
@@ -486,7 +486,7 @@ namespace Buildaria
 
                     if (displayMessages)
                     {
-                        Main.NewText("God Mode = " + godMode, 255, 255, 255);
+                        Main.NewText("God Mode = " + godMode, 0, 255, 0);
                     }
                 }
 
@@ -522,7 +522,7 @@ namespace Buildaria
 
                     if (displayMessages)
                     {
-                        Main.NewText("Spawn Location Set", 255, 255, 255);
+                        Main.NewText("Spawn Location Set", 255, 0, 0);
                     }
                 }
 
@@ -755,14 +755,14 @@ namespace Buildaria
 
                                 if (displayMessages)
                                 {
-                                    Main.NewText("Skipped to Dusk", 255, 255, 255);
+                                    Main.NewText("Skipped to Dusk", 0, 255, 0);
                                 }
                             }
                             else
                             {
                                 if (displayMessages)
                                 {
-                                    Main.NewText("Skipped to Dawn", 255, 255, 255);
+                                    Main.NewText("Skipped to Dawn", 0, 255, 0);
                                 }
                                 time = nightLength;
                             }
@@ -803,7 +803,7 @@ namespace Buildaria
 
                             if (displayMessages)
                             {
-                                Main.NewText("Copied Selection", 255, 255, 255);
+                                Main.NewText("Copied Selection", 50, 50, 255);
                             }
                         }
 
@@ -864,7 +864,7 @@ namespace Buildaria
 
                             if (displayMessages)
                             {
-                                Main.NewText("Pasted Selection", 255, 255, 255);
+                                Main.NewText("Pasted Selection", 50, 50, 255);
                             }
                         }
 
@@ -915,7 +915,7 @@ namespace Buildaria
                             }
 
                             if (sel1 != -Vector2.One && sel2 != -Vector2.One && displayMessages)
-                                Main.NewText("Cleared Selection of Blocks", 255, 255, 255);
+                                Main.NewText("Cleared Selection of Blocks", 50, 50, 255);
                         }
                         else if (mouseState.RightButton == ButtonState.Pressed && oldMouseState.RightButton == ButtonState.Released && player[myPlayer].inventory[player[myPlayer].selectedItem].hammer >= 55)
                         {
@@ -958,7 +958,7 @@ namespace Buildaria
 
                             if (displayMessages)
                             {
-                                Main.NewText("Cleared Selection of Walls", 255, 255, 255);
+                                Main.NewText("Cleared Selection of Walls", 50, 50, 255);
                             }
                         }
 
@@ -1004,7 +1004,7 @@ namespace Buildaria
 
                             if (displayMessages)
                             {
-                                Main.NewText("Filled Selection with Lava", 255, 255, 255);
+                                Main.NewText("Filled Selection with Lava", 50, 50, 255);
                             }
                         }
                         else if (mouseState.RightButton == ButtonState.Pressed && oldMouseState.RightButton == ButtonState.Released && player[myPlayer].inventory[player[myPlayer].selectedItem].type == 0xce)
@@ -1045,7 +1045,7 @@ namespace Buildaria
 
                             if (displayMessages)
                             {
-                                Main.NewText("Filled Selection with Water", 255, 255, 255);
+                                Main.NewText("Filled Selection with Water", 50, 50, 255);
                             }
                         }
                         else if (mouseState.RightButton == ButtonState.Pressed && oldMouseState.RightButton == ButtonState.Released && player[myPlayer].inventory[player[myPlayer].selectedItem].type == 0xcd)
@@ -1086,7 +1086,7 @@ namespace Buildaria
 
                             if (displayMessages)
                             {
-                                Main.NewText("Drained Selection of Liquid", 255, 255, 255);
+                                Main.NewText("Drained Selection of Liquid", 50, 50, 255);
                             }
                         }
 
@@ -1134,7 +1134,7 @@ namespace Buildaria
 
                             if (displayMessages)
                             {
-                                Main.NewText("Filled Selection with Block " + player[myPlayer].inventory[player[myPlayer].selectedItem].createTile, 255, 255, 255);
+                                Main.NewText("Filled Selection with Block " + player[myPlayer].inventory[player[myPlayer].selectedItem].createTile, 50, 50, 255);
                             }
                         }
                         else if (mouseState.RightButton == ButtonState.Pressed && oldMouseState.RightButton == ButtonState.Released && player[myPlayer].inventory[player[myPlayer].selectedItem].createWall >= 0)
@@ -1180,7 +1180,7 @@ namespace Buildaria
 
                             if (displayMessages)
                             {
-                                Main.NewText("Filled Selection with Wall " + player[myPlayer].inventory[player[myPlayer].selectedItem].createWall, 255, 255, 255);
+                                Main.NewText("Filled Selection with Wall " + player[myPlayer].inventory[player[myPlayer].selectedItem].createWall, 50, 50, 255);
                             }
                         }
 
@@ -1215,7 +1215,7 @@ namespace Buildaria
 
                             if (displayMessages)
                             {
-                                Main.NewText("Undo Complete", 255, 255, 255);
+                                Main.NewText("Undo Complete", 150, 50, 50);
                             }
                         }
 
@@ -2293,7 +2293,7 @@ namespace Buildaria
 
             if (displayMessages)
             {
-                Main.NewText("Loaded Inventory " + id + " (" + inv.Name + ")", 255, 255, 255);
+                Main.NewText("Loaded Inventory " + id + " (" + inv.Name + ")", 150, 100, 0);
             }
 
             return inventoryType = id;
@@ -2334,7 +2334,7 @@ namespace Buildaria
 
             if (displayMessages)
             {
-                Main.NewText("Saved Inventory " + id + " (" + inv.Name + ")", 255, 255, 255);
+                Main.NewText("Saved Inventory " + id + " (" + inv.Name + ")", 150, 100, 0);
             }
 
             return inventoryType = id;
