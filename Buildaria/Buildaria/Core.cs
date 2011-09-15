@@ -77,6 +77,7 @@ namespace Buildaria
         bool buildMode = true;
         bool itemsEnabled = false;
         bool displayMessages = true;
+        bool lightme = false;
 
         #endregion
 
@@ -526,6 +527,25 @@ namespace Buildaria
                     }
                 }
 
+                #endregion
+                
+                #region Light me
+
+                if (keyState.IsKeyDown(Keys.F) && !oldKeyState.IsKeyDown(Keys.F) && !editSign)
+                {
+                    lightme = !lightme;
+                                        
+                    if (displayMessages)
+                    {
+                        Main.NewText("Light me = " + lightme, 255, 255, 0);
+                    }
+
+                }
+                if (lightme)
+                {
+                    player[myPlayer].AddBuff(11, 1, false);
+                }       
+                
                 #endregion
 
                 bool allowStuff = true; // Disallows most buildaria functionality in-game
