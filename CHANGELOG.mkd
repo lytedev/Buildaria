@@ -1,6 +1,13 @@
 Buildaria’s changelog
 ===================
 
+1.7.1 (?)
+-------------------------------------------------
+* Output chat messages are now color coded. See the readme file for a chart.
+* You can now toggle a light aura (default key: `F`).
+* Due to the above change the Mining Helmet has been replaced with Sunglasses. Sunglasses are cool.
+
+
 1.7 (September 14th, 2011)
 -------------------------------------------------
 * The ability to toggle the information messages has been added (default key: `K`).
@@ -16,6 +23,7 @@ Buildaria’s changelog
 * Many other items now display correctly due to their names being fixed.
 * You can once again unstack previously unstackable items (thanks scaryguy334).
 * If you toggle god mode off and you die the respawn timer is now 1 second.
+
 
 1.6.1 (August 11th, 2011)
 -------------------------------------------------

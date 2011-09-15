@@ -77,7 +77,7 @@ namespace Buildaria
         bool buildMode = true;
         bool itemsEnabled = false;
         bool displayMessages = true;
-        bool lightme = false;
+        bool lightMe = false;
 
         #endregion
 
@@ -529,19 +529,19 @@ namespace Buildaria
 
                 #endregion
                 
-                #region Light me
+                #region Light Me (unlimited Shine Potion buff)
 
                 if (keyState.IsKeyDown(Keys.F) && !oldKeyState.IsKeyDown(Keys.F) && !editSign)
                 {
-                    lightme = !lightme;
+                    lightMe = !lightMe;
                                         
                     if (displayMessages)
                     {
-                        Main.NewText("Light me = " + lightme, 255, 255, 0);
+                        Main.NewText("Light Me = " + lightMe, 255, 255, 0);
                     }
 
                 }
-                if (lightme)
+                if (lightMe)
                 {
                     player[myPlayer].AddBuff(11, 1, false);
                 }       
@@ -1418,7 +1418,7 @@ namespace Buildaria
                 i[39].SetDefaults("Molten Greaves");
 
                 // Equipment
-                i[44].SetDefaults("Mining Helmet");
+                i[44].SetDefaults("Sunglasses");
 
                 // Accessories
                 i[47].SetDefaults("Cloud in a Bottle");
@@ -1495,7 +1495,7 @@ namespace Buildaria
                 i[38].SetDefaults("Molten Fury");
 
                 // Equipment
-                i[44].SetDefaults("Mining Helmet");
+                i[44].SetDefaults("Sunglasses");
 
                 // Accessories
                 i[47].SetDefaults("Cloud in a Bottle");
@@ -1566,7 +1566,7 @@ namespace Buildaria
                 i[38].SetDefaults("Yellow Phaseblade");
 
                 // Equipment
-                i[44].SetDefaults("Mining Helmet");
+                i[44].SetDefaults("Sunglasses");
 
                 // Accessories
                 i[47].SetDefaults("Cloud in a Bottle");
@@ -1634,7 +1634,7 @@ namespace Buildaria
                 i[38].SetDefaults("Whoopie Cushion");
 
                 // Equipment
-                i[44].SetDefaults("Mining Helmet");
+                i[44].SetDefaults("Sunglasses");
 
                 // Accessories
                 i[47].SetDefaults("Cloud in a Bottle");
@@ -1705,7 +1705,7 @@ namespace Buildaria
                 i[37].SetDefaults("Hero's Pants");
 
                 // Equipment
-                i[44].SetDefaults("Mining Helmet");
+                i[44].SetDefaults("Sunglasses");
 
                 // Accessories
                 i[47].SetDefaults("Cloud in a Bottle");
@@ -1781,7 +1781,7 @@ namespace Buildaria
                 i[38].SetDefaults("Mana Crystal");
 
                 // Equipment
-                i[44].SetDefaults("Mining Helmet");
+                i[44].SetDefaults("Sunglasses");
 
                 // Accessories
                 i[47].SetDefaults("Cloud in a Bottle");
@@ -1861,7 +1861,7 @@ namespace Buildaria
                 i[39].SetDefaults("Black Dye");
 
                 // Equipment
-                i[44].SetDefaults("Mining Helmet");
+                i[44].SetDefaults("Sunglasses");
 
                 // Accessories
                 i[47].SetDefaults("Cloud in a Bottle");
@@ -1925,7 +1925,7 @@ namespace Buildaria
                 i[33].SetDefaults("Platinum Coin");
 
                 // Equipment
-                i[44].SetDefaults("Mining Helmet");
+                i[44].SetDefaults("Sunglasses");
 
                 // Accessories
                 i[47].SetDefaults("Cloud in a Bottle");
@@ -1984,7 +1984,7 @@ namespace Buildaria
                 i[26].SetDefaults("Waterleaf");
 
                 // Equipment
-                i[44].SetDefaults("Mining Helmet");
+                i[44].SetDefaults("Sunglasses");
 
                 // Accessories
                 i[47].SetDefaults("Cloud in a Bottle");
@@ -2062,7 +2062,7 @@ namespace Buildaria
                 i[39].SetDefaults("Yellow Banner");
 
                 // Equipment
-                i[44].SetDefaults("Mining Helmet");
+                i[44].SetDefaults("Sunglasses");
 
                 // Accessories
                 i[47].SetDefaults("Cloud in a Bottle");
@@ -2123,7 +2123,7 @@ namespace Buildaria
                 i[27].SetDefaults("Piggy Bank");
 
                 // Equipment
-                i[44].SetDefaults("Mining Helmet");
+                i[44].SetDefaults("Sunglasses");
 
                 // Accessories
                 i[47].SetDefaults("Cloud in a Bottle");
@@ -2175,7 +2175,7 @@ namespace Buildaria
                 i[17].SetDefaults("Blue Brick Wall");
 
                 // Equipment
-                i[44].SetDefaults("Mining Helmet");
+                i[44].SetDefaults("Sunglasses");
 
                 // Accessories
                 i[47].SetDefaults("Cloud in a Bottle");
@@ -2255,7 +2255,7 @@ namespace Buildaria
                 i[39].SetDefaults("Lava Bucket");
 
                 // Equipment
-                i[44].SetDefaults("Mining Helmet");
+                i[44].SetDefaults("Sunglasses");
 
                 // Accessories
                 i[47].SetDefaults("Cloud in a Bottle");

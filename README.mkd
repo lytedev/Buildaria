@@ -4,7 +4,7 @@
 * You could very possibly screw up your world. Make constant backups of your world or use a new world entirely.
 
 
-# Buildaria 1.7
+# Buildaria 1.7.1
 
 Buildaria is a Terraira mod geared towards map makers.
 
@@ -12,43 +12,56 @@ Buildaria is a Terraira mod geared towards map makers.
 ## Features
 
 * Easy-to-use selection system that supports multiple shapes, copy, paste, and an undo.
-* Toggle-able enemy NPC auto-killing. 
+* Toggle-able enemy NPC auto-killing.
 * A toggle-able ghost mode for easy construction.
 * Toggle between tools that instantly destroy everything you hover over and normal 100% power tools.
-* Place blocks anywhere without needing background walls or adjacent blocks. 
-* Multiple, saved, preset inventory pages with all the construction materials you'll ever need.  
-* Cycle forward to dawn/dusk instantly. 
-* Optional god mode just in case you fall or ghost into lava. 
-* A trash slot - you will always have inventory room. 
-* Infinite rocket boots.
-* Depth meter and watch active with god mode.
+* Place blocks anywhere without needing background walls or adjacent blocks.
+* Multiple, saved, preset inventory pages with all the construction materials you'll ever need.
+* Cycle forward to dawn/dusk instantly.
+* Optional god mode just in case you fall or ghost into lava.
 * Semi-insta respawn if you do manage to die.
-* Inventories are now loaded and saved to and from an XML file, allowing you to add, remove, and customize your own inventories. 
+* A trash slot - you will always have inventory room.
+* Infinite rocket boots.
+* Toggle-able light aura for easier mining.
+* Depth meter and watch active with god mode.
+* Inventories are now loaded and saved to and from an XML file, allowing you to add, remove, and customize your own inventories.
 * Output appears in chat area, letting you know what's going on... most of the time.
+* Output messages are color coded based on event type.
 * Item drops are toggle-able.
 * Ability to set the default spawn point with the press of a button.
+
+
+## Chat Output Colors
+
+* `Blue` - Selection/Copy/Paste/Fills/Drains
+* `Brown` - Undo
+* `Yellow Orange` - Load/Save Inventories
+* `Red` - Set Spawn Point
+* `White` - Display Messages Toggle
+* `Green` - All Other Toggles
 
 
 ## Controls
 
 * `Right-click` - Fills the current selection with whatever the current item normally fills/destroys.
-* `Alt` - Transforms the current selection in an ellipse (oval or circle). Also, causes Paste to paste upside-down, or flipped vertically. 
-* `Shift` - Transforms the current selection into an outline. Works with `Alt` for a circle outline. Also, causes Paste to paste backwards, or flipped horizontally. 
+* `Alt` - Transforms the current selection in an ellipse (oval or circle). Also, causes Paste to paste upside-down, or flipped vertically.
+* `Shift` - Transforms the current selection into an outline. Works with `Alt` for a circle outline. Also, causes Paste to paste backwards, or flipped horizontally.
 
 * `Ctrl-C` - Copy the currently selected tiles.
-* `Ctrl-V` - Paste your current copy to the selected position. 
-* `Ctrl-Z` - Undo the last selection-based modification. 
+* `Ctrl-V` - Paste your current copy to the selected position.
+* `Ctrl-Z` - Undo the last selection-based modification.
 
 * `Ctrl-Shift-S` - Save Inventories to file.
 * `Ctrl-Shift-O` - Load Inventories from file.
 
-* `T` - Toggles item speeds. 
+* `T` - Toggles item speeds.
 * `G` - Toggles god mode.
 * `C` - Toggles NPC spawning
-* `P` - Toggles between ghost mode. Noclip! Hold `Shift` to go extra fast. Hold `Shift+Alt` to go super extra fast! 
-* `N` - Toggles day/night time. 
+* `P` - Toggles between ghost mode. Noclip! Hold `Shift` to go extra fast. Hold `Shift+Alt` to go super extra fast!
+* `N` - Toggles day/night time.
 * `M` - Toggles item drops.
 * `K` - Toggles output chat messages.
+* `F` - Toggles a light aura for easier mining.
 * `L` - Set the currently moused-over area as the default spawn location.
 * `[` and `]` - Switch inventories.
 
@@ -56,14 +69,14 @@ Buildaria is a Terraira mod geared towards map makers.
 ## Items Explained
 
 * `Phaseblade` - Acts as the selection tool. Click and drag to select a box area. Right-click to clear selection. Works with any phaseblade color.
-* `Pickaxe` - Destroys any blocks that a normal pick would destroy, only instantaneously and without range. Right-click to clear selection of pick-able tiles. 
-* `Hammer` - The same as the pickaxe, only it acts as a hamaxe. Right-click to clear selection of hamaxe-able tiles. 
+* `Pickaxe` - Destroys any blocks that a normal pick would destroy, only instantaneously and without range. Right-click to clear selection of pick-able tiles.
+* `Hammer` - The same as the pickaxe, only it acts as a hamaxe. Right-click to clear selection of hamaxe-able tiles.
 * `Blocks` - Works normally, only you can place multiple blocks much faster than normal. Right-click to fill.
 * `Walls` - Works normally, only you can place multiple walls much faster than normal.
 * `Decorations` - Works normally, only you can place multiple decorations much faster than normal. I do not recommend using the right-click functionality with decorations!
-* `Filled Buckets` - Place the contained liquid anywhere. Yes, you can fill with Right-click. 
+* `Filled Buckets` - Place the contained liquid anywhere. Yes, you can fill with Right-click.
 * `Empty Buckets` - Removes liquid, quite obviously. Remove any liquid within the selection by Right-clicking.
-	
+
 ### ItemHax Note
 
 If itemHax is disabled some items behave differently than mentioned above.
