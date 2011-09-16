@@ -528,7 +528,19 @@ namespace Buildaria
                 }
 
                 #endregion
-                
+
+                #region Display Coordinates
+
+                if (keyState.IsKeyDown(Keys.I) && oldKeyState.IsKeyUp(Keys.I) && !editSign)
+                {
+                    int x = (int)((Main.mouseState.X + Main.screenPosition.X) / 16f);
+                    int y = (int)((Main.mouseState.Y + Main.screenPosition.Y) / 16f);
+
+                    Main.NewText("Your mouse currently points to " + x + ", " + y, 138, 43, 226);
+                }
+
+                #endregion
+
                 #region Light Me (unlimited Shine Potion buff)
 
                 if (keyState.IsKeyDown(Keys.F) && !oldKeyState.IsKeyDown(Keys.F) && !editSign)
