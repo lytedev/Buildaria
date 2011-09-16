@@ -38,6 +38,7 @@ Buildaria is a Terraira mod geared towards map makers.
 * `Yellow Orange` - Load/Save Inventories
 * `Red` - Set Spawn Point
 * `White` - Display Messages Toggle
+* `Yellow` - Light Me Toggle
 * `Green` - All Other Toggles
 
 

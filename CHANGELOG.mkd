@@ -1,7 +1,7 @@
 Buildaria’s changelog
 ===================
 
-1.7.1 (?)
+1.7.1 (September 15th, 2011)
 -------------------------------------------------
 * Output chat messages are now color coded. See the readme file for a chart.
 * You can now toggle a light aura (default key: `F`).
