@@ -110,7 +110,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Inventory.cs" />
+    <Compile Include="Inventory.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Core.cs" />

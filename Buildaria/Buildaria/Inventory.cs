@@ -79,21 +79,11 @@ namespace Buildaria
         #endregion
 
         public string Name { get; set; }
-        public bool ItemHax { get; set; }
-        public bool GodMode { get; set; }
-        public bool NPCs { get; set; }
-        public bool BuildMode { get; set; }
-        public bool ItemDrops { get; set; }
         public InventoryItem[] Items { get; set; }
 
         public void Default()
         {
             Name = "Inventory";
-            ItemHax = true;
-            GodMode = true;
-            NPCs = false;
-            BuildMode = true;
-            ItemDrops = false;
             Items = new InventoryItem[0];
         }
 

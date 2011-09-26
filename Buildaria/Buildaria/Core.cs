@@ -3,6 +3,8 @@
 using System;
 using System.Reflection;
 using System.IO;
+using System.Text;
+using System.Xml;
 
 #endregion
 
@@ -70,14 +72,11 @@ namespace Buildaria
         Vector2 lastPosition = Vector2.Zero;
         KeyboardState oldKeyState = Keyboard.GetState();
 
-        bool itemHax = true;
-        bool godMode = true;
-        bool npcsEnabled = false;
-        bool hover = false;
-        bool buildMode = true;
-        bool itemsEnabled = false;
-        bool displayMessages = true;
-        bool lightMe = false;
+        // default settings booleans
+        bool itemHax, godMode, npcsEnabled, hover, buildMode, itemsEnabled, displayMessages, lightMe;
+
+        // chat output strings
+        string[] displayMessagesMsg, otherToggles, selectionMessages, undoMessage, saveLoadInv, setSpawnPoint, lightMeToggle, mouseCoords;
 
         #endregion
 
@@ -97,12 +96,95 @@ namespace Buildaria
 
         #endregion
 
+        #region Functions
+
+        public static void GenerateConfigFile()
+        {
+            XmlWriterSettings writerSettings = new XmlWriterSettings { Encoding = Encoding.UTF8, Indent = true };
+
+            XmlWriter writer = XmlWriter.Create("BuildariaConfig.xml", writerSettings);
+
+            if (writer != null)
+            {
+                writer.WriteStartElement("Buildaria");
+
+                #region Defaults
+
+                writer.WriteStartElement("Defaults");
+
+                string[] defaultSettings = new string[] {
+                    "itemHax_true",
+                    "godMode_true",
+                    "npcsEnabled_false",
+                    "hover_false",
+                    "buildMode_true",
+                    "itemsEnabled_false",
+                    "displayMessages_true",
+                    "lightMe_true"
+                };
+
+                foreach (string defaults in defaultSettings)
+                {
+                    string[] dS = defaults.Split('_');
+
+                    writer.WriteStartElement(dS[0]);
+                    writer.WriteString(dS[1]);
+                    writer.WriteEndElement();
+                }
+
+                writer.WriteEndElement();
+
+                #endregion
+
+                #region Chat Output Colors
+
+                writer.WriteStartElement("chatColors");
+
+                string[] chatColors = new string[] {
+                    "displayMessagesMsg_255,255,255",
+                    "otherToggles_0,255,0",
+                    "selectionMessages_50,50,255",
+                    "undoMessage_150,50,50",
+                    "saveLoadInv_150,100,0",
+                    "setSpawnPoint_255,0,0",
+                    "lightMeToggle_255,255,0",
+                    "mouseCoords_138,43,226"
+                };
+
+                foreach (string cColors in chatColors)
+                {
+                    string[] cClrs = cColors.Split('_');
+
+                    writer.WriteStartElement(cClrs[0]);
+                    writer.WriteString(cClrs[1]);
+                    writer.WriteEndElement();
+                }
+
+                writer.WriteEndElement();
+
+                #endregion
+
+                writer.WriteEndElement();
+                writer.WriteEndDocument();
+                writer.Flush();
+                writer.Close();
+            }
+        }
+
+        #endregion
+
         #region XNA Overrides
 
         protected override void Initialize()
         {
+            // We need a configuration file to continue, if it doesn't exist make one!
+            if (!File.Exists("BuildariaConfig.xml"))
+            {
+                GenerateConfigFile();
+            }
+
             screenHeight = 720;
-            screenWidth = 1280; // */
+            screenWidth = 1280;
 
             base.Initialize();
             spriteBatch = new SpriteBatch(base.GraphicsDevice);
@@ -123,10 +205,58 @@ namespace Buildaria
             MainWrapper = asm.GetType("Terraria.Main");
 
             Inventory.LoadInventories();
+
+            #region Gather Config Data
+
+            XmlReaderSettings readerSettings = new XmlReaderSettings { IgnoreComments = true, IgnoreWhitespace = true };
+            XmlReader reader = XmlReader.Create("BuildariaConfig.xml", readerSettings);
+
+            while (reader.Read())
+            {
+                if (reader.NodeType == XmlNodeType.Element)
+                {
+                    #region Defaults
+
+                    if (reader.Name == "itemHax") itemHax = Convert.ToBoolean(reader.ReadString());
+                    if (reader.Name == "godMode") godMode = Convert.ToBoolean(reader.ReadString());
+                    if (reader.Name == "npcsEnabled") npcsEnabled = Convert.ToBoolean(reader.ReadString());
+                    if (reader.Name == "hover") hover = Convert.ToBoolean(reader.ReadString());
+                    if (reader.Name == "buildMode") buildMode = Convert.ToBoolean(reader.ReadString());
+                    if (reader.Name == "itemsEnabled") itemsEnabled = Convert.ToBoolean(reader.ReadString());
+                    if (reader.Name == "displayMessages") displayMessages = Convert.ToBoolean(reader.ReadString());
+                    if (reader.Name == "lightMe") lightMe = Convert.ToBoolean(reader.ReadString());
+
+                    #endregion
+
+                    #region Chat Output Colors
+
+                    if (reader.Name == "displayMessagesMsg") displayMessagesMsg = reader.ReadString().Split(',');
+                    if (reader.Name == "otherToggles") otherToggles = reader.ReadString().Split(',');
+                    if (reader.Name == "selectionMessages") selectionMessages = reader.ReadString().Split(',');
+                    if (reader.Name == "undoMessage") undoMessage = reader.ReadString().Split(',');
+                    if (reader.Name == "saveLoadInv") saveLoadInv = reader.ReadString().Split(',');
+                    if (reader.Name == "setSpawnPoint") setSpawnPoint = reader.ReadString().Split(',');
+                    if (reader.Name == "lightMeToggle") lightMeToggle = reader.ReadString().Split(',');
+                    if (reader.Name == "mouseCoords") mouseCoords = reader.ReadString().Split(',');
+
+                    #endregion
+                }
+            }
+
+            #endregion
         }
 
         protected override void Update(GameTime gameTime)
         {
+            #region Modifier Keys
+
+            // Detect modifier keys
+            bool shift = keyState.IsKeyDown(Keys.LeftShift) || keyState.IsKeyDown(Keys.RightShift);
+            bool alt = keyState.IsKeyDown(Keys.LeftAlt) || keyState.IsKeyDown(Keys.RightAlt);
+            bool ctrl = keyState.IsKeyDown(Keys.LeftControl) || keyState.IsKeyDown(Keys.RightControl);
+
+            #endregion
+
             #region buildMode
 
             if (buildMode)
@@ -153,13 +283,31 @@ namespace Buildaria
                         {
                             if (it.name != "")
                             {
-                                it.stack = 255;
+                                #region Item Stack Sizes
 
-                                // Unstacking of unstackable items was removed with the 1.0.6 Terraria update. This is a work around. (thanks scaryguy334)
+                                // Set this to false if you want items to be stacked only to their default max stack size.
+                                bool haxItemStack = true;
+
+                                // The amount of items you want in a hax'd stack.
+                                int haxItemStackSize = 999;
+
+                                // Note: The haxItemStack toggle has no affect on single-stacked items.
+                                // In order to keep them unstackable we need to up their max stack size. 10 is a good, solid, number.
                                 if (it.maxStack == 1)
                                 {
-                                    it.maxStack = 255;
+                                    it.stack = 10;
+                                    it.maxStack = 10;
                                 }
+                                if (haxItemStack)
+                                {
+                                    it.stack = haxItemStackSize;
+                                }
+                                else
+                                {
+                                    it.stack = it.maxStack;
+                                }
+
+                                #endregion
 
                                 #region Placeable Gems!
 
@@ -192,8 +340,11 @@ namespace Buildaria
 
                                 if (itemHax)
                                 {
-                                    it.autoReuse = true;
-                                    it.useTime = 0;
+                                    if (it.name.Contains("axe") || it.name.Contains("Hammer") || it.useTime == 10 || it.useTime == 7 || it.name.Contains("Phaseblade"))
+                                    {
+                                        it.autoReuse = true;
+                                        it.useTime = 0;
+                                    }
 
                                     if (it.hammer > 0 || it.axe > 0)
                                     {
@@ -324,13 +475,13 @@ namespace Buildaria
 
             #region NPC Spawning
 
-            if (keyState.IsKeyDown(Keys.C) && oldKeyState.IsKeyUp(Keys.C) && !editSign)
+            if (keyState.IsKeyDown(Keys.C) && oldKeyState.IsKeyUp(Keys.C) && !editSign && !ctrl)
             {
                 npcsEnabled = !npcsEnabled;
 
                 if (displayMessages)
                 {
-                    Main.NewText("NPCs = " + npcsEnabled, 0, 255, 0);
+                    Main.NewText("NPCs = " + npcsEnabled, Convert.ToByte(otherToggles[0]), Convert.ToByte(otherToggles[1]), Convert.ToByte(otherToggles[2]));
                 }
             }
 
@@ -350,13 +501,13 @@ namespace Buildaria
 
             #region World Items
 
-            if (keyState.IsKeyDown(Keys.M) && oldKeyState.IsKeyUp(Keys.M) && !editSign)
+            if (keyState.IsKeyDown(Keys.M) && oldKeyState.IsKeyUp(Keys.M) && !editSign && !ctrl)
             {
                 itemsEnabled = !itemsEnabled;
 
                 if (displayMessages)
                 {
-                    Main.NewText("Item Drops = " + itemsEnabled, 0, 255, 0);
+                    Main.NewText("Item Drops = " + itemsEnabled, Convert.ToByte(otherToggles[0]), Convert.ToByte(otherToggles[1]), Convert.ToByte(otherToggles[2]));
                 }
             }
 
@@ -373,20 +524,6 @@ namespace Buildaria
 
             #endregion
 
-            if (!editSign)
-            {
-                if (keyState.IsKeyDown(Keys.T) && oldKeyState.IsKeyUp(Keys.T))
-                {
-                    itemHax = !itemHax;
-
-                    if (displayMessages)
-                    {
-                        Main.NewText("ItemHax = " + itemHax, 0, 255, 0);
-                    }
-                }
-
-            }
-
             if (menuMode != oldMenuMode)
             {
                 sel1 = -Vector2.One;
@@ -399,22 +536,28 @@ namespace Buildaria
             }
             else if (menuMode == 10) // if in-game ...
             {
-                #region Modifier Keys
-
-                // Detect modifier keys
-                bool shift = keyState.IsKeyDown(Keys.LeftShift) || keyState.IsKeyDown(Keys.RightShift);
-                bool alt = keyState.IsKeyDown(Keys.LeftAlt) || keyState.IsKeyDown(Keys.RightAlt);
-                bool ctrl = keyState.IsKeyDown(Keys.LeftControl) || keyState.IsKeyDown(Keys.RightControl);
-
-                #endregion
 
                 #region Display Chat Messages
 
-                if (keyState.IsKeyDown(Keys.K) && oldKeyState.IsKeyUp(Keys.K) && !editSign)
+                if (keyState.IsKeyDown(Keys.K) && oldKeyState.IsKeyUp(Keys.K) && !editSign && !ctrl && !shift)
                 {
                     displayMessages = !displayMessages;
 
-                    Main.NewText("DisplayMessages = " + displayMessages, 255, 255, 255);
+                    Main.NewText("Display Messages = " + displayMessages, Convert.ToByte(displayMessagesMsg[0]), Convert.ToByte(displayMessagesMsg[1]), Convert.ToByte(displayMessagesMsg[2]));
+                }
+
+                #endregion
+
+                #region ItemHax
+
+                if (keyState.IsKeyDown(Keys.T) && oldKeyState.IsKeyUp(Keys.T) && !editSign && !ctrl && !shift)
+                {
+                    itemHax = !itemHax;
+
+                    if (displayMessages)
+                    {
+                        Main.NewText("ItemHax = " + itemHax, Convert.ToByte(otherToggles[0]), Convert.ToByte(otherToggles[1]), Convert.ToByte(otherToggles[2]));
+                    }
                 }
 
                 #endregion
@@ -464,16 +607,20 @@ namespace Buildaria
                     }
                 }
 
-                if (keyState.IsKeyDown(Keys.P) && !oldKeyState.IsKeyDown(Keys.P) && !editSign)
+                if (keyState.IsKeyDown(Keys.P) && !oldKeyState.IsKeyDown(Keys.P) && !editSign && !ctrl && !shift)
                 {
                     hover = !hover;
                     player[myPlayer].fallStart = (int)player[myPlayer].position.Y;
                     player[myPlayer].immune = true;
                     player[myPlayer].immuneTime = 1000;
+                    if (!hover)
+                    {
+                        player[myPlayer].immune = false;
+                    }
 
                     if (displayMessages)
                     {
-                        Main.NewText("NoClip = " + hover, 0, 255, 0);
+                        Main.NewText("NoClip = " + hover, Convert.ToByte(otherToggles[0]), Convert.ToByte(otherToggles[1]), Convert.ToByte(otherToggles[2]));
                     }
                 }
 
@@ -481,13 +628,13 @@ namespace Buildaria
 
                 #region God Mode
 
-                if (keyState.IsKeyDown(Keys.G) && oldKeyState.IsKeyUp(Keys.G) && !editSign)
+                if (keyState.IsKeyDown(Keys.G) && oldKeyState.IsKeyUp(Keys.G) && !editSign && !ctrl && !shift)
                 {
                     godMode = !godMode;
 
                     if (displayMessages)
                     {
-                        Main.NewText("God Mode = " + godMode, 0, 255, 0);
+                        Main.NewText("God Mode = " + godMode, Convert.ToByte(otherToggles[0]), Convert.ToByte(otherToggles[1]), Convert.ToByte(otherToggles[2]));
                     }
                 }
 
@@ -513,7 +660,7 @@ namespace Buildaria
 
                 #region Set Default Spawn Location
 
-                if (keyState.IsKeyDown(Keys.L) && oldKeyState.IsKeyUp(Keys.L) && !editSign)
+                if (keyState.IsKeyDown(Keys.L) && oldKeyState.IsKeyUp(Keys.L) && !editSign && !ctrl && !shift)
                 {
                     int x = (int)((Main.mouseState.X + Main.screenPosition.X) / 16f);
                     int y = (int)((Main.mouseState.Y + Main.screenPosition.Y) / 16f);
@@ -523,7 +670,7 @@ namespace Buildaria
 
                     if (displayMessages)
                     {
-                        Main.NewText("Spawn Location Set", 255, 0, 0);
+                        Main.NewText("Spawn Location Set", Convert.ToByte(setSpawnPoint[0]), Convert.ToByte(setSpawnPoint[1]), Convert.ToByte(setSpawnPoint[2]));
                     }
                 }
 
@@ -531,25 +678,25 @@ namespace Buildaria
 
                 #region Display Coordinates
 
-                if (keyState.IsKeyDown(Keys.I) && oldKeyState.IsKeyUp(Keys.I) && !editSign)
+                if (keyState.IsKeyDown(Keys.I) && oldKeyState.IsKeyUp(Keys.I) && !editSign && !ctrl && !shift)
                 {
                     int x = (int)((Main.mouseState.X + Main.screenPosition.X) / 16f);
                     int y = (int)((Main.mouseState.Y + Main.screenPosition.Y) / 16f);
 
-                    Main.NewText("Your mouse currently points to " + x + ", " + y, 138, 43, 226);
+                    Main.NewText("Your mouse currently points to " + x + ", " + y, Convert.ToByte(mouseCoords[0]), Convert.ToByte(mouseCoords[1]), Convert.ToByte(mouseCoords[2]));
                 }
 
                 #endregion
 
                 #region Light Me (unlimited Shine Potion buff)
 
-                if (keyState.IsKeyDown(Keys.F) && !oldKeyState.IsKeyDown(Keys.F) && !editSign)
+                if (keyState.IsKeyDown(Keys.F) && !oldKeyState.IsKeyDown(Keys.F) && !editSign && !ctrl && !shift)
                 {
                     lightMe = !lightMe;
                                         
                     if (displayMessages)
                     {
-                        Main.NewText("Light Me = " + lightMe, 255, 255, 0);
+                        Main.NewText("Light Me = " + lightMe, Convert.ToByte(lightMeToggle[0]), Convert.ToByte(lightMeToggle[1]), Convert.ToByte(lightMeToggle[2]));
                     }
 
                 }
@@ -625,7 +772,7 @@ namespace Buildaria
 
                     #region Inventory Change
 
-                    if (!editSign)
+                    if (!editSign && !ctrl && !shift)
                     {
                         // Toggle this to true if you wish for inventories to be saved everytime you switch them.
                         bool saveInventoriesOnSwitch = false;
@@ -787,14 +934,14 @@ namespace Buildaria
 
                                 if (displayMessages)
                                 {
-                                    Main.NewText("Skipped to Dusk", 0, 255, 0);
+                                    Main.NewText("Skipped to Dusk", Convert.ToByte(otherToggles[0]), Convert.ToByte(otherToggles[1]), Convert.ToByte(otherToggles[2]));
                                 }
                             }
                             else
                             {
                                 if (displayMessages)
                                 {
-                                    Main.NewText("Skipped to Dawn", 0, 255, 0);
+                                    Main.NewText("Skipped to Dawn", Convert.ToByte(otherToggles[0]), Convert.ToByte(otherToggles[1]), Convert.ToByte(otherToggles[2]));
                                 }
                                 time = nightLength;
                             }
@@ -835,7 +982,7 @@ namespace Buildaria
 
                             if (displayMessages)
                             {
-                                Main.NewText("Copied Selection", 50, 50, 255);
+                                Main.NewText("Copied Selection", Convert.ToByte(selectionMessages[0]), Convert.ToByte(selectionMessages[1]), Convert.ToByte(selectionMessages[2]));
                             }
                         }
 
@@ -896,7 +1043,7 @@ namespace Buildaria
 
                             if (displayMessages)
                             {
-                                Main.NewText("Pasted Selection", 50, 50, 255);
+                                Main.NewText("Pasted Selection", Convert.ToByte(selectionMessages[0]), Convert.ToByte(selectionMessages[1]), Convert.ToByte(selectionMessages[2]));
                             }
                         }
 
@@ -947,7 +1094,7 @@ namespace Buildaria
                             }
 
                             if (sel1 != -Vector2.One && sel2 != -Vector2.One && displayMessages)
-                                Main.NewText("Cleared Selection of Blocks", 50, 50, 255);
+                                Main.NewText("Cleared Selection of Blocks", Convert.ToByte(selectionMessages[0]), Convert.ToByte(selectionMessages[1]), Convert.ToByte(selectionMessages[2]));
                         }
                         else if (mouseState.RightButton == ButtonState.Pressed && oldMouseState.RightButton == ButtonState.Released && player[myPlayer].inventory[player[myPlayer].selectedItem].hammer >= 55)
                         {
@@ -990,7 +1137,7 @@ namespace Buildaria
 
                             if (displayMessages)
                             {
-                                Main.NewText("Cleared Selection of Walls", 50, 50, 255);
+                                Main.NewText("Cleared Selection of Walls", Convert.ToByte(selectionMessages[0]), Convert.ToByte(selectionMessages[1]), Convert.ToByte(selectionMessages[2]));
                             }
                         }
 
@@ -1036,7 +1183,7 @@ namespace Buildaria
 
                             if (displayMessages)
                             {
-                                Main.NewText("Filled Selection with Lava", 50, 50, 255);
+                                Main.NewText("Filled Selection with Lava", Convert.ToByte(selectionMessages[0]), Convert.ToByte(selectionMessages[1]), Convert.ToByte(selectionMessages[2]));
                             }
                         }
                         else if (mouseState.RightButton == ButtonState.Pressed && oldMouseState.RightButton == ButtonState.Released && player[myPlayer].inventory[player[myPlayer].selectedItem].type == 0xce)
@@ -1077,7 +1224,7 @@ namespace Buildaria
 
                             if (displayMessages)
                             {
-                                Main.NewText("Filled Selection with Water", 50, 50, 255);
+                                Main.NewText("Filled Selection with Water", Convert.ToByte(selectionMessages[0]), Convert.ToByte(selectionMessages[1]), Convert.ToByte(selectionMessages[2]));
                             }
                         }
                         else if (mouseState.RightButton == ButtonState.Pressed && oldMouseState.RightButton == ButtonState.Released && player[myPlayer].inventory[player[myPlayer].selectedItem].type == 0xcd)
@@ -1166,7 +1313,7 @@ namespace Buildaria
 
                             if (displayMessages)
                             {
-                                Main.NewText("Filled Selection with Block " + player[myPlayer].inventory[player[myPlayer].selectedItem].createTile, 50, 50, 255);
+                                Main.NewText("Filled Selection with Block " + player[myPlayer].inventory[player[myPlayer].selectedItem].createTile, Convert.ToByte(selectionMessages[0]), Convert.ToByte(selectionMessages[1]), Convert.ToByte(selectionMessages[2]));
                             }
                         }
                         else if (mouseState.RightButton == ButtonState.Pressed && oldMouseState.RightButton == ButtonState.Released && player[myPlayer].inventory[player[myPlayer].selectedItem].createWall >= 0)
@@ -1212,7 +1359,7 @@ namespace Buildaria
 
                             if (displayMessages)
                             {
-                                Main.NewText("Filled Selection with Wall " + player[myPlayer].inventory[player[myPlayer].selectedItem].createWall, 50, 50, 255);
+                                Main.NewText("Filled Selection with Wall " + player[myPlayer].inventory[player[myPlayer].selectedItem].createWall, Convert.ToByte(selectionMessages[0]), Convert.ToByte(selectionMessages[1]), Convert.ToByte(selectionMessages[2]));
                             }
                         }
 
@@ -1247,7 +1394,7 @@ namespace Buildaria
 
                             if (displayMessages)
                             {
-                                Main.NewText("Undo Complete", 150, 50, 50);
+                                Main.NewText("Undo Complete", Convert.ToByte(undoMessage[0]), Convert.ToByte(undoMessage[1]), Convert.ToByte(undoMessage[2]));
                             }
                         }
 
@@ -1268,11 +1415,11 @@ namespace Buildaria
 
         protected override void Draw(GameTime gameTime)
         {
-            if (menuMode == 10)
+            /*if (menuMode == 10)
             {
                 try
                 {
-                    /*int minx = (int)((screenPosition.X / 16) - ((screenWidth / 2) / 16) - 1);
+                    int minx = (int)((screenPosition.X / 16) - ((screenWidth / 2) / 16) - 1);
                     int maxx = (int)((screenPosition.X / 16) + ((screenWidth / 2) / 16) + 1);
                     int miny = (int)((screenPosition.Y / 16) - ((screenHeight / 2) / 16) - 1);
                     int maxy = (int)((screenPosition.Y / 16) + ((screenHeight / 2) / 16) + 1);
@@ -1305,13 +1452,13 @@ namespace Buildaria
                                 continue;
                             }
                         }
-                    }*/
+                    }
                 }
                 catch
                 {
 
                 }
-            }
+            }*/
 
             base.Draw(gameTime);
             spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.NonPremultiplied);
@@ -1373,13 +1520,6 @@ namespace Buildaria
                 i[4].SetDefaults("Ivy Whip");
 
                 Inventory inv = new Inventory(i, "Blank");
-
-                inv.ItemHax = true;
-                inv.GodMode = true;
-                inv.NPCs = false;
-                inv.BuildMode = true;
-                inv.ItemDrops = true;
-
                 Inventory.AddInventory(inv);
             }
             #endregion
@@ -1440,13 +1580,6 @@ namespace Buildaria
                 i[51].SetDefaults("Hermes Boots");
 
                 Inventory inv = new Inventory(i, "Armor");
-
-                inv.ItemHax = true;
-                inv.GodMode = true;
-                inv.NPCs = false;
-                inv.BuildMode = true;
-                inv.ItemDrops = true;
-
                 Inventory.AddInventory(inv);
             }
             #endregion
@@ -1517,13 +1650,6 @@ namespace Buildaria
                 i[51].SetDefaults("Hermes Boots");
 
                 Inventory inv = new Inventory(i, "Misc Weapons");
-
-                inv.ItemHax = true;
-                inv.GodMode = true;
-                inv.NPCs = false;
-                inv.BuildMode = true;
-                inv.ItemDrops = true;
-
                 Inventory.AddInventory(inv);
             }
             #endregion
@@ -1588,13 +1714,6 @@ namespace Buildaria
                 i[51].SetDefaults("Hermes Boots");
 
                 Inventory inv = new Inventory(i, "Melee/Magic Weapons");
-
-                inv.ItemHax = true;
-                inv.GodMode = true;
-                inv.NPCs = false;
-                inv.BuildMode = true;
-                inv.ItemDrops = true;
-
                 Inventory.AddInventory(inv);
             }
             #endregion
@@ -1656,13 +1775,6 @@ namespace Buildaria
                 i[51].SetDefaults("Hermes Boots");
 
                 Inventory inv = new Inventory(i, "Misc + Accessories");
-
-                inv.ItemHax = true;
-                inv.GodMode = true;
-                inv.NPCs = false;
-                inv.BuildMode = true;
-                inv.ItemDrops = true;
-
                 Inventory.AddInventory(inv);
             }
             #endregion
@@ -1727,13 +1839,6 @@ namespace Buildaria
                 i[51].SetDefaults("Hermes Boots");
 
                 Inventory inv = new Inventory(i, "Vanity");
-
-                inv.ItemHax = true;
-                inv.GodMode = true;
-                inv.NPCs = false;
-                inv.BuildMode = true;
-                inv.ItemDrops = true;
-
                 Inventory.AddInventory(inv);
             }
             #endregion
@@ -1803,13 +1908,6 @@ namespace Buildaria
                 i[51].SetDefaults("Hermes Boots");
 
                 Inventory inv = new Inventory(i, "Consumables");
-
-                inv.ItemHax = true;
-                inv.GodMode = true;
-                inv.NPCs = false;
-                inv.BuildMode = true;
-                inv.ItemDrops = true;
-
                 Inventory.AddInventory(inv);
             }
             #endregion
@@ -1829,23 +1927,23 @@ namespace Buildaria
                 i[2].SetDefaults("Blue Phaseblade");
                 i[2].useStyle = 0;
 
-                i[3].SetDefaults("Copper Bar");
-                i[4].SetDefaults("Iron Bar");
-                i[5].SetDefaults("Silver Bar");
-                i[6].SetDefaults("Gold Bar");
-                i[7].SetDefaults("Demonite Bar");
-                i[8].SetDefaults("Meteorite Bar");
-                i[9].SetDefaults("Hellstone Bar");
+                i[3].SetDefaults("Amethyst");
+                i[4].SetDefaults("Diamond");
+                i[5].SetDefaults("Emerald");
+                i[6].SetDefaults("Ruby");
+                i[7].SetDefaults("Sapphire");
+                i[8].SetDefaults("Topaz");
+                i[9].SetDefaults("Cobweb");
 
                 // Row 2
-                i[11].SetDefaults("Amethyst");
-                i[12].SetDefaults("Diamond");
-                i[13].SetDefaults("Emerald");
-                i[14].SetDefaults("Ruby");
-                i[15].SetDefaults("Sapphire");
-                i[16].SetDefaults("Topaz");
-                i[17].SetDefaults("Gel");
-                i[18].SetDefaults("Cobweb");
+                i[11].SetDefaults("Copper Bar");
+                i[12].SetDefaults("Iron Bar");
+                i[13].SetDefaults("Silver Bar");
+                i[14].SetDefaults("Gold Bar");
+                i[15].SetDefaults("Demonite Bar");
+                i[16].SetDefaults("Meteorite Bar");
+                i[17].SetDefaults("Hellstone Bar");
+                i[18].SetDefaults("Gel");
                 i[19].SetDefaults("Silk");
 
                 // Row 3
@@ -1883,13 +1981,6 @@ namespace Buildaria
                 i[51].SetDefaults("Hermes Boots");
 
                 Inventory inv = new Inventory(i, "Crafting Materials");
-
-                inv.ItemHax = true;
-                inv.GodMode = true;
-                inv.NPCs = false;
-                inv.BuildMode = true;
-                inv.ItemDrops = true;
-
                 Inventory.AddInventory(inv);
             }
             #endregion
@@ -1947,13 +2038,6 @@ namespace Buildaria
                 i[51].SetDefaults("Hermes Boots");
 
                 Inventory inv = new Inventory(i, "Misc + Ammo");
-
-                inv.ItemHax = true;
-                inv.GodMode = true;
-                inv.NPCs = false;
-                inv.BuildMode = true;
-                inv.ItemDrops = true;
-
                 Inventory.AddInventory(inv); ;
             }
             #endregion
@@ -2006,13 +2090,6 @@ namespace Buildaria
                 i[51].SetDefaults("Hermes Boots");
 
                 Inventory inv = new Inventory(i, "Alchemy");
-
-                inv.ItemHax = true;
-                inv.GodMode = true;
-                inv.NPCs = false;
-                inv.BuildMode = true;
-                inv.ItemDrops = true;
-
                 Inventory.AddInventory(inv);
             }
             #endregion
@@ -2084,13 +2161,6 @@ namespace Buildaria
                 i[51].SetDefaults("Hermes Boots");
                 
                 Inventory inv = new Inventory(i, "Decor");
-
-                inv.ItemHax = true;
-                inv.GodMode = true;
-                inv.NPCs = false;
-                inv.BuildMode = true;
-                inv.ItemDrops = false;
-
                 Inventory.AddInventory(inv);
             }
             #endregion
@@ -2145,13 +2215,6 @@ namespace Buildaria
                 i[51].SetDefaults("Hermes Boots");
                 
                 Inventory inv = new Inventory(i, "Lighting/Storage");
-
-                inv.ItemHax = true;
-                inv.GodMode = true;
-                inv.NPCs = false;
-                inv.BuildMode = true;
-                inv.ItemDrops = false;
-
                 Inventory.AddInventory(inv);
             }
             #endregion
@@ -2197,13 +2260,6 @@ namespace Buildaria
                 i[51].SetDefaults("Hermes Boots");
 
                 Inventory inv = new Inventory(i, "Walls");
-
-                inv.ItemHax = true;
-                inv.GodMode = true;
-                inv.NPCs = false;
-                inv.BuildMode = true;
-                inv.ItemDrops = false;
-
                 Inventory.AddInventory(inv);
             }
             #endregion
@@ -2277,13 +2333,6 @@ namespace Buildaria
                 i[51].SetDefaults("Hermes Boots");
 
                 Inventory inv = new Inventory(i, "Building Items");
-
-                inv.ItemHax = true;
-                inv.GodMode = true;
-                inv.NPCs = false;
-                inv.BuildMode = true;
-                inv.ItemDrops = false;
-
                 Inventory.AddInventory(inv);
             }
             #endregion
@@ -2317,15 +2366,9 @@ namespace Buildaria
                 }
             }
 
-            buildMode = inv.BuildMode;
-            godMode = inv.GodMode;
-            itemHax = inv.ItemHax;
-            npcsEnabled = inv.NPCs;
-            itemsEnabled = inv.ItemDrops;
-
             if (displayMessages)
             {
-                Main.NewText("Loaded Inventory " + id + " (" + inv.Name + ")", 150, 100, 0);
+                Main.NewText("Loaded Inventory " + id + " (" + inv.Name + ")", Convert.ToByte(saveLoadInv[0]), Convert.ToByte(saveLoadInv[1]), Convert.ToByte(saveLoadInv[2]));
             }
 
             return inventoryType = id;
@@ -2357,16 +2400,9 @@ namespace Buildaria
                     Inventory.Inventories[id].Items[i].Name = player[myPlayer].armor[i - 44].name;
                 }
             }
-
-            inv.BuildMode = buildMode;
-            inv.GodMode = godMode;
-            inv.ItemHax = itemHax;
-            inv.NPCs = npcsEnabled;
-            inv.ItemDrops = itemsEnabled;
-
             if (displayMessages)
             {
-                Main.NewText("Saved Inventory " + id + " (" + inv.Name + ")", 150, 100, 0);
+                Main.NewText("Saved Inventory " + id + " (" + inv.Name + ")", Convert.ToByte(saveLoadInv[0]), Convert.ToByte(saveLoadInv[1]), Convert.ToByte(saveLoadInv[2]));
             }
 
             return inventoryType = id;
@@ -2481,5 +2517,16 @@ namespace Buildaria
         }
 
         #endregion 
+
+        #region OnExit Cleanup
+
+        /*protected override void OnExiting(object sender, EventArgs args)
+        {
+            // This happens when a user clicks the Exit option at the main menu.
+            // Nothing to see here, yet.
+            
+        }*/
+
+        #endregion
     }
 }

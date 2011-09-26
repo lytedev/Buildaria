@@ -4,7 +4,7 @@
 * You could very possibly screw up your world. Make constant backups of your world or use a new world entirely.
 
 
-# Buildaria 1.7.1
+# Buildaria 1.7.2
 
 Buildaria is a Terraira mod geared towards map makers.
 
@@ -29,14 +29,19 @@ Buildaria is a Terraira mod geared towards map makers.
 * Output messages are color coded based on event type.
 * Item drops are toggle-able.
 * Ability to set the default spawn point with the press of a button.
+* Display the current X,Y coordinates of your mouse with the press of a button.
+* All toggle-able defaults and chat output colors can be customized in an XML configuration file.
 
 
 ## Chat Output Colors
+
+If you are using a modified configuration file, the colors below may not be accurate.
 
 * `Blue` - Selection/Copy/Paste/Fills/Drains
 * `Brown` - Undo
 * `Yellow Orange` - Load/Save Inventories
 * `Red` - Set Spawn Point
+* `Violet` - Coordinate Display Message
 * `White` - Display Messages Toggle
 * `Yellow` - Light Me Toggle
 * `Green` - All Other Toggles
@@ -64,6 +69,7 @@ Buildaria is a Terraira mod geared towards map makers.
 * `K` - Toggles output chat messages.
 * `F` - Toggles a light aura for easier mining.
 * `L` - Set the currently moused-over area as the default spawn location.
+* `I` - Display the current X,Y location of your mouse (displays even if message display is toggled off).
 * `[` and `]` - Switch inventories.
 
 

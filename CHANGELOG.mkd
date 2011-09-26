@@ -1,6 +1,17 @@
 Buildaria’s changelog
 ===================
 
+
+1.7.2 (September 25th, 2011)
+-------------------------------------------------
+* Ability to show your mouse's current X,Y location added (default key: `I`).
+* Materials inventory shuffled around. Gems are now on the hotbar since they are placeable.
+* Exiting ghost mode now makes you immediately susceptible to damage (if god mode is off, obviously). ([#6](https://github.com/septor/Buildaria/issues/6))
+* Most non-placeable/tool type items have had their speed/power/etc normalized when itemHax is on.
+* Default toggles and chat out put colors are now all managed in a configuration file. ([#2](https://github.com/septor/Buildaria/issues/2))
+* Toggles and the like should no longer function if `Ctrl` or `Shift` are pressed (when they aren't needed). ([#13](https://github.com/septor/Buildaria/issues/13))
+
+
 1.7.1 (September 15th, 2011)
 -------------------------------------------------
 * Output chat messages are now color coded. See the readme file for a chart.
