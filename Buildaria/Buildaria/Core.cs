@@ -183,30 +183,31 @@ namespace Buildaria
                 GenerateConfigFile();
             }
 
-            screenHeight = 720;
-            screenWidth = 1280;
+            #region Fail Safe Config Data (these are initially set, and then overridden if they exist in the config file)
 
-            base.Initialize();
-            spriteBatch = new SpriteBatch(base.GraphicsDevice);
+            // Defaults
+            itemHax = true;
+            godMode = true;
+            npcsEnabled = false;
+            hover = false;
+            buildMode = true;
+            itemsEnabled = false;
+            displayMessages = true;
+            lightMe = true;
 
-            Texture2D t = new Texture2D(base.GraphicsDevice, 1, 1);
-            t.SetData<Color>(new Color[] { new Color(255, 255, 255, 255) });
-            DefaultTexture = t;
-            TileSize = new Vector2(16, 16);
+            // Chat Output Colors
+            displayMessagesMsg = "255,255,255".Split(',');
+            otherToggles = "0,255,0".Split(',');
+            selectionMessages = "50,50,255".Split(',');
+            undoMessage = "150,50,50".Split(',');
+            saveLoadInv = "150,100,0".Split(',');
+            setSpawnPoint = "255,0,0".Split(',');
+            lightMeToggle = "255,255,0".Split(',');
+            mouseCoords = "138,43,226".Split(',');
 
-            Window.Title = "Buildaria v" + VersionString;
-            Main.versionNumber = Window.Title + " on Terraria " + Main.versionNumber;
+            #endregion
 
-            SelectionOverlay = new Color(255, 100, 0, 50);
-
-            MemoryStream stream = new MemoryStream();
-            Assembly asm = Assembly.Load(new AssemblyName("Terraria"));
-            WorldGenWrapper = asm.GetType("Terraria.WorldGen");
-            MainWrapper = asm.GetType("Terraria.Main");
-
-            Inventory.LoadInventories();
-
-            #region Gather Config Data
+            #region Gather Config Data (override the failsafes)
 
             XmlReaderSettings readerSettings = new XmlReaderSettings { IgnoreComments = true, IgnoreWhitespace = true };
             XmlReader reader = XmlReader.Create("BuildariaConfig.xml", readerSettings);
@@ -244,6 +245,30 @@ namespace Buildaria
             }
 
             #endregion
+
+            screenHeight = 720;
+            screenWidth = 1280;
+
+            base.Initialize();
+            spriteBatch = new SpriteBatch(base.GraphicsDevice);
+
+            Texture2D t = new Texture2D(base.GraphicsDevice, 1, 1);
+            t.SetData<Color>(new Color[] { new Color(255, 255, 255, 255) });
+            DefaultTexture = t;
+            TileSize = new Vector2(16, 16);
+
+            Window.Title = "Buildaria v" + VersionString;
+            Main.versionNumber = Window.Title + " on Terraria " + Main.versionNumber;
+
+            SelectionOverlay = new Color(255, 100, 0, 50);
+
+            MemoryStream stream = new MemoryStream();
+            Assembly asm = Assembly.Load(new AssemblyName("Terraria"));
+            WorldGenWrapper = asm.GetType("Terraria.WorldGen");
+            MainWrapper = asm.GetType("Terraria.Main");
+
+            Inventory.LoadInventories();
+
         }
 
         protected override void Update(GameTime gameTime)
@@ -309,27 +334,25 @@ namespace Buildaria
 
                                 #endregion
 
-                                #region Placeable Gems!
+                                #region Placeable Items!
 
-                                int[] cuitems;
-                                string[] cuitname;
-
-                                cuitems = new int[6] { 63, 64, 65, 66, 67, 68 };
-                                cuitname = new string[6]    
+                                // ItemName_TileID
+                                string[] placeableItems = new string[]    
                                 {
-                                    "Sapphire",
-                                    "Ruby",
-                                    "Emerald",
-                                    "Topaz",
-                                    "Amethyst",
-                                    "Diamond",
+                                    "Sapphire_63",
+                                    "Ruby_64",
+                                    "Emerald_65",
+                                    "Topaz_66",
+                                    "Amethyst_67",
+                                    "Diamond_68",
                                 };
-                                for (int j = 0; j < cuitname.Length; j++)
+                                for (int j = 0; j < placeableItems.Length; j++)
                                 {
-                                    if (cuitname[j] == it.name)
+                                    string[] pi = placeableItems[j].Split('_');
+                                    if (pi[0] == it.name)
                                     {
                                         it.useTime = 0;
-                                        it.createTile = cuitems[j];
+                                        it.createTile = Convert.ToByte(pi[1]);
                                     }
 
                                 }
@@ -371,7 +394,6 @@ namespace Buildaria
                                         it.pick = 90;
                                         it.useTime = 12;
                                     }
-
                                     // Slow down, Spider Man.
                                     if (it.name == "Ivy Whip")
                                     {
@@ -726,7 +748,7 @@ namespace Buildaria
                             break;
                         }
                     }
-                    if (playerInventory || !buildMode || editSign) // Inventory is open
+                    if (playerInventory || !buildMode || editSign)
                         allowStuff = false;
 
                     #endregion
