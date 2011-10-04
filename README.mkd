@@ -1,6 +1,6 @@
 ## WARNINGS -- READ THIS FIRST:
 * Joining multiplayer games is disabled while running Buildaria.
-* Any character you load while running Buildaria will have their *INVENTORY ERASED AND THEIR STATS MODIFIED PERMANENTLY*.
+* Any character you load while running Buildaria will have their **INVENTORY ERASED AND THEIR STATS MODIFIED PERMANENTLY**.
 * You could very possibly screw up your world. Make constant backups of your world or use a new world entirely.
 
 
@@ -44,7 +44,9 @@ If you are using a modified configuration file, the colors below may not be accu
 * `Violet` - Coordinate Display Message
 * `White` - Display Messages Toggle
 * `Yellow` - Light Me Toggle
+* `Cyan` - Teleport Messages
 * `Green` - All Other Toggles
+* `Pistachio Green` - System Time Display
 
 
 ## Controls
@@ -69,9 +71,33 @@ If you are using a modified configuration file, the colors below may not be accu
 * `K` - Toggles output chat messages.
 * `F` - Toggles a light aura for easier mining.
 * `L` - Set the currently moused-over area as the default spawn location.
-* `I` - Display the current X,Y location of your mouse (displays even if message display is toggled off).
+* `I` - Display the current X,Y location of your mouse. (displays even if message display is toggled off)
 * `[` and `]` - Switch inventories.
 
+* `Ctrl-T` - Displays the current time according to your computer. (displays even if message display is toggled off)
+
+* `F1` through `F*` - Built-in Teleport Locations. See below for what they are.
+* `Ctrl-F1` through `Ctrl-F12` - Custom Teleport Locations. Add these to the configuration file. See below for the format to use.
+
+
+## Teleportation
+
+You can teleport to locations on your map by pressing the function (eg: `F1`) keys. Below is a list of built-in locations, the list will grow as more locations are added:
+
+* `F1` - Default Spawn Location
+
+Custom locations can be set up in the configuration file and you can get to these by pressing `Ctrl` following by the corresponding function key. Below is how you need to add them to the configuration file:
+
+	<customTeleports>
+		<F1>Location Name,X,Y</F1>
+		<F2>Location Name,X,Y</F2>
+		<F3>Location Name,X,Y</F3>
+		<F4>Location Name,X,Y</F4>
+	</customTeleports>
+
+You can obtain the X and Y integers in-game by pressing `I`. Anything up to F12 will be accepted and usable. If you add more (eg: `F13`) it will be ignored.
+
+**It is very important that you follow the above syntax when entering custom locations! Failure to do so will result in Buildaria crashing!**
 
 ## Items Explained
 

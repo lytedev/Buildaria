@@ -2,6 +2,14 @@ Buildaria’s changelog
 ===================
 
 
+1.7.3 (October 3rd, 2011)
+-------------------------------------------------
+* If a configuration item is missing from the file there is now fall back code in place.
+* You can now enable autosave on inventory switch in the configuration file.
+* Partial teleporting support has been added. View the README file for more information.
+* Added system time display. No more windowed mode! (default key: `Ctrl-T`).
+
+
 1.7.2 (September 25th, 2011)
 -------------------------------------------------
 * Ability to show your mouse's current X,Y location added (default key: `I`).

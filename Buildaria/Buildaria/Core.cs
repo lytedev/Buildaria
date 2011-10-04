@@ -73,10 +73,13 @@ namespace Buildaria
         KeyboardState oldKeyState = Keyboard.GetState();
 
         // default settings booleans
-        bool itemHax, godMode, npcsEnabled, hover, buildMode, itemsEnabled, displayMessages, lightMe;
+        bool itemHax, godMode, npcsEnabled, hover, buildMode, itemsEnabled, displayMessages, lightMe, saveInventoriesOnSwitch;
 
         // chat output strings
-        string[] displayMessagesMsg, otherToggles, selectionMessages, undoMessage, saveLoadInv, setSpawnPoint, lightMeToggle, mouseCoords;
+        string[] displayMessagesMsg, otherToggles, selectionMessages, undoMessage, saveLoadInv, setSpawnPoint, lightMeToggle, mouseCoords, teleportMessages, timeMessage;
+
+        // custom teleport locations
+        string[] ctlF1, ctlF2, ctlF3, ctlF4, ctlF5, ctlF6, ctlF7, ctlF8, ctlF9, ctlF10, ctlF11, ctlF12;
 
         #endregion
 
@@ -120,7 +123,8 @@ namespace Buildaria
                     "buildMode_true",
                     "itemsEnabled_false",
                     "displayMessages_true",
-                    "lightMe_true"
+                    "lightMe_true",
+                    "saveInventoriesOnSwitch_false"
                 };
 
                 foreach (string defaults in defaultSettings)
@@ -148,7 +152,9 @@ namespace Buildaria
                     "saveLoadInv_150,100,0",
                     "setSpawnPoint_255,0,0",
                     "lightMeToggle_255,255,0",
-                    "mouseCoords_138,43,226"
+                    "mouseCoords_138,43,226",
+                    "teleportMessages_0,255,255",
+                    "timeMessage_147,197,114"
                 };
 
                 foreach (string cColors in chatColors)
@@ -194,6 +200,7 @@ namespace Buildaria
             itemsEnabled = false;
             displayMessages = true;
             lightMe = true;
+            saveInventoriesOnSwitch = false;
 
             // Chat Output Colors
             displayMessagesMsg = "255,255,255".Split(',');
@@ -204,6 +211,8 @@ namespace Buildaria
             setSpawnPoint = "255,0,0".Split(',');
             lightMeToggle = "255,255,0".Split(',');
             mouseCoords = "138,43,226".Split(',');
+            teleportMessages = "0,255,255".Split(',');
+            timeMessage = "147,197,114".Split(',');
 
             #endregion
 
@@ -226,6 +235,7 @@ namespace Buildaria
                     if (reader.Name == "itemsEnabled") itemsEnabled = Convert.ToBoolean(reader.ReadString());
                     if (reader.Name == "displayMessages") displayMessages = Convert.ToBoolean(reader.ReadString());
                     if (reader.Name == "lightMe") lightMe = Convert.ToBoolean(reader.ReadString());
+                    if (reader.Name == "saveInventoriesOnSwitch") saveInventoriesOnSwitch = Convert.ToBoolean(reader.ReadString());
 
                     #endregion
 
@@ -239,6 +249,25 @@ namespace Buildaria
                     if (reader.Name == "setSpawnPoint") setSpawnPoint = reader.ReadString().Split(',');
                     if (reader.Name == "lightMeToggle") lightMeToggle = reader.ReadString().Split(',');
                     if (reader.Name == "mouseCoords") mouseCoords = reader.ReadString().Split(',');
+                    if (reader.Name == "teleportMessages") teleportMessages = reader.ReadString().Split(',');
+                    if (reader.Name == "timeMessage") timeMessage = reader.ReadString().Split(',');
+
+                    #endregion
+
+                    #region Custom Teleport Locations
+
+                    if (reader.Name == "F1") ctlF1 = reader.ReadString().Split(',');
+                    if (reader.Name == "F2") ctlF2 = reader.ReadString().Split(',');
+                    if (reader.Name == "F3") ctlF3 = reader.ReadString().Split(',');
+                    if (reader.Name == "F4") ctlF4 = reader.ReadString().Split(',');
+                    if (reader.Name == "F5") ctlF5 = reader.ReadString().Split(',');
+                    if (reader.Name == "F6") ctlF6 = reader.ReadString().Split(',');
+                    if (reader.Name == "F7") ctlF7 = reader.ReadString().Split(',');
+                    if (reader.Name == "F8") ctlF8 = reader.ReadString().Split(',');
+                    if (reader.Name == "F9") ctlF9 = reader.ReadString().Split(',');
+                    if (reader.Name == "F10") ctlF10 = reader.ReadString().Split(',');
+                    if (reader.Name == "F11") ctlF11 = reader.ReadString().Split(',');
+                    if (reader.Name == "F12") ctlF12 = reader.ReadString().Split(',');
 
                     #endregion
                 }
@@ -698,6 +727,198 @@ namespace Buildaria
 
                 #endregion
 
+                #region Built-in Teleport Locations (bound to F1-F?)
+
+                // F1 - Default Spawn Location
+                if (keyState.IsKeyDown(Keys.F1) && oldKeyState.IsKeyUp(Keys.F1) && !editSign && !shift && !ctrl)
+                {
+                    int x = (int)((Main.spawnTileX * 16f));
+                    int y = (int)((Main.spawnTileY * 16f) - 16f);
+
+                    player[myPlayer].position = new Vector2(x, y);
+                    Main.NewText("You have been teleported to the Default Spawn Location.", Convert.ToByte(teleportMessages[0]), Convert.ToByte(teleportMessages[1]), Convert.ToByte(teleportMessages[2]));
+                }
+
+                // F2 - Dungeon
+                if (keyState.IsKeyDown(Keys.F2) && oldKeyState.IsKeyUp(Keys.F2) && !editSign && !shift && !ctrl)
+                {
+                    // not yet implemented
+                }
+
+                // Ocean teleports need further tweaking..
+
+                // F3 - Right Ocean
+                /*if (keyState.IsKeyDown(Keys.F3) && oldKeyState.IsKeyUp(Keys.F3) && !editSign && !shift && !ctrl)
+                {
+                    int x = (int)((Main.rightWorld * 16f) + 2048f);
+                    int y = (int)((Main.spawnTileY * 16f) - 16f);
+
+                    hover = true;
+                    player[myPlayer].position = new Vector2(x, y);
+                    Main.NewText("You have been teleported to the Right Ocean.", Convert.ToByte(teleportMessages[0]), Convert.ToByte(teleportMessages[1]), Convert.ToByte(teleportMessages[2]));
+                }
+
+                // F4 - Left Ocean
+                if (keyState.IsKeyDown(Keys.F4) && oldKeyState.IsKeyUp(Keys.F4) && !editSign && !shift && !ctrl)
+                {
+                    int x = (int)((Main.leftWorld * 16f) + 2048f);
+                    int y = (int)((Main.spawnTileY * 16f) - 16f);
+
+                    hover = true;
+                    player[myPlayer].position = new Vector2(x, y);
+                    Main.NewText("You have been teleported to the Left Ocean.", Convert.ToByte(teleportMessages[0]), Convert.ToByte(teleportMessages[1]), Convert.ToByte(teleportMessages[2]));
+                }*/
+
+                #endregion
+
+                #region Custom Teleport Locations (bound to Ctrl + F1-F12)
+
+                if (ctlF1 != null)
+                {
+                    if (ctrl && keyState.IsKeyDown(Keys.F1) && oldKeyState.IsKeyUp(Keys.F1) && !editSign && !shift)
+                    {
+                        int x = (int)((Convert.ToSingle(ctlF1[1]) * 16f));
+                        int y = (int)((Convert.ToSingle(ctlF1[2]) * 16f) - 16f);
+
+                        player[myPlayer].position = new Vector2(x, y);
+                        Main.NewText("You have been teleported to " + ctlF1[0], Convert.ToByte(teleportMessages[0]), Convert.ToByte(teleportMessages[1]), Convert.ToByte(teleportMessages[2]));
+                    }
+                }
+
+                if (ctlF2 != null)
+                {
+                    if (ctrl && keyState.IsKeyDown(Keys.F2) && oldKeyState.IsKeyUp(Keys.F2) && !editSign && !shift)
+                    {
+                        int x = (int)((Convert.ToByte(ctlF2[1]) * 16f));
+                        int y = (int)((Convert.ToByte(ctlF2[2]) * 16f) - 16f);
+
+                        player[myPlayer].position = new Vector2(x, y);
+                        Main.NewText("You have been teleported to " + ctlF2[0], Convert.ToByte(teleportMessages[0]), Convert.ToByte(teleportMessages[1]), Convert.ToByte(teleportMessages[2]));
+                    }
+                }
+
+                if (ctlF3 != null)
+                {
+                    if (ctrl && keyState.IsKeyDown(Keys.F3) && oldKeyState.IsKeyUp(Keys.F3) && !editSign && !shift)
+                    {
+                        int x = (int)((Convert.ToByte(ctlF3[1]) * 16f));
+                        int y = (int)((Convert.ToByte(ctlF3[2]) * 16f) - 16f);
+
+                        player[myPlayer].position = new Vector2(x, y);
+                        Main.NewText("You have been teleported to " + ctlF3[0], Convert.ToByte(teleportMessages[0]), Convert.ToByte(teleportMessages[1]), Convert.ToByte(teleportMessages[2]));
+                    }
+                }
+
+                if (ctlF4 != null)
+                {
+                    if (ctrl && keyState.IsKeyDown(Keys.F4) && oldKeyState.IsKeyUp(Keys.F4) && !editSign && !shift)
+                    {
+                        int x = (int)((Convert.ToByte(ctlF4[1]) * 16f));
+                        int y = (int)((Convert.ToByte(ctlF4[2]) * 16f) - 16f);
+
+                        player[myPlayer].position = new Vector2(x, y);
+                        Main.NewText("You have been teleported to " + ctlF4[0], Convert.ToByte(teleportMessages[0]), Convert.ToByte(teleportMessages[1]), Convert.ToByte(teleportMessages[2]));
+                    }
+                }
+
+                if (ctlF5 != null)
+                {
+                    if (ctrl && keyState.IsKeyDown(Keys.F5) && oldKeyState.IsKeyUp(Keys.F5) && !editSign && !shift)
+                    {
+                        int x = (int)((Convert.ToByte(ctlF5[1]) * 16f));
+                        int y = (int)((Convert.ToByte(ctlF5[2]) * 16f) - 16f);
+
+                        player[myPlayer].position = new Vector2(x, y);
+                        Main.NewText("You have been teleported to " + ctlF5[0], Convert.ToByte(teleportMessages[0]), Convert.ToByte(teleportMessages[1]), Convert.ToByte(teleportMessages[2]));
+                    }
+                }
+
+                if (ctlF6 != null)
+                {
+                    if (ctrl && keyState.IsKeyDown(Keys.F6) && oldKeyState.IsKeyUp(Keys.F6) && !editSign && !shift)
+                    {
+                        int x = (int)((Convert.ToByte(ctlF6[1]) * 16f));
+                        int y = (int)((Convert.ToByte(ctlF6[2]) * 16f) - 16f);
+
+                        player[myPlayer].position = new Vector2(x, y);
+                        Main.NewText("You have been teleported to " + ctlF6[0], Convert.ToByte(teleportMessages[0]), Convert.ToByte(teleportMessages[1]), Convert.ToByte(teleportMessages[2]));
+                    }
+                }
+
+                if (ctlF7 != null)
+                {
+                    if (ctrl && keyState.IsKeyDown(Keys.F7) && oldKeyState.IsKeyUp(Keys.F7) && !editSign && !shift)
+                    {
+                        int x = (int)((Convert.ToByte(ctlF7[1]) * 16f));
+                        int y = (int)((Convert.ToByte(ctlF7[2]) * 16f) - 16f);
+
+                        player[myPlayer].position = new Vector2(x, y);
+                        Main.NewText("You have been teleported to " + ctlF7[0], Convert.ToByte(teleportMessages[0]), Convert.ToByte(teleportMessages[1]), Convert.ToByte(teleportMessages[2]));
+                    }
+                }
+
+                if (ctlF8 != null)
+                {
+                    if (ctrl && keyState.IsKeyDown(Keys.F8) && oldKeyState.IsKeyUp(Keys.F8) && !editSign && !shift)
+                    {
+                        int x = (int)((Convert.ToByte(ctlF8[1]) * 16f));
+                        int y = (int)((Convert.ToByte(ctlF8[2]) * 16f) - 16f);
+
+                        player[myPlayer].position = new Vector2(x, y);
+                        Main.NewText("You have been teleported to " + ctlF8[0], Convert.ToByte(teleportMessages[0]), Convert.ToByte(teleportMessages[1]), Convert.ToByte(teleportMessages[2]));
+                    }
+                }
+
+                if (ctlF9 != null)
+                {
+                    if (ctrl && keyState.IsKeyDown(Keys.F9) && oldKeyState.IsKeyUp(Keys.F9) && !editSign && !shift)
+                    {
+                        int x = (int)((Convert.ToByte(ctlF9[1]) * 16f));
+                        int y = (int)((Convert.ToByte(ctlF9[2]) * 16f) - 16f);
+
+                        player[myPlayer].position = new Vector2(x, y);
+                        Main.NewText("You have been teleported to " + ctlF9[0], Convert.ToByte(teleportMessages[0]), Convert.ToByte(teleportMessages[1]), Convert.ToByte(teleportMessages[2]));
+                    }
+                }
+
+                if (ctlF10 != null)
+                {
+                    if (ctrl && keyState.IsKeyDown(Keys.F10) && oldKeyState.IsKeyUp(Keys.F10) && !editSign && !shift)
+                    {
+                        int x = (int)((Convert.ToByte(ctlF10[1]) * 16f));
+                        int y = (int)((Convert.ToByte(ctlF10[2]) * 16f) - 16f);
+
+                        player[myPlayer].position = new Vector2(x, y);
+                        Main.NewText("You have been teleported to " + ctlF10[0], Convert.ToByte(teleportMessages[0]), Convert.ToByte(teleportMessages[1]), Convert.ToByte(teleportMessages[2]));
+                    }
+                }
+
+                if (ctlF11 != null)
+                {
+                    if (ctrl && keyState.IsKeyDown(Keys.F11) && oldKeyState.IsKeyUp(Keys.F11) && !editSign && !shift)
+                    {
+                        int x = (int)((Convert.ToByte(ctlF11[1]) * 16f));
+                        int y = (int)((Convert.ToByte(ctlF11[2]) * 16f) - 16f);
+
+                        player[myPlayer].position = new Vector2(x, y);
+                        Main.NewText("You have been teleported to " + ctlF11[0], Convert.ToByte(teleportMessages[0]), Convert.ToByte(teleportMessages[1]), Convert.ToByte(teleportMessages[2]));
+                    }
+                }
+
+                if (ctlF12 != null)
+                {
+                    if (ctrl && keyState.IsKeyDown(Keys.F12) && oldKeyState.IsKeyUp(Keys.F12) && !editSign && !shift)
+                    {
+                        int x = (int)((Convert.ToByte(ctlF12[1]) * 16f));
+                        int y = (int)((Convert.ToByte(ctlF12[2]) * 16f) - 16f);
+
+                        player[myPlayer].position = new Vector2(x, y);
+                        Main.NewText("You have been teleported to " + ctlF12[0], Convert.ToByte(teleportMessages[0]), Convert.ToByte(teleportMessages[1]), Convert.ToByte(teleportMessages[2]));
+                    }
+                }
+
+                #endregion
+
                 #region Display Coordinates
 
                 if (keyState.IsKeyDown(Keys.I) && oldKeyState.IsKeyUp(Keys.I) && !editSign && !ctrl && !shift)
@@ -706,6 +927,15 @@ namespace Buildaria
                     int y = (int)((Main.mouseState.Y + Main.screenPosition.Y) / 16f);
 
                     Main.NewText("Your mouse currently points to " + x + ", " + y, Convert.ToByte(mouseCoords[0]), Convert.ToByte(mouseCoords[1]), Convert.ToByte(mouseCoords[2]));
+                }
+
+                #endregion
+
+                #region System DateTime Display
+
+                if (ctrl && keyState.IsKeyDown(Keys.T) && oldKeyState.IsKeyUp(Keys.T) && !editSign && !shift)
+                {
+                    Main.NewText("The current system time is " + DateTime.Now.ToString("t"), Convert.ToByte(timeMessage[0]), Convert.ToByte(timeMessage[1]), Convert.ToByte(timeMessage[2]));
                 }
 
                 #endregion
@@ -796,9 +1026,6 @@ namespace Buildaria
 
                     if (!editSign && !ctrl && !shift)
                     {
-                        // Toggle this to true if you wish for inventories to be saved everytime you switch them.
-                        bool saveInventoriesOnSwitch = false;
-
                         if (keyState.IsKeyDown(Keys.OemOpenBrackets) && !oldKeyState.IsKeyDown(Keys.OemOpenBrackets) && !editSign)
                         {
                             if (saveInventoriesOnSwitch)
