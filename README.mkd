@@ -4,7 +4,7 @@
 * You could very possibly screw up your world. Make constant backups of your world or use a new world entirely.
 
 
-# Buildaria 1.7.2
+# Buildaria 1.7.3
 
 Buildaria is a Terraira mod geared towards map makers.
 
@@ -31,6 +31,7 @@ Buildaria is a Terraira mod geared towards map makers.
 * Ability to set the default spawn point with the press of a button.
 * Display the current X,Y coordinates of your mouse with the press of a button.
 * All toggle-able defaults and chat output colors can be customized in an XML configuration file.
+* Teleportation System! Get to areas of your map quickly just by pressing a button!
 
 
 ## Chat Output Colors
@@ -86,7 +87,7 @@ You can teleport to locations on your map by pressing the function (eg: `F1`) ke
 
 * `F1` - Default Spawn Location
 
-Custom locations can be set up in the configuration file and you can get to these by pressing `Ctrl` following by the corresponding function key. Below is how you need to add them to the configuration file:
+Custom locations can be set up in the configuration file and you can get to these by pressing `Ctrl` followed by the corresponding function key. Below is how you need to add them to the configuration file:
 
 	<customTeleports>
 		<F1>Location Name,X,Y</F1>
