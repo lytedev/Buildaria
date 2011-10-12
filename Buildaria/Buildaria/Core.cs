@@ -72,13 +72,8 @@ namespace Buildaria
         Vector2 lastPosition = Vector2.Zero;
         KeyboardState oldKeyState = Keyboard.GetState();
 
-        // default settings booleans
         bool itemHax, godMode, npcsEnabled, hover, buildMode, itemsEnabled, displayMessages, lightMe, saveInventoriesOnSwitch;
-
-        // chat output strings
         string[] displayMessagesMsg, otherToggles, selectionMessages, undoMessage, saveLoadInv, setSpawnPoint, lightMeToggle, mouseCoords, teleportMessages, timeMessage;
-
-        // custom teleport locations
         string[] ctlF1, ctlF2, ctlF3, ctlF4, ctlF5, ctlF6, ctlF7, ctlF8, ctlF9, ctlF10, ctlF11, ctlF12;
 
         #endregion
@@ -284,6 +279,8 @@ namespace Buildaria
             Texture2D t = new Texture2D(base.GraphicsDevice, 1, 1);
             t.SetData<Color>(new Color[] { new Color(255, 255, 255, 255) });
             DefaultTexture = t;
+            
+            
             TileSize = new Vector2(16, 16);
 
             Window.Title = "Buildaria v" + VersionString;
@@ -297,7 +294,6 @@ namespace Buildaria
             MainWrapper = asm.GetType("Terraria.Main");
 
             Inventory.LoadInventories();
-
         }
 
         protected override void Update(GameTime gameTime)
@@ -701,6 +697,7 @@ namespace Buildaria
                     player[myPlayer].canRocket = true;
                     player[myPlayer].fallStart = (int)player[myPlayer].position.Y;
                     player[myPlayer].accFlipper = true;
+                    player[myPlayer].AddBuff(9, 1, false); // Spelunker effect
                 }
                 else
                 {
@@ -940,12 +937,12 @@ namespace Buildaria
 
                 #endregion
 
-                #region Light Me (unlimited Shine Potion buff)
+                #region Light Me (unlimited Shine Potion & Night Owl Potion buff)
 
                 if (keyState.IsKeyDown(Keys.F) && !oldKeyState.IsKeyDown(Keys.F) && !editSign && !ctrl && !shift)
                 {
                     lightMe = !lightMe;
-                                        
+
                     if (displayMessages)
                     {
                         Main.NewText("Light Me = " + lightMe, Convert.ToByte(lightMeToggle[0]), Convert.ToByte(lightMeToggle[1]), Convert.ToByte(lightMeToggle[2]));
@@ -954,9 +951,10 @@ namespace Buildaria
                 }
                 if (lightMe)
                 {
-                    player[myPlayer].AddBuff(11, 1, false);
-                }       
-                
+                    player[myPlayer].AddBuff(11, 1, false); // Shine effect
+                    player[myPlayer].AddBuff(12, 1, false); // Night Owl effect
+                }
+
                 #endregion
 
                 bool allowStuff = true; // Disallows most buildaria functionality in-game
