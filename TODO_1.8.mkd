@@ -1,0 +1,10 @@
+﻿# WHAT?
+
+This list will bring Buildaria to 1.8, and will allow it to fully work with the 1.1 update of Terraria.
+
+This list will be updated many times. Once it has all I want to do on it, I will remove this line of text.
+
+## TODO
+
+* Add all new items to the inventories. This will require many changes to the current inventories. **Prepare to remove your existing Inventories.xml file!**
+* Include the rule accessory on new characters. Possible toggle action.
