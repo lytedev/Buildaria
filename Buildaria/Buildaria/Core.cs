@@ -325,7 +325,7 @@ namespace Buildaria
                     {
                         Item it = player[myPlayer].inventory[i];
 
-                        if (i == 10)
+                        if (i == 39)
                         {
                             player[myPlayer].inventory[i].SetDefaults(0);
                             player[myPlayer].inventory[i].name = "";
@@ -1773,7 +1773,7 @@ namespace Buildaria
 
         public static void CreateInventories()
         {
-            // i[10] is now the trash slot. DO NOT place an item there, it will get overwritten and will cause you frustration!!
+            // i[39] is now the trash slot. DO NOT place an item there, it will get overwritten and will cause you frustration!!
 
             #region Blank
             {
@@ -2509,25 +2509,32 @@ namespace Buildaria
                 i[5].SetDefaults("Wood Wall");
                 i[6].SetDefaults("Gray Brick Wall");
                 i[7].SetDefaults("Red Brick Wall");
+                i[8].SetDefaults("Glass Wall");
+                i[9].SetDefaults("Planked Wall");
 
                 // Row 2
-                i[11].SetDefaults("Copper Brick Wall");
-                i[12].SetDefaults("Silver Brick Wall");
-                i[13].SetDefaults("Gold Brick Wall");
-                i[14].SetDefaults("Obsidian Brick Wall");
-                i[15].SetDefaults("Pink Brick Wall");
-                i[16].SetDefaults("Green Brick Wall");
-                i[17].SetDefaults("Blue Brick Wall");
+                i[10].SetDefaults("Copper Brick Wall");
+                i[11].SetDefaults("Silver Brick Wall");
+                i[12].SetDefaults("Gold Brick Wall");
+                i[13].SetDefaults("Obsidian Brick Wall");
+                i[14].SetDefaults("Pink Brick Wall");
+                i[15].SetDefaults("Green Brick Wall");
+                i[16].SetDefaults("Blue Brick Wall");
+
+                // Row 3
+                i[20].SetDefaults("Cobalt Brick Wall");
+                i[21].SetDefaults("Iridescent Brick Wall");
+                i[22].SetDefaults("Mythril Brick Wall");
+                i[23].SetDefaults("Pearlstone Brick Wall");
+                i[24].SetDefaults("Mudstone Brick Wall");
 
                 // Equipment
                 i[44].SetDefaults("Sunglasses");
 
                 // Accessories
-                i[47].SetDefaults("Cloud in a Bottle");
-                i[48].SetDefaults("Shiny Red Balloon");
-                i[49].SetDefaults("Rocket Boots");
-                i[50].SetDefaults("Lucky Horseshoe");
-                i[51].SetDefaults("Hermes Boots");
+                i[47].SetDefaults("Cloud in a Balloon");
+                i[48].SetDefaults("Spectre Boots");
+                i[49].SetDefaults("Obsidian Horseshoe");
 
                 Inventory inv = new Inventory(i, "Walls");
                 Inventory.AddInventory(inv);
