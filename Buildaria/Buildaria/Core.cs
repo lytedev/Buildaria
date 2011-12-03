@@ -119,7 +119,7 @@ namespace Buildaria
                     "itemsEnabled_false",
                     "displayMessages_true",
                     "lightMe_true",
-                    "saveInventoriesOnSwitch_false"
+                    "saveInventoriesOnSwitch_false",
                     "gridMe_false"
                 };
 
@@ -676,7 +676,7 @@ namespace Buildaria
 
                 #endregion
 
-#region Grid (ruler)
+				#region Grid (ruler)
                 
                 if (keyState.IsKeyDown(Keys.R) && oldKeyState.IsKeyUp(Keys.R) && !editSign && !ctrl && !shift)
                 {
@@ -711,6 +711,8 @@ namespace Buildaria
                 {
                     player[myPlayer].accWatch = 3;
                     player[myPlayer].accDepthMeter = 3;
+                    player[myPlayer].accCompass = 3;
+                    player[myPlayer].accFlipper = true;
                     player[myPlayer].statLife = 400;
                     player[myPlayer].statMana = 200;
                     player[myPlayer].dead = false;
@@ -718,7 +720,6 @@ namespace Buildaria
                     player[myPlayer].rocketTime = 1000;
                     player[myPlayer].canRocket = true;
                     player[myPlayer].fallStart = (int)player[myPlayer].position.Y;
-                    player[myPlayer].accFlipper = true;
                     player[myPlayer].AddBuff(9, 1, false); // Spelunker effect
                 }
                 else
