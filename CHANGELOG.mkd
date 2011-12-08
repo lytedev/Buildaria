@@ -2,6 +2,19 @@ Buildaria’s changelog
 ===================
 
 
+1.8 (December 8th, 2011)
+-------------------------------------------------
+* Night Owl effects added to Light On functionality. ([#18](https://github.com/septor/Buildaria/issues/18))
+* Spelunker effects added to God Mode. ([#18](https://github.com/septor/Buildaria/issues/18))
+* Ruler accessory can now be toggled on and off. (default key: `R`). [#14](https://github.com/septor/Buildaria/issues/14))
+* Compass information is now displayed during God Mode.
+* Trash slot moved back to the bottom right of the inventory.
+* Inventories revamped to make way for the 1.1 items (which were added, btw). [#20](https://github.com/septor/Buildaria/issues/20))
+* Selection color can now be customized in the configuration file.
+* Item drops are now enabled by default.
+* To prevent crashing, unlimited water and lava have been disabled. Fill by selection still works.
+
+
 1.7.3 (October 3rd, 2011)
 -------------------------------------------------
 * If a configuration item is missing from the file there is now fall back code in place.

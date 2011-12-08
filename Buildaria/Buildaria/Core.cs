@@ -1,15 +1,15 @@
 #region References
 using System;
-using System.Reflection;
 using System.IO;
+using System.Reflection;
 using System.Text;
 using System.Xml;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-
 using Terraria;
+
 #endregion
 
 namespace Buildaria
@@ -3418,7 +3418,7 @@ namespace Buildaria
 
             if (displayMessages)
             {
-                Main.NewText("Loaded Inventory " + id + " (" + inv.Name + ")", Convert.ToByte(saveLoadInv[0]), Convert.ToByte(saveLoadInv[1]), Convert.ToByte(saveLoadInv[2]));
+                Main.NewText("Loaded " + inv.Name + " Inventory", Convert.ToByte(saveLoadInv[0]), Convert.ToByte(saveLoadInv[1]), Convert.ToByte(saveLoadInv[2]));
             }
 
             return inventoryType = id;
@@ -3452,7 +3452,7 @@ namespace Buildaria
             }
             if (displayMessages)
             {
-                Main.NewText("Saved Inventory " + id + " (" + inv.Name + ")", Convert.ToByte(saveLoadInv[0]), Convert.ToByte(saveLoadInv[1]), Convert.ToByte(saveLoadInv[2]));
+                Main.NewText("Saved " + inv.Name + " Inventory", Convert.ToByte(saveLoadInv[0]), Convert.ToByte(saveLoadInv[1]), Convert.ToByte(saveLoadInv[2]));
             }
 
             return inventoryType = id;
