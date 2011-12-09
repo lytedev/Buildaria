@@ -2715,9 +2715,13 @@ namespace Buildaria
                 }
 
                 // Row 1
-                i[0].SetDefaults("Ivy Whip");
-                i[1].SetDefaults("Wrench");
-                i[2].SetDefaults("Wire Cutter");
+                i[0].SetDefaults("Copper Pickaxe");
+                i[1].SetDefaults("Copper Hammer");
+                i[2].SetDefaults("Blue Phaseblade");
+                i[2].useStyle = 0;
+                i[4].SetDefaults("Ivy Whip");
+                i[5].SetDefaults("Wrench");
+                i[6].SetDefaults("Wire Cutter");
 
                 // Row 2
                 i[10].SetDefaults("Wire");
