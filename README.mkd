@@ -4,7 +4,7 @@
 * You could very possibly screw up your world. Make constant backups of your world or use a new world entirely.
 
 
-# Buildaria 1.8
+# Buildaria 1.8.1
 
 Buildaria is a Terraira mod geared towards map makers.
 
@@ -12,27 +12,27 @@ Buildaria is a Terraira mod geared towards map makers.
 ## Features
 
 * Easy-to-use selection system that supports multiple shapes, copy, paste, and an undo.
-* Toggle-able enemy NPC auto-killing.
-* A toggle-able ghost mode for easy construction.
-* Toggle between tools that instantly destroy everything you hover over and normal 100% power tools.
+* Toggle off hostile NPCs so they don't hinder your building.
+* Noclip mode that let's you fly around the map and through blocks for easy construction.
+* Toggle between tools that instantly destroy everything you click on or normal 100% power tools.
 * Place blocks anywhere without needing background walls or adjacent blocks.
-* Multiple, saved, preset inventory pages with all the construction materials you'll ever need.
 * Cycle forward to dawn/dusk instantly.
-* Optional god mode just in case you fall or ghost into lava.
-* Semi-insta respawn if you do manage to die.
+* Optional god mode just in case you fall or fly into lava.
+* One second respawn if you do manage to die.
 * A trash slot - you will always have inventory room.
-* Infinite rocket boots.
+* Infinite spectre boots.
 * Toggle-able light aura for easier mining.
 * Toggle-able grid for easier building.
 * Depth meter, watch, and compass active with god mode.
+* Multiple, saved, preset inventory pages with all the construction materials you'll ever need.
 * Inventories are now loaded and saved to and from an XML file, allowing you to add, remove, and customize your own inventories.
-* Output appears in chat area, letting you know what's going on... most of the time.
-* Output messages are color coded based on event type.
+* Color coded output chat messages to let you know what's going on... most of the time.
 * Item drops are toggle-able. Default is on.
+* All toggle-able defaults and chat output colors can be customized in an XML configuration file.
+* Teleportation System! Get to areas of your map quickly just by pressing a button (or two)!
 * Ability to set the default spawn point with the press of a button.
 * Display the current X,Y coordinates of your mouse with the press of a button.
-* All toggle-able defaults and chat output colors can be customized in an XML configuration file.
-* Teleportation System! Get to areas of your map quickly just by pressing a button!
+* Display the current system time with the press of a button.
 
 
 ## Chat Output Colors

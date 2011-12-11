@@ -409,7 +409,7 @@ namespace Buildaria
 
                                 if (itemHax)
                                 {
-                                    if (it.name.Contains("axe") || it.name.Contains("Hammer") || it.useTime == 10 || it.useTime == 7 || it.name.Contains("Phaseblade"))
+                                    if (it.name.ToLower().Contains("axe") || it.name.ToLower().Contains("hammer") || it.useTime == 10 || it.useTime == 7 || it.name.ToLower().Contains("phase"))
                                     {
                                         it.autoReuse = true;
                                         it.useTime = 0;
@@ -485,8 +485,7 @@ namespace Buildaria
 
             #region Bucket Management
 
-            // Disabled for now, I don't want this bug holding up 1.8.
-            // I'll revisit it and get it fixed for 1.8.1.
+            // Disabled for now.
 
             /*bool[] lavaBuckets = new bool[40];
             bool[] waterBuckets = new bool[40];
@@ -552,7 +551,7 @@ namespace Buildaria
 
                 if (displayMessages)
                 {
-                    Main.NewText("NPCs = " + npcsEnabled, Convert.ToByte(otherToggles[0]), Convert.ToByte(otherToggles[1]), Convert.ToByte(otherToggles[2]));
+                    Main.NewText(npcsEnabled == true ? "Hostile NPCs will now spawn." : "Hostile NPCs will no longer spawn.", Convert.ToByte(otherToggles[0]), Convert.ToByte(otherToggles[1]), Convert.ToByte(otherToggles[2]));
                 }
             }
 
@@ -578,7 +577,7 @@ namespace Buildaria
 
                 if (displayMessages)
                 {
-                    Main.NewText("Item Drops = " + itemsEnabled, Convert.ToByte(otherToggles[0]), Convert.ToByte(otherToggles[1]), Convert.ToByte(otherToggles[2]));
+                    Main.NewText(itemsEnabled == true ? "Items will now drop to the ground when excavated or dropped." : "Items will no longer be visible when excavated or dropped.", Convert.ToByte(otherToggles[0]), Convert.ToByte(otherToggles[1]), Convert.ToByte(otherToggles[2]));
                 }
             }
 
@@ -614,7 +613,7 @@ namespace Buildaria
                 {
                     displayMessages = !displayMessages;
 
-                    Main.NewText("Display Messages = " + displayMessages, Convert.ToByte(displayMessagesMsg[0]), Convert.ToByte(displayMessagesMsg[1]), Convert.ToByte(displayMessagesMsg[2]));
+                    Main.NewText(displayMessages == true ? "You will now see messages for toggles." : "You will no longer see messages for toggles.", Convert.ToByte(displayMessagesMsg[0]), Convert.ToByte(displayMessagesMsg[1]), Convert.ToByte(displayMessagesMsg[2]));
                 }
 
                 #endregion
@@ -691,7 +690,7 @@ namespace Buildaria
 
                     if (displayMessages)
                     {
-                        Main.NewText("NoClip = " + hover, Convert.ToByte(otherToggles[0]), Convert.ToByte(otherToggles[1]), Convert.ToByte(otherToggles[2]));
+                        Main.NewText(hover == true ? "You can now fly through any solid object!" : "You can no longer pass through solid objects. :(", Convert.ToByte(otherToggles[0]), Convert.ToByte(otherToggles[1]), Convert.ToByte(otherToggles[2]));
                     }
                 }
 
@@ -705,7 +704,7 @@ namespace Buildaria
                     gridMe = !gridMe;
                     if (displayMessages)
                     {
-                        Main.NewText("Ruler = " + gridMe, Convert.ToByte(otherToggles[0]), Convert.ToByte(otherToggles[1]), Convert.ToByte(otherToggles[2]));
+                        Main.NewText(gridMe == true ? "Build free. You now have a 1x1 grid to assist you." : "The 1x1 grid has been hidden.", Convert.ToByte(otherToggles[0]), Convert.ToByte(otherToggles[1]), Convert.ToByte(otherToggles[2]));
                     }
                 }
                 if (gridMe)
@@ -724,7 +723,7 @@ namespace Buildaria
 
                     if (displayMessages)
                     {
-                        Main.NewText("God Mode = " + godMode, Convert.ToByte(otherToggles[0]), Convert.ToByte(otherToggles[1]), Convert.ToByte(otherToggles[2]));
+                        Main.NewText(godMode == true ? "You are now an immortal entity." : "Welcome back to the world of the Normals.", Convert.ToByte(otherToggles[0]), Convert.ToByte(otherToggles[1]), Convert.ToByte(otherToggles[2]));
                     }
                 }
 
@@ -762,7 +761,7 @@ namespace Buildaria
 
                     if (displayMessages)
                     {
-                        Main.NewText("Spawn Location Set", Convert.ToByte(setSpawnPoint[0]), Convert.ToByte(setSpawnPoint[1]), Convert.ToByte(setSpawnPoint[2]));
+                        Main.NewText("You have successfully set the default spawn location.", Convert.ToByte(setSpawnPoint[0]), Convert.ToByte(setSpawnPoint[1]), Convert.ToByte(setSpawnPoint[2]));
                     }
                 }
 
@@ -989,7 +988,7 @@ namespace Buildaria
 
                     if (displayMessages)
                     {
-                        Main.NewText("Light Me = " + lightMe, Convert.ToByte(lightMeToggle[0]), Convert.ToByte(lightMeToggle[1]), Convert.ToByte(lightMeToggle[2]));
+                        Main.NewText(lightMe == true ? "Let there be light!" : "... and darkness falls.", Convert.ToByte(lightMeToggle[0]), Convert.ToByte(lightMeToggle[1]), Convert.ToByte(lightMeToggle[2]));
                     }
 
                 }
@@ -1225,14 +1224,14 @@ namespace Buildaria
 
                                 if (displayMessages)
                                 {
-                                    Main.NewText("Skipped to Dusk", Convert.ToByte(otherToggles[0]), Convert.ToByte(otherToggles[1]), Convert.ToByte(otherToggles[2]));
+                                    Main.NewText("You have bent time. The sun is now setting.", Convert.ToByte(otherToggles[0]), Convert.ToByte(otherToggles[1]), Convert.ToByte(otherToggles[2]));
                                 }
                             }
                             else
                             {
                                 if (displayMessages)
                                 {
-                                    Main.NewText("Skipped to Dawn", Convert.ToByte(otherToggles[0]), Convert.ToByte(otherToggles[1]), Convert.ToByte(otherToggles[2]));
+                                    Main.NewText("You have bent time. The sun is now rising.", Convert.ToByte(otherToggles[0]), Convert.ToByte(otherToggles[1]), Convert.ToByte(otherToggles[2]));
                                 }
                                 time = nightLength;
                             }
@@ -1706,51 +1705,6 @@ namespace Buildaria
 
         protected override void Draw(GameTime gameTime)
         {
-            /*if (menuMode == 10)
-            {
-                try
-                {
-                    int minx = (int)((screenPosition.X / 16) - ((screenWidth / 2) / 16) - 1);
-                    int maxx = (int)((screenPosition.X / 16) + ((screenWidth / 2) / 16) + 1);
-                    int miny = (int)((screenPosition.Y / 16) - ((screenHeight / 2) / 16) - 1);
-                    int maxy = (int)((screenPosition.Y / 16) + ((screenHeight / 2) / 16) + 1);
-
-                    if (minx < 0)
-                        minx = 0;
-
-                    if (miny < 0)
-                        miny = 0;
-
-                    if (maxx > maxTilesX)
-                        maxx = maxTilesX - 1;
-
-                    if (maxy > maxTilesY)
-                        maxy = maxTilesY - 1;
-
-                    for (int x = minx; x < maxx; x++)
-                    {
-                        for (int y = miny; y < maxy; y++)
-                        {
-                            try
-                            {
-                                if (tile[x, y] == null)
-                                    continue;
-
-                                tile[x, y].lighted = true;
-                            }
-                            catch
-                            {
-                                continue;
-                            }
-                        }
-                    }
-                }
-                catch
-                {
-
-                }
-            }*/
-
             base.Draw(gameTime);
             spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.NonPremultiplied);
 
@@ -2241,6 +2195,9 @@ namespace Buildaria
                 i[2].SetDefaults("Purification Poweder");
                 i[3].SetDefaults("Holy Water");
                 i[4].SetDefaults("Unholy Water");
+				i[5].SetDefaults("Empty Bucket");
+				i[6].SetDefaults("Water Bucket");
+				i[7].SetDefaults("Lava Bucket");
                 
 
                 // Row 2
@@ -2719,9 +2676,9 @@ namespace Buildaria
                 i[1].SetDefaults("Copper Hammer");
                 i[2].SetDefaults("Blue Phaseblade");
                 i[2].useStyle = 0;
-                i[4].SetDefaults("Ivy Whip");
-                i[5].SetDefaults("Wrench");
-                i[6].SetDefaults("Wire Cutter");
+                i[3].SetDefaults("Ivy Whip");
+                i[4].SetDefaults("Wrench");
+                i[5].SetDefaults("Wire Cutter");
 
                 // Row 2
                 i[10].SetDefaults("Wire");
@@ -3179,59 +3136,6 @@ namespace Buildaria
             }
             #endregion
 
-            #region Soils & Blocks
-            {
-                Item[] i = new Item[53];
-
-                for (int it = 0; it < i.Length; it++)
-                {
-                    i[it] = new Item();
-                }
-
-                // Row 1
-                i[0].SetDefaults("Copper Pickaxe");
-                i[1].SetDefaults("Copper Hammer");
-                i[2].SetDefaults("Blue Phaseblade");
-                i[2].useStyle = 0;
-
-                i[3].SetDefaults("Torch");
-                i[4].SetDefaults("Wood Platform");
-                i[5].SetDefaults("Wood");
-                i[6].SetDefaults("Dirt Block");
-                i[7].SetDefaults("Sand Block");
-                i[8].SetDefaults("Clay Block");
-                i[9].SetDefaults("Mud Block");
-
-                // Row 2
-                i[10].SetDefaults("Ash Block");
-                i[11].SetDefaults("Silt Block");
-                i[12].SetDefaults("Stone Block");
-                i[13].SetDefaults("Ebonstone Block");
-                i[14].SetDefaults("Pearlstone Block");
-                i[15].SetDefaults("Pearlsand Block");
-                i[16].SetDefaults("Ebonsand Block");
-                i[17].SetDefaults("Mudstone Block");
-
-                // Row 3
-                i[20].SetDefaults("Grass Seeds");
-                i[21].SetDefaults("Jungle Grass Seeds");
-                i[22].SetDefaults("Mushroom Grass Seeds");
-                i[23].SetDefaults("Corrupt Seeds");
-                i[24].SetDefaults("Hallowed Seeds");
-
-                // Equipment
-                i[44].SetDefaults("Sunglasses");
-
-                // Accessories
-                i[47].SetDefaults("Cloud in a Balloon");
-                i[48].SetDefaults("Spectre Boots");
-                i[49].SetDefaults("Obsidian Horseshoe");
-
-                Inventory inv = new Inventory(i, "Soils & Blocks");
-                Inventory.AddInventory(inv);
-            }
-            #endregion
-
             #region Ores & Gems
             {
                 Item[] i = new Item[53];
@@ -3338,6 +3242,58 @@ namespace Buildaria
             }
             #endregion
 
+            #region Soils & Blocks
+            {
+                Item[] i = new Item[53];
+
+                for (int it = 0; it < i.Length; it++)
+                {
+                    i[it] = new Item();
+                }
+
+                // Row 1
+                i[0].SetDefaults("Copper Pickaxe");
+                i[1].SetDefaults("Copper Hammer");
+                i[2].SetDefaults("Blue Phaseblade");
+                i[2].useStyle = 0;
+
+                i[3].SetDefaults("Torch");
+                i[4].SetDefaults("Wood Platform");
+                i[5].SetDefaults("Wood");
+                i[6].SetDefaults("Dirt Block");
+                i[7].SetDefaults("Sand Block");
+                i[8].SetDefaults("Clay Block");
+                i[9].SetDefaults("Mud Block");
+
+                // Row 2
+                i[10].SetDefaults("Ash Block");
+                i[11].SetDefaults("Silt Block");
+                i[12].SetDefaults("Stone Block");
+                i[13].SetDefaults("Ebonstone Block");
+                i[14].SetDefaults("Pearlstone Block");
+                i[15].SetDefaults("Pearlsand Block");
+                i[16].SetDefaults("Ebonsand Block");
+
+                // Row 3
+                i[20].SetDefaults("Grass Seeds");
+                i[21].SetDefaults("Jungle Grass Seeds");
+                i[22].SetDefaults("Mushroom Grass Seeds");
+                i[23].SetDefaults("Corrupt Seeds");
+                i[24].SetDefaults("Hallowed Seeds");
+
+                // Equipment
+                i[44].SetDefaults("Sunglasses");
+
+                // Accessories
+                i[47].SetDefaults("Cloud in a Balloon");
+                i[48].SetDefaults("Spectre Boots");
+                i[49].SetDefaults("Obsidian Horseshoe");
+
+                Inventory inv = new Inventory(i, "Soils & Blocks");
+                Inventory.AddInventory(inv);
+            }
+            #endregion
+
             #region Bricks
             {
                 Item[] i = new Item[53];
@@ -3377,6 +3333,7 @@ namespace Buildaria
                 i[22].SetDefaults("Iridescent Brick");
                 i[23].SetDefaults("Mythril Brick");
                 i[24].SetDefaults("Pearlstone Brick");
+				i[25].SetDefaults("Mudstone Block");
 
                 // Equipment
                 i[44].SetDefaults("Sunglasses");
@@ -3477,7 +3434,7 @@ namespace Buildaria
             }
 
             // Button is being held down, set second point and make sure the selection points are in the right order
-            if (mouseState.LeftButton == ButtonState.Pressed && player[myPlayer].inventory[player[myPlayer].selectedItem].name.ToLower().Contains("phaseblade"))
+            if (mouseState.LeftButton == ButtonState.Pressed && player[myPlayer].inventory[player[myPlayer].selectedItem].name.ToLower().Contains("phase"))
             {
                 int x = (int)((Main.mouseState.X + Main.screenPosition.X) / 16f);
                 int y = (int)((Main.mouseState.Y + Main.screenPosition.Y) / 16f);
@@ -3509,7 +3466,7 @@ namespace Buildaria
             }
 
             // Clear selection
-            if (mouseState.RightButton == ButtonState.Pressed && player[myPlayer].inventory[player[myPlayer].selectedItem].name.ToLower().Contains("phaseblade"))
+            if (mouseState.RightButton == ButtonState.Pressed && player[myPlayer].inventory[player[myPlayer].selectedItem].name.ToLower().Contains("phase"))
             {
                 sel1 = -Vector2.One;
                 sel2 = -Vector2.One;

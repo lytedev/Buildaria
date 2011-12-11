@@ -1,6 +1,14 @@
 Buildaria’s changelog
 ===================
 
+1.8.1 (December 11th, 2011)
+-------------------------------------------------
+* Added Pickaxe, Hammer, and Phaseblade to the Mechanical inventory (oops?).
+* Added Empty Bucket, Water Bucket, and Lava Bucket to the Tools inventory.
+* Moved the Mudstone Block to the Bricks inventory.
+* Moved the Soils & Dirt inventory next to the Bricks inventory.
+* The output chat messages have been rewritten to be a tad more informative.
+
 
 1.8 (December 8th, 2011)
 -------------------------------------------------
