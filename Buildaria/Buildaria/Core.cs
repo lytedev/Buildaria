@@ -626,7 +626,7 @@ namespace Buildaria
 
                     if (displayMessages)
                     {
-                        Main.NewText("ItemHax = " + itemHax, Convert.ToByte(otherToggles[0]), Convert.ToByte(otherToggles[1]), Convert.ToByte(otherToggles[2]));
+                        Main.NewText(itemHax == true ? "You are no longer limited while placing or destroying blocks and items." : "Your construction powers have been normalized.", Convert.ToByte(otherToggles[0]), Convert.ToByte(otherToggles[1]), Convert.ToByte(otherToggles[2]));
                     }
                 }
 
@@ -733,14 +733,14 @@ namespace Buildaria
                     player[myPlayer].accDepthMeter = 3;
                     player[myPlayer].accCompass = 3;
                     player[myPlayer].accFlipper = true;
-                    player[myPlayer].statLife = 400;
-                    player[myPlayer].statMana = 200;
+                    player[myPlayer].statLife = player[myPlayer].statLifeMax;
+                    player[myPlayer].statMana = player[myPlayer].statManaMax;
                     player[myPlayer].dead = false;
                     player[myPlayer].rocketTimeMax = 1000000;
                     player[myPlayer].rocketTime = 1000;
                     player[myPlayer].canRocket = true;
                     player[myPlayer].fallStart = (int)player[myPlayer].position.Y;
-                    player[myPlayer].AddBuff(9, 1, true); // Spelunker effect
+                    player[myPlayer].AddBuff(9, 1); // Spelunker effect
                 }
                 else
                 {
@@ -785,29 +785,27 @@ namespace Buildaria
                     // not yet implemented
                 }
 
-                // Ocean teleports need further tweaking..
-
-                // F3 - Right Ocean
-                /*if (keyState.IsKeyDown(Keys.F3) && oldKeyState.IsKeyUp(Keys.F3) && !editSign && !shift && !ctrl)
+                // F3 - Left Ocean
+                if (keyState.IsKeyDown(Keys.F3) && oldKeyState.IsKeyUp(Keys.F3) && !editSign && !shift && !ctrl)
                 {
-                    int x = (int)((Main.rightWorld * 16f) + 2048f);
-                    int y = (int)((Main.spawnTileY * 16f) - 16f);
+                    int x = (int)((Main.leftWorld) + 4048f);
+                    int y = (int)((Main.spawnTileY * 16f) - 1024f);
+
+                    hover = true;
+                    player[myPlayer].position = new Vector2(x, y);
+                    Main.NewText("You have been teleported to the Left Ocean.", Convert.ToByte(teleportMessages[0]), Convert.ToByte(teleportMessages[1]), Convert.ToByte(teleportMessages[2]));
+                }
+
+                // F4 - Right Ocean
+                if (keyState.IsKeyDown(Keys.F4) && oldKeyState.IsKeyUp(Keys.F4) && !editSign && !shift && !ctrl)
+                {
+                    int x = (int)((Main.rightWorld) - 4048f);
+                    int y = (int)((Main.spawnTileY * 16f) - 1024f);
 
                     hover = true;
                     player[myPlayer].position = new Vector2(x, y);
                     Main.NewText("You have been teleported to the Right Ocean.", Convert.ToByte(teleportMessages[0]), Convert.ToByte(teleportMessages[1]), Convert.ToByte(teleportMessages[2]));
                 }
-
-                // F4 - Left Ocean
-                if (keyState.IsKeyDown(Keys.F4) && oldKeyState.IsKeyUp(Keys.F4) && !editSign && !shift && !ctrl)
-                {
-                    int x = (int)((Main.leftWorld * 16f) + 2048f);
-                    int y = (int)((Main.spawnTileY * 16f) - 16f);
-
-                    hover = true;
-                    player[myPlayer].position = new Vector2(x, y);
-                    Main.NewText("You have been teleported to the Left Ocean.", Convert.ToByte(teleportMessages[0]), Convert.ToByte(teleportMessages[1]), Convert.ToByte(teleportMessages[2]));
-                }*/
 
                 #endregion
 
@@ -988,14 +986,14 @@ namespace Buildaria
 
                     if (displayMessages)
                     {
-                        Main.NewText(lightMe == true ? "Let there be light!" : "... and darkness falls.", Convert.ToByte(lightMeToggle[0]), Convert.ToByte(lightMeToggle[1]), Convert.ToByte(lightMeToggle[2]));
+                        Main.NewText(lightMe == true ? "Let there be light!" : "You casually switch your headlamp off.", Convert.ToByte(lightMeToggle[0]), Convert.ToByte(lightMeToggle[1]), Convert.ToByte(lightMeToggle[2]));
                     }
 
                 }
                 if (lightMe)
                 {
-                    player[myPlayer].AddBuff(11, 1, false); // Shine effect
-                    player[myPlayer].AddBuff(12, 1, false); // Night Owl effect
+                    player[myPlayer].AddBuff(11, 1); // Shine effect
+                    player[myPlayer].AddBuff(12, 1); // Night Owl effect
                 }
 
                 #endregion
