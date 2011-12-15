@@ -1,7 +1,7 @@
 Buildaria’s changelog
 ===================
 
-1.8.2 (?)
+1.8.2 (December 15th, 2011)
 -------------------------------------------------
 * itemHax now has a rewritten output chat message.
 * The Light On output message has been tweaked.
