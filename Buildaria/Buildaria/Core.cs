@@ -2365,6 +2365,56 @@ namespace Buildaria
             }
             #endregion
 
+            #region Christmas
+            {
+                Item[] i = new Item[53];
+
+                for (int it = 0; it < i.Length; it++)
+                {
+                    i[it] = new Item();
+                }
+
+                // Row 1
+                i[0].SetDefaults("Copper Pickaxe");
+                i[1].SetDefaults("Copper Hammer");
+                i[2].SetDefaults("Blue Phaseblade");
+                i[2].useStyle = 0;
+
+                i[3].SetDefaults("Yellow Present");
+                i[4].SetDefaults("Blue Present");
+                i[5].SetDefaults("Green Present");
+                i[6].SetDefaults("Santa Hat");
+                i[7].SetDefaults("Santa Shirt");
+                i[8].SetDefaults("Santa Pants");
+
+                //Row 3
+                i[10].SetDefaults("Red Light");
+                i[11].SetDefaults("Blue Light");
+                i[12].SetDefaults("Green Light");
+                i[13].SetDefaults("Snow Globe");
+
+                // Row 2
+                i[20].SetDefaults("Candy Cane Block");
+                i[21].SetDefaults("Green Candy Cane Block");
+                i[22].SetDefaults("Snow Block");
+                i[23].SetDefaults("Snow Brick");
+                i[25].SetDefaults("Candy Cane Wall");
+                i[26].SetDefaults("Green Candy Cane Wall");
+                i[27].SetDefaults("Snow Wall");
+
+                // Equipment
+                i[44].SetDefaults("Sunglasses");
+
+                // Accessories
+                i[47].SetDefaults("Cloud in a Balloon");
+                i[48].SetDefaults("Spectre Boots");
+                i[49].SetDefaults("Obsidian Horseshoe");
+
+                Inventory inv = new Inventory(i, "Christmas");
+                Inventory.AddInventory(inv);
+            }
+            #endregion
+
             #region Miscellaneous
             {
                 Item[] i = new Item[53];

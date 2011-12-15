@@ -1,6 +1,15 @@
 Buildaria’s changelog
 ===================
 
+1.8.2 (?)
+-------------------------------------------------
+* itemHax now has a rewritten output chat message.
+* The Light On output message has been tweaked.
+* Teleportation Update! You can now teleport to each ocean! `F3` for the left, `F4` for the right!
+* Statue inventories are now sorted by usefulness. One inventory can be triggered with wires, the other can't.
+* Christmas inventory (1.1.1 items) added.
+
+
 1.8.1 (December 11th, 2011)
 -------------------------------------------------
 * Added Pickaxe, Hammer, and Phaseblade to the Mechanical inventory (oops?).
@@ -14,10 +23,10 @@ Buildaria’s changelog
 -------------------------------------------------
 * Night Owl effects added to Light On functionality. ([#18](https://github.com/septor/Buildaria/issues/18))
 * Spelunker effects added to God Mode. ([#18](https://github.com/septor/Buildaria/issues/18))
-* Ruler accessory can now be toggled on and off. (default key: `R`). [#14](https://github.com/septor/Buildaria/issues/14))
+* Ruler accessory can now be toggled on and off. (default key: `R`). ([#14](https://github.com/septor/Buildaria/issues/14))
 * Compass information is now displayed during God Mode.
 * Trash slot moved back to the bottom right of the inventory.
-* Inventories revamped to make way for the 1.1 items (which were added, btw). [#20](https://github.com/septor/Buildaria/issues/20))
+* Inventories revamped to make way for the 1.1 items (which were added, btw). ([#20](https://github.com/septor/Buildaria/issues/20))
 * Selection color can now be customized in the configuration file.
 * Item drops are now enabled by default.
 * To prevent crashing, unlimited water and lava have been disabled. Fill by selection still works.

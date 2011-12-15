@@ -4,7 +4,7 @@
 * You could very possibly screw up your world. Make constant backups of your world or use a new world entirely.
 
 
-# Buildaria 1.8.1
+# Buildaria 1.8.2
 
 Buildaria is a Terraira mod geared towards map makers.
 
@@ -88,6 +88,12 @@ If you are using a modified configuration file, the colors below may not be accu
 You can teleport to locations on your map by pressing the function (eg: `F1`) keys. Below is a list of built-in locations, the list will grow as more locations are added:
 
 * `F1` - Default Spawn Location
+* `F3` - Left Ocean
+* `F4` - Right Ocean
+
+*Note: Ocean teleports may be slightly off. You may or may not be teleported above or below the surface. It's also possible you may be spawned slightly to the left or right
+of each beach. Due to map size and world generation it's difficult to put you exactly on the beach of each ocean. I plan on making further tweaks to this, but it's
+still going to be a gamble.*
 
 Custom locations can be set up in the configuration file and you can get to these by pressing `Ctrl` followed by the corresponding function key. Below is how you need to add them to the configuration file:
 
