@@ -2802,7 +2802,50 @@ namespace Buildaria
             }
             #endregion
 
-            #region Statues: Part 1
+            #region Statues: Useful
+            {
+                Item[] i = new Item[53];
+
+                for (int it = 0; it < i.Length; it++)
+                {
+                    i[it] = new Item();
+                }
+
+                // Row 1
+                i[0].SetDefaults("Ivy Whip");
+                i[1].SetDefaults("Bat Statue");
+                i[2].SetDefaults("Bird Statue");
+                i[3].SetDefaults("Bomb Statue");
+                i[4].SetDefaults("Bunny Statue");
+                i[5].SetDefaults("Chest Statue");
+                i[6].SetDefaults("Crab Statue");
+                i[7].SetDefaults("Fish Statue");
+                i[8].SetDefaults("Heart Statue");
+                i[9].SetDefaults("Jellyfish Statue");
+
+                // Row 2
+                i[10].SetDefaults("King Statue");
+                i[11].SetDefaults("Mushroom Statue");
+                i[12].SetDefaults("Piranha Statue");
+                i[13].SetDefaults("Queen Statue");
+                i[14].SetDefaults("Skeleton Statue");
+                i[15].SetDefaults("Slime Statue");
+                i[16].SetDefaults("Star Statue");
+
+                // Equipment
+                i[44].SetDefaults("Sunglasses");
+
+                // Accessories
+                i[47].SetDefaults("Cloud in a Balloon");
+                i[48].SetDefaults("Spectre Boots");
+                i[49].SetDefaults("Obsidian Horseshoe");
+
+                Inventory inv = new Inventory(i, "Statues: Useful");
+                Inventory.AddInventory(inv);
+            }
+            #endregion
+
+            #region Statues: Useless
             {
                 Item[] i = new Item[53];
 
@@ -2816,36 +2859,33 @@ namespace Buildaria
                 i[1].SetDefaults("Angel Statue");
                 i[2].SetDefaults("Anvil Statue");
                 i[3].SetDefaults("Axe Statue");
-                i[4].SetDefaults("Bat Statue");
-                i[5].SetDefaults("Bird Statue");
-                i[6].SetDefaults("Bomb Statue");
-                i[7].SetDefaults("Boomerang Statue");
-                i[8].SetDefaults("Boot Statue");
-                i[9].SetDefaults("Bow Statue");
+                i[4].SetDefaults("Boomerang Statue");
+                i[5].SetDefaults("Boot Statue");
+                i[6].SetDefaults("Bow Statue");
+                i[7].SetDefaults("Corrupt Statue");
+                i[8].SetDefaults("Cross Statue");
+                i[9].SetDefaults("Eyeball Statue");
 
                 // Row 2
-                i[10].SetDefaults("Bunny Statue");
-                i[11].SetDefaults("Chest Statue");
-                i[12].SetDefaults("Corrupt Statue");
-                i[13].SetDefaults("Crab Statue");
-                i[14].SetDefaults("Cross Statue");
-                i[15].SetDefaults("Eyeball Statue");
-                i[16].SetDefaults("Fish Statue");
-                i[17].SetDefaults("Gargoyle Statue");
-                i[18].SetDefaults("Gloom Statue");
-                i[19].SetDefaults("Goblin Statue");
+                i[10].SetDefaults("Gargoyle Statue");
+                i[11].SetDefaults("Gloom Statue");
+                i[12].SetDefaults("Goblin Statue");
+                i[13].SetDefaults("Hammer Statue");
+                i[14].SetDefaults("Hornet Statue");
+                i[15].SetDefaults("Imp Statue");
+                i[16].SetDefaults("Pickaxe Statue");
+                i[17].SetDefaults("Pillar Statue");
+                i[18].SetDefaults("Pot Statue");
+                i[19].SetDefaults("Potion Statue");
 
                 // Row 3
-                i[20].SetDefaults("Hammer Statue");
-                i[21].SetDefaults("Heart Statue");
-                i[22].SetDefaults("Hornet Statue");
-                i[23].SetDefaults("Imp Statue");
-                i[24].SetDefaults("Jellyfish Statue");
-                i[25].SetDefaults("King Statue");
-                i[26].SetDefaults("Mushroom Statue");
-                i[27].SetDefaults("Pickaxe Statue");
-                i[28].SetDefaults("Pillar Statue");
-                i[29].SetDefaults("Piranha Statue");
+                i[20].SetDefaults("Reaper Statue");
+                i[21].SetDefaults("Shield Statue");
+                i[22].SetDefaults("Spear Statue");
+                i[23].SetDefaults("Sunflower Statue");
+                i[24].SetDefaults("Sword Statue");
+                i[25].SetDefaults("Tree Statue");
+                i[26].SetDefaults("Woman Statue");
 
                 // Equipment
                 i[44].SetDefaults("Sunglasses");
@@ -2855,47 +2895,7 @@ namespace Buildaria
                 i[48].SetDefaults("Spectre Boots");
                 i[49].SetDefaults("Obsidian Horseshoe");
 
-                Inventory inv = new Inventory(i, "Statues: Part 2");
-                Inventory.AddInventory(inv);
-            }
-            #endregion
-
-            #region Statues: Part 2
-            {
-                Item[] i = new Item[53];
-
-                for (int it = 0; it < i.Length; it++)
-                {
-                    i[it] = new Item();
-                }
-
-                // Row 1
-                i[0].SetDefaults("Ivy Whip");
-                i[1].SetDefaults("Pot Statue");
-                i[2].SetDefaults("Potion Statue");
-                i[3].SetDefaults("Queen Statue");
-                i[4].SetDefaults("Reaper Statue");
-                i[5].SetDefaults("Shield Statue");
-                i[6].SetDefaults("Skeleton Statue");
-                i[7].SetDefaults("Slime Statue");
-                i[8].SetDefaults("Spear Statue");
-                i[9].SetDefaults("Star Statue");
-
-                // Row 2
-                i[10].SetDefaults("Sunflower Statue");
-                i[11].SetDefaults("Sword Statue");
-                i[12].SetDefaults("Tree Statue");
-                i[13].SetDefaults("Woman Statue");
-
-                // Equipment
-                i[44].SetDefaults("Sunglasses");
-
-                // Accessories
-                i[47].SetDefaults("Cloud in a Balloon");
-                i[48].SetDefaults("Spectre Boots");
-                i[49].SetDefaults("Obsidian Horseshoe");
-
-                Inventory inv = new Inventory(i, "Statues: Part 2");
+                Inventory inv = new Inventory(i, "Statues: Useless");
                 Inventory.AddInventory(inv);
             }
             #endregion
