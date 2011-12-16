@@ -2400,7 +2400,7 @@ namespace Buildaria
                 i[23].SetDefaults("Snow Brick");
                 i[25].SetDefaults("Candy Cane Wall");
                 i[26].SetDefaults("Green Candy Cane Wall");
-                i[27].SetDefaults("Snow Wall");
+                i[27].SetDefaults("Snow Brick Wall");
 
                 // Equipment
                 i[44].SetDefaults("Sunglasses");
