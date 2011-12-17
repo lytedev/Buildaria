@@ -740,7 +740,7 @@ namespace Buildaria
                     player[myPlayer].rocketTime = 1000;
                     player[myPlayer].canRocket = true;
                     player[myPlayer].fallStart = (int)player[myPlayer].position.Y;
-                    player[myPlayer].AddBuff(9, 1); // Spelunker effect
+                    player[myPlayer].AddBuff(9, 50); // Spelunker effect
                 }
                 else
                 {
@@ -992,8 +992,8 @@ namespace Buildaria
                 }
                 if (lightMe)
                 {
-                    player[myPlayer].AddBuff(11, 1); // Shine effect
-                    player[myPlayer].AddBuff(12, 1); // Night Owl effect
+                    player[myPlayer].AddBuff(11, 50); // Shine effect
+                    player[myPlayer].AddBuff(12, 50); // Night Owl effect
                 }
 
                 #endregion
@@ -1265,6 +1265,7 @@ namespace Buildaria
                                     Copied[copyX, copyY].wall = tile[x + SelectionPosition.X, y + SelectionPosition.Y].wall;
                                     Copied[copyX, copyY].liquid = tile[x + SelectionPosition.X, y + SelectionPosition.Y].liquid;
                                     Copied[copyX, copyY].lava = tile[x + SelectionPosition.X, y + SelectionPosition.Y].lava;
+                                    Copied[copyX, copyY].wire = tile[x + SelectionPosition.X, y + SelectionPosition.Y].wire;
                                 }
                             }
 
@@ -1300,6 +1301,7 @@ namespace Buildaria
                                                 Undo[x, y].lava = Main.tile[x, y].lava;
                                                 Undo[x, y].wall = Main.tile[x, y].wall;
                                                 Undo[x, y].active = Main.tile[x, y].active;
+                                                Undo[x, y].wire = Main.tile[x, y].wire;
                                             }
 
                                             int copyX = x;
@@ -1318,6 +1320,7 @@ namespace Buildaria
                                             tile[(int)sel1.X + x, (int)sel1.Y + y].wall = Copied[copyX, copyY].wall;
                                             tile[(int)sel1.X + x, (int)sel1.Y + y].liquid = Copied[copyX, copyY].liquid;
                                             tile[(int)sel1.X + x, (int)sel1.Y + y].lava = Copied[copyX, copyY].lava;
+                                            tile[(int)sel1.X + x, (int)sel1.Y + y].wire = Copied[copyX, copyY].wire;
                                             TileFrame((int)sel1.X + x, (int)sel1.Y + y);
                                             SquareWallFrame((int)sel1.X + x, (int)sel1.Y + y);
                                         }
@@ -1586,6 +1589,7 @@ namespace Buildaria
                                             Undo[xp, yp].lava = Main.tile[x, y].lava;
                                             Undo[xp, yp].wall = Main.tile[x, y].wall;
                                             Undo[xp, yp].active = Main.tile[x, y].active;
+                                            Undo[xp, yp].wire = Main.tile[x, y].wire;
                                         }
 
                                         byte wall = Main.tile[x, y].wall;
@@ -1628,6 +1632,7 @@ namespace Buildaria
                                         Undo[xp, yp].lava = Main.tile[x, y].lava;
                                         Undo[xp, yp].wall = Main.tile[x, y].wall;
                                         Undo[xp, yp].active = Main.tile[x, y].active;
+                                        Undo[xp, yp].wire = Main.tile[x, y].wire;
                                     }
 
                                     if (SelectedTiles[xp, yp])
@@ -1674,6 +1679,7 @@ namespace Buildaria
                                         tile[x, y].wall = Undo[xp, yp].wall;
                                         tile[x, y].liquid = Undo[xp, yp].liquid;
                                         tile[x, y].lava = Undo[xp, yp].lava;
+                                        tile[x, y].wire = Undo[xp, yp].wire;
                                         TileFrame(x, y);
                                         SquareWallFrame(x, y);
                                     }
