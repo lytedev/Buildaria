@@ -998,6 +998,8 @@ namespace Buildaria
 
                 #endregion
 
+
+
                 bool allowStuff = true; // Disallows most buildaria functionality in-game
                 // Set to true if the user may not want certain functions to be happening
                 try
@@ -1017,7 +1019,7 @@ namespace Buildaria
                             break;
                         }
                     }
-                    if (playerInventory || !buildMode || editSign)
+                    if (playerInventory || !buildMode || editSign || netMode == 1)
                         allowStuff = false;
 
                     #endregion
@@ -1605,7 +1607,7 @@ namespace Buildaria
 
                             if (displayMessages)
                             {
-                                Main.NewText("Filled Selection with Block " + player[myPlayer].inventory[player[myPlayer].selectedItem].createTile, Convert.ToByte(selectionMessages[0]), Convert.ToByte(selectionMessages[1]), Convert.ToByte(selectionMessages[2]));
+                                Main.NewText("Filled Selection with " + player[myPlayer].inventory[player[myPlayer].selectedItem].name + "s", Convert.ToByte(selectionMessages[0]), Convert.ToByte(selectionMessages[1]), Convert.ToByte(selectionMessages[2]));
                             }
                         }
                         else if (mouseState.RightButton == ButtonState.Pressed && oldMouseState.RightButton == ButtonState.Released && player[myPlayer].inventory[player[myPlayer].selectedItem].createWall >= 0)
@@ -1652,7 +1654,7 @@ namespace Buildaria
 
                             if (displayMessages)
                             {
-                                Main.NewText("Filled Selection with Wall " + player[myPlayer].inventory[player[myPlayer].selectedItem].createWall, Convert.ToByte(selectionMessages[0]), Convert.ToByte(selectionMessages[1]), Convert.ToByte(selectionMessages[2]));
+                                Main.NewText("Filled Selection with " + player[myPlayer].inventory[player[myPlayer].selectedItem].name + "s", Convert.ToByte(selectionMessages[0]), Convert.ToByte(selectionMessages[1]), Convert.ToByte(selectionMessages[2]));
                             }
                         }
 
@@ -3043,6 +3045,15 @@ namespace Buildaria
                 i[27].SetDefaults("Blue Banner");
                 i[28].SetDefaults("Yellow Banner");
 
+                // Row 4
+                i[30].SetDefaults("Chest");
+                i[31].SetDefaults("Gold Chest");
+                i[32].SetDefaults("Shadow Chest");
+                i[33].SetDefaults("Barrel");
+                i[34].SetDefaults("Trash Can");
+                i[36].SetDefaults("Safe");
+                i[37].SetDefaults("Piggy Bank");
+
                 // Equipment
                 i[44].SetDefaults("Sunglasses");
 
@@ -3122,7 +3133,7 @@ namespace Buildaria
                 i[8].SetDefaults("Tiki Torch");
                 i[9].SetDefaults("Lamp Post");
 
-                // Row 3
+                // Row 2
                 i[10].SetDefaults("Cursed Torch");
                 i[11].SetDefaults("Demon Torch");
                 i[12].SetDefaults("Blue Torch");
@@ -3132,7 +3143,7 @@ namespace Buildaria
                 i[16].SetDefaults("White Torch");
                 i[17].SetDefaults("Yellow Torch");
 
-                // Row 2
+                // Row 3
                 i[20].SetDefaults("Copper Chandelier");
                 i[21].SetDefaults("Silver Chandelier");
                 i[22].SetDefaults("Gold Chandelier");
@@ -3149,43 +3160,6 @@ namespace Buildaria
                 i[49].SetDefaults("Obsidian Horseshoe");
                 
                 Inventory inv = new Inventory(i, "Lighting");
-                Inventory.AddInventory(inv);
-            }
-            #endregion
-
-            #region Storage
-            {
-                Item[] i = new Item[53];
-
-                for (int it = 0; it < i.Length; it++)
-                {
-                    i[it] = new Item();
-                }
-
-                // Row 1
-                i[0].SetDefaults("Copper Pickaxe");
-                i[1].SetDefaults("Copper Hammer");
-                i[2].SetDefaults("Blue Phaseblade");
-                i[2].useStyle = 0;
-
-                // Row 3
-                i[10].SetDefaults("Chest");
-                i[11].SetDefaults("Gold Chest");
-                i[12].SetDefaults("Shadow Chest");
-                i[13].SetDefaults("Barrel");
-                i[14].SetDefaults("Trash Can");
-                i[16].SetDefaults("Safe");
-                i[17].SetDefaults("Piggy Bank");
-
-                // Equipment
-                i[44].SetDefaults("Sunglasses");
-
-                // Accessories
-                i[47].SetDefaults("Cloud in a Balloon");
-                i[48].SetDefaults("Spectre Boots");
-                i[49].SetDefaults("Obsidian Horseshoe");
-
-                Inventory inv = new Inventory(i, "Storage");
                 Inventory.AddInventory(inv);
             }
             #endregion
