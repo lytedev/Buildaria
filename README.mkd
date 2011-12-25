@@ -130,7 +130,13 @@ If itemHax is disabled some items behave differently than mentioned above.
 
 ## How to Install
 
-1. Put `Buildaria.exe` in your Terraria folder with `Terraria.exe`. This is usually found here: `Program Files/Steam/steamapps/common/terraria/`
+**Recommended Method:**
+
+1. Download the [installer](https://github.com/downloads/septor/Buildaria/buildaria_1.8.2_setup.exe) and run it. If you do not want your inventories or configuration overwritten you need to make sure you deselect the appropriate checkboxes when selecting what to install.
+
+**Alternative Method:**
+
+1. Download the [latest archive](https://github.com/downloads/septor/Buildaria/Buildaria_1.8.2.7z) and extract `Buildaria.exe` into your Terraria folder with `Terraria.exe`. This is usually found here: `Program Files/Steam/steamapps/common/terraria/`
 2. Run `Buildaria.exe`!
 
 
