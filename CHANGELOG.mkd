@@ -1,6 +1,19 @@
 Buildaria’s changelog
 ===================
 
+1.8.3 (January 7th, 2012)
+-------------------------------------------------
+* Snow Wall does not exist. Snow Brick Wall does though! (also, it's in the inventory now)
+* Bumped the duration of the always on buffs to 1 second. This will stop the flickering.
+* You can now copy and paste wires. ([#23](https://github.com/septor/Buildaria/issues/23))
+* Moved the storage items into the Decorations inventory.
+* Filling by selection messages now tell you what the item was instead of it's ID.
+* You can now use the selection tool while the inventory is open. ([#34](https://github.com/septor/Buildaria/issues/34))
+* Trash slot moved back to the top left (first slot of the second row). Inventory filling changed, but not like I thought.
+* Some inventories have had items added (or moved) to the hotbars to help manage what is in the inventories.
+* An inventory list has been added. It lists the **default** inventory structure.
+
+
 1.8.2 (December 15th, 2011)
 -------------------------------------------------
 * itemHax now has a rewritten output chat message.

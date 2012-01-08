@@ -1,0 +1,777 @@
+﻿Tier 1 Armor
+	Row 2
+		Copper Helmet
+		Iron Helmet
+		Silver Helmet
+		Gold Helmet
+		Mining Helmet
+	Row 3
+		Copper Chainmail
+		Iron Chainmail
+		Silver Chainmail
+		Gold Chainmail
+		Mining Shirt
+	Row 4
+		Copper Greaves
+		Iron Greaves
+		Silver Greaves
+		Gold Greaves
+		Mining Pants
+
+Tier 2 Armor
+	Row 2
+		Meteor Helmet
+		Shadow Helmet
+		Necro Helmet
+		Jungle Hat
+		Molten Helmet
+	Row 3
+		Meteor Suit
+		Shadow Scalemail
+		Necro Breastplate
+		Jungle Shirt
+		Molten Breastplate
+	Row 4
+		Meteor Leggings
+		Shadow Greaves
+		Necro Greaves
+		Jungle Pants
+		Molten Greaves
+
+Tier 3 Armor
+	Row 2
+		Cobalt Hat
+		Cobalt Helmet
+		Mythril Hood
+		Mythril Helmet
+		Adamantite Headgear
+		Adamantite Helmet
+		Hallowed Headgear
+		Hallowed Helmet
+	Row 3
+		Cobalt Breastplate
+		Cobalt Mask
+		Mythril Chainmail
+		Mythril Hat
+		Adamantite Breastplate
+		Adamantite Mask
+		Hallowed Plate Mail
+		Hallowed Mask
+	Row 4
+		Cobalt Leggings
+		Mythril Greaves
+		Adamantite Leggings
+		Hallowed Greaves
+
+Throwables & Explosives
+	Row 2
+		Vile Powder
+		Shuriken
+		Bone
+		Spiky Ball
+		Throwing Knife
+		Poisoned Knife
+	Row 3
+		Dynamite
+		Grenade
+		Bomb
+		Sticky Bomb
+		Explosives
+	Row 4
+		Flamarang
+		Thorn Chakram
+		Wooden Boomerang
+		Enchanted Boomerang
+		Light Disc
+
+Flails & Spears
+	Row 2
+		Harpoon
+		Ball O' Hurt
+		Blue Moon
+		Sunfury
+		Dao of Pow
+	Row 3
+		Spear
+		Trident
+		Dark Lance
+		Cobalt Naginata
+		Mythril Halberd
+		Adamantite Glaive
+		Gungnir
+
+Bows & Guns
+	Row 2
+		Blowpipe
+		Flintlock Pistol
+		Musket
+		Handgun
+		Minishark
+		Megashark
+		Phoenix Blaster
+		Sandgun
+		Shotgun
+	Row 3
+		Space Gun
+		Star Cannon
+		Flamethrower
+		Clockwork Assault Rifle
+		Wooden Bow
+		Copper Bow
+		Iron Bow
+		Silver Bow
+		Gold Bow
+	Row 4
+		Demon Bow
+		Molten Fury
+		Cobalt Repeater
+		Mythril Repeater
+		Adamantite Repeater
+		Hallowed Repeater
+
+Magic Weapons
+	Row 2
+		Flower of Fire
+		Vilethorn
+		Magic Missile
+		Flamelash
+		Water Bolt
+		Demon Scythe
+		Crystal Storm
+		Cursed Flames
+	Row 3
+		Aqua Scepter
+		Laser Rifle
+		Magic Dagger
+		Magical Harp
+		Rainbow Rod
+		Ice Rod
+
+Swords
+	Row 2
+		Wooden Sword
+		Copper Shortsword
+		Copper Broadsword
+		Iron Shortsword
+		Iron Broadsword
+		Silver Shortsword
+		Silver Broadsword
+		Gold Shortsword
+		Gold Broadsword
+	Row 3
+		Night's Edge
+		Light's Bane
+		Starfury
+		Muramasa
+		Blade of Grass
+		Fiery Greatsword
+	Row 4
+		Cobalt Sword
+		Mythril Sword
+		Adamantite Sword
+		Breaker Blade
+		Excalibur
+
+Phase Weapons
+	Row 2
+		White Phaseblade
+		Blue Phaseblade
+		Red Phaseblade
+		Purple Phaseblade
+		Green Phaseblade
+		Yellow Phaseblade
+	Row 3
+		White Phasesaber
+		Blue Phasesaber
+		Red Phasesaber
+		Purple Phasesaber
+		Green Phasesaber
+		Yellow Phasesaber
+
+Tools
+	Row 1
+		Hamdrax
+		Purification Poweder
+		Holy Water
+		Unholy Water
+		Empty Bucket
+		Water Bucket
+		Lava Bucket
+	Row 2
+		Copper Pickaxe
+		Iron Pickaxe
+		Silver Pickaxe
+		Gold Pickaxe
+		Nightmare Pickaxe
+		Molten Pickaxe
+		Cobalt Drill
+		Mythril Drill
+		Adamantite Drill
+	Row 3
+		Copper Axe
+		Iron Axe
+		Silver Axe
+		Gold Axe
+		War Axe of the Night
+		Meteor Hamaxe
+		Molten Hamaxe
+		Cobalt Chainsaw
+		Mythril Chainsaw
+		Adamantite Chainsaw
+	Row 4
+		Wooden Hammer
+		Copper Hammer
+		Iron Hammer
+		Silver Hammer
+		Gold Hammer
+		The Breaker
+		Pwnhammer
+
+Movement Accessories
+	Row 1
+		Aglet
+		Anklet of the Wind
+		Hermes Boots
+		Rocket Boots
+		Angel Wings
+		Demon Wings
+		Spectre Boots
+		Lucky Horseshoe
+		Obsidian Horseshoe
+	Row 2
+		Cloud in a Bottle
+		Shiny Red Balloon
+		Cloud in a Balloon
+		Flipper
+		Diving Helmet
+		Diving Gear
+
+Combat Accessories
+	Row 1
+		Cobalt Shield
+		Feral Claws
+		Obsidian Skull
+		Shackle
+		Obsidian Shield
+		Star Cloak
+		Titan Glove
+		Cross Necklace
+	Row 2
+		Band of Regeneration
+		Band of Starpower
+		Nature's Gift
+		Mana Flower
+		Philosopher's Stone
+		Ranger Emblem
+		Sorcerer Emblem
+		Warrior Emblem
+
+Miscellaneous Accessories
+	Row 1
+		Depth Meter
+		Copper Watch
+		Silver Watch
+		Gold Watch
+		Compass
+		GPS
+	Row 2
+		Ruler
+		Toolbelt
+		Moon Charm
+		Neptune's Shell
+
+Christmas
+	Row 1
+		Yellow Present
+		Blue Present
+		Green Present
+		Santa Hat
+		Santa Shirt
+		Santa Pants
+	Row 2
+		Red Light
+		Blue Light
+		Green Light
+		Snow Globe
+	Row 3
+		Candy Cane Block
+		Green Candy Cane Block
+		Snow Block
+		Snow Brick
+		Candy Cane Wall
+		Green Candy Cane Wall
+		Snow Brick Wall
+
+Miscellaneous
+	Row 1
+		Ivy Whip
+		Grappling Hook
+		Dual Hook
+		Dirt Rod
+		Guide Voodoo Doll
+		Orb of Light
+		Fairy Bell
+		Magic Mirror
+		Whoopie Cushion
+		Boulder
+	Row 2
+		Goblin Battle Standard
+		Suspicious Looking Eye
+		Worm Food
+		Slime Crown
+		Mechanical Eye
+		Mechanical Worm
+		Mechanical Skull
+		Golden Key
+		Shadow Key
+	Row 3
+		Copper Coin
+		Silver Coin
+		Gold Coin
+		Platinum Coin
+
+Vanity Items
+	Row 1
+		Goggles
+		Sunglasses
+		Jungle Rose
+		Fish Bowl
+		Robe
+		Mime Mask
+		Bunny Hood
+		Summer Hat
+		Robot Hat
+	Row 2
+		Archaeologist's Hat
+		Plumber's Hat
+		Top Hat
+		Familiar Wig
+		Red Hat
+		Ninja Hood
+		Hero's Hat
+		Clown Hat
+		Gold Crown
+	Row 3
+		Archaeologist's Jacket
+		Plumber's Shirt
+		Tuxedo Shirt
+		Familiar Shirt
+		The Doctor's Shirt
+		Ninja Shirt
+		Hero's Shirt
+		Clown Shirt
+	Row 4
+		Archaeologist's Pants
+		Plumber's Pants
+		Tuxedo Pants
+		Familiar Pants
+		The Doctor's Pants
+		Ninja Pants
+		Hero's Pants
+		Clown Pants
+
+Consumables
+	Row 1
+		Lesser Healing Potion
+		Lesser Mana Potion
+		Lesser Restoration Potion
+		Healing Potion
+		Mana Potion
+		Restoration Potion
+		Greater Healing Potion
+		Greater Mana Potion
+	Row 2
+		Archery Potion
+		Battle Potion
+		Featherfall Potion
+		Gills Potion
+		Gravitation Potion
+		Hunter Potion
+		Invisibility Potion
+		Ironskin Potion
+		Magic Power Potion
+	Row 3
+		Mana Regeneration Potion
+		Night Owl Potion
+		Obsidian Skin Potion
+		Regeneration Potion
+		Shine Potion
+		Spelunker Potion
+		Swiftness Potion
+		Thorns Potion
+		Water Walking Potion
+	Row 4
+		Mushroom
+		Glowing Mushroom
+		Ale
+		Bowl of Soup
+		Goldfish
+		Fallen Star
+		Life Crystal
+		Mana Crystal
+
+Materials: Part 1
+	Row 1
+		Cobweb
+		Silk
+		Gel
+		Lens
+		Black Lens
+		Iron Chain
+		Hook
+	Row 2
+		Shadow Scale
+		Tattered Cloth
+		Leather
+		Rotten Chunk
+		Worm Tooth
+		Cactus
+		Water Bucket
+		Lava Bucket
+		Vile Powder
+	Row 3
+		Stinger
+		Feather
+		Vine
+		Jungle Spores
+		Shark Fin
+		Antlion Mandible
+		Illegal Gun Parts
+		Glowstick
+		Green Dye
+		Black Dye
+	Row 4
+		Copper Bar
+		Iron Bar
+		Silver Bar
+		Gold Bar
+		Demonite Bar
+		Meteorite Bar
+		Hellstone Bar
+		Cobalt Bar
+		Mythril Bar
+		Adamantite Bar
+
+Materials: Part 2
+	Row 2
+		Bell
+		Harp
+		Spell Tome
+		Cursed Flame
+		Dark Shard
+		Light Shard
+		Pixie Dust
+		Unicorn Horn
+	Row 3
+		Soul of Flight
+		Soul of Fright
+		Soul of Light
+		Soul of Might
+		Soul of Night
+		Soul of Sight
+
+Mechanical
+	Row 1
+		Wrench
+		Wire Cutter
+		Switch
+		Active Stone Block
+		Inactive Stone Block
+	Row 2
+		Wire
+		Lever
+		Brown Pressure Plate
+		Gray Pressure Plate
+		Green Pressure Plate
+		Red Pressure Plate
+		1 Second Timer
+		3 Second Timer
+		5 Second Timer
+	Row 3
+		Inlet Pump
+		Outlet Pump
+		Dart Trap
+
+Ammo
+	Row 2
+		Wooden Arrow
+		Flaming Arrow
+		Unholy Arrow
+		Jester's Arrow
+		Hellfire Arrow
+		Holy Arrow
+		Cursed Arrow
+	Row 3
+		Seed
+		Musket Ball
+		Silver Bullet
+		Meteor Shot
+		Crystal Bullet
+		Cursed Bullet
+
+Alchemy
+	Row 1
+		Clay Pot
+		Bottled Water
+		Bottle
+		Acorn
+		Sunflower
+	Row 2
+		Blinkroot Seeds
+		Daybloom Seeds
+		Fireblossom Seeds
+		Moonglow Seeds
+		Deathweed Seeds
+		Waterleaf Seeds
+	Row 3
+		Blinkroot
+		Daybloom
+		Fireblossom
+		Moonglow
+		Deathweed
+		Waterleaf
+
+Statues: Useful
+	Row 1
+		Bat Statue
+		Bird Statue
+		Bomb Statue
+		Bunny Statue
+		Chest Statue
+		Crab Statue
+		Fish Statue
+		Heart Statue
+		Jellyfish Statue
+	Row 2
+		King Statue
+		Mushroom Statue
+		Piranha Statue
+		Queen Statue
+		Skeleton Statue
+		Slime Statue
+		Star Statue
+
+Statues: Useless
+	Row 1
+		Angel Statue
+		Anvil Statue
+		Axe Statue
+		Boomerang Statue
+		Boot Statue
+		Bow Statue
+		Corrupt Statue
+		Cross Statue
+		Eyeball Statue
+	Row 2
+		Gargoyle Statue
+		Gloom Statue
+		Goblin Statue
+		Hammer Statue
+		Hornet Statue
+		Imp Statue
+		Pickaxe Statue
+		Pillar Statue
+		Pot Statue
+	Row 3
+		Potion Statue
+		Reaper Statue
+		Shield Statue
+		Spear Statue
+		Sunflower Statue
+		Sword Statue
+		Tree Statue
+		Woman Statue
+
+Crafting Stations
+	Row 1
+		Wooden Chair
+		Wooden Table
+		Work Bench
+		Sawmill
+		Keg
+		Cooking Pot
+		Iron Anvil
+		Mythril Anvil
+	Row 2
+		Furnace
+		Hellforge
+		Adamantite Forge
+		Loom
+		Bookcase
+		Tinkerer's Workshop
+
+Decorations
+	Row 1
+		Wooden Door
+		Wooden Chair
+		Wooden Table
+		Bed
+		Sign
+		Tombstone
+		Book
+		Bookcase
+	Row 2
+		Statue
+		Toilet
+		Bathtub
+		Bench
+		Piano
+		Grandfather Clock
+		Dresser
+		Throne
+		Pink Vase
+	Row 3
+		Bowl
+		Mannequin
+		Mug
+		Coral
+		Crystal Shard
+		Spike
+		Red Banner
+		Green Banner
+		Blue Banner
+		Yellow Banner
+	Row 4
+		Chest
+		Gold Chest
+		Shadow Chest
+		Barrel
+		Trash Can
+		Safe
+		Piggy Bank
+
+Music Boxes
+	Row 2
+		Music Box
+		Music Box (Boss 1)
+		Music Box (Boss 2)
+		Music Box (Boss 3)
+		Music Box (Corruption)
+		Music Box (Eerie)
+		Music Box (Jungle)
+		Music Box (Night)
+		Music Box (Overworld Day)
+	Row 3
+		Music Box (The Hallow)
+		Music Box (Title)
+		Music Box (Underground)
+		Music Box (Underground Corruption)
+		Music Box (Underground Hallow)
+
+Lighting
+	Row 1
+		Torch
+		Candle
+		Water Candle
+		Candelabra
+		Skull Lantern
+		Tiki Torch
+		Lamp Post
+	Row 2
+		Cursed Torch
+		Demon Torch
+		Blue Torch
+		Green Torch
+		Purple Torch
+		Red Torch
+		White Torch
+		Yellow Torch
+	Row 3
+		Copper Chandelier
+		Silver Chandelier
+		Gold Chandelier
+		Chain Lantern
+		Chinese Lantern
+		Disco Ball
+
+Ores & Gems
+	Row 2
+		Copper Ore
+		Iron Ore
+		Silver Ore
+		Gold Ore
+		Demonite Ore
+		Meteorite
+		Obsidian
+		Hellstone
+	Row 3
+		Cobalt Ore
+		Mythril Ore
+		Adamantite Ore
+	Row 4
+		Amethyst
+		Diamond
+		Emerald
+		Ruby
+		Sapphire
+		Topaz
+
+Walls
+	Row 1
+		Dirt Wall
+		Stone Wall
+		Wood Wall
+		Gray Brick Wall
+		Red Brick Wall
+		Glass Wall
+		Planked Wall
+	Row 2
+		Copper Brick Wall
+		Silver Brick Wall
+		Gold Brick Wall
+		Obsidian Brick Wall
+		Pink Brick Wall
+		Green Brick Wall
+		Blue Brick Wall
+	Row 3
+		Cobalt Brick Wall
+		Iridescent Brick Wall
+		Mythril Brick Wall
+		Pearlstone Brick Wall
+		Mudstone Brick Wall
+
+Soils & Blocks
+	Row 1
+		Dirt Block
+		Sand Block
+		Clay Block
+		Mud Block
+	Row 2
+		Ash Block
+		Silt Block
+		Stone Block
+		Ebonstone Block
+		Pearlstone Block
+		Pearlsand Block
+		Ebonsand Block
+	Row 3
+		Grass Seeds
+		Jungle Grass Seeds
+		Mushroom Grass Seeds
+		Corrupt Seeds
+		Hallowed Seeds
+
+Bricks
+	Row 1
+		Wood Platform
+		Gray Brick
+		Red Brick
+		Glass
+		Wood
+		Wooden Beam
+	Row 2
+		Copper Brick
+		Silver Brick
+		Gold Brick
+		Obsidian Brick
+		Hellstone Brick
+		Pink Brick
+		Green Brick
+		Blue Brick
+	Row 3
+		Cobalt Brick
+		Demonite Brick
+		Iridescent Brick
+		Mythril Brick
+		Pearlstone Brick
+		Mudstone Block
