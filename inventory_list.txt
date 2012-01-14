@@ -350,7 +350,7 @@ Vanity Items
 		Ninja Hood
 		Hero's Hat
 		Clown Hat
-		Gold Crown
+		Wizard Hat
 	Row 3
 		Archaeologist's Jacket
 		Plumber's Shirt
@@ -360,6 +360,7 @@ Vanity Items
 		Ninja Shirt
 		Hero's Shirt
 		Clown Shirt
+		Gold Crown
 	Row 4
 		Archaeologist's Pants
 		Plumber's Pants

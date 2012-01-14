@@ -2503,7 +2503,7 @@ namespace Buildaria
                 i[16].SetDefaults("Ninja Hood");
                 i[17].SetDefaults("Hero's Hat");
                 i[18].SetDefaults("Clown Hat");
-                i[19].SetDefaults("Gold Crown");
+                i[19].SetDefaults("Wizard Hat");
 
                 // Row 3
                 i[21].SetDefaults("Archaeologist's Jacket");
@@ -2514,6 +2514,7 @@ namespace Buildaria
                 i[26].SetDefaults("Ninja Shirt");
                 i[27].SetDefaults("Hero's Shirt");
                 i[28].SetDefaults("Clown Shirt");
+				i[29].SetDefaults("Gold Crown");
 
                 // Row 4
                 i[31].SetDefaults("Archaeologist's Pants");
