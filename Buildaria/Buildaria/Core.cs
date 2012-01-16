@@ -992,6 +992,16 @@ namespace Buildaria
 
                 #endregion
 
+                #region Display World Information
+
+                if (alt && keyState.IsKeyDown(Keys.W) && oldKeyState.IsKeyUp(Keys.W) && !editSign && !shift)
+                {
+                    Main.NewText("World Name: " + worldName.ToString(), Convert.ToByte(otherToggles[0]), Convert.ToByte(otherToggles[1]), Convert.ToByte(otherToggles[2]));
+                    Main.NewText("World ID: " + worldID.ToString(), Convert.ToByte(otherToggles[0]), Convert.ToByte(otherToggles[1]), Convert.ToByte(otherToggles[2]));
+                }
+
+                #endregion
+
                 bool allowStuff = true; // Disallows most buildaria functionality in-game
                 // Set to true if the user may not want certain functions to be happening
                 try
