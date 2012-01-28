@@ -4,7 +4,7 @@
 * You could very possibly screw up your world. Make constant backups of your world or use a new world entirely.
 
 
-# Buildaria 1.8.3
+# Buildaria 1.8.4
 
 Buildaria is a Terraira mod geared towards map makers.
 
@@ -32,7 +32,8 @@ Buildaria is a Terraira mod geared towards map makers.
 * Teleportation System! Get to areas of your map quickly just by pressing a button (or two)!
 * Ability to set the default spawn point with the press of a button.
 * Display the current X,Y coordinates of your mouse with the press of a button.
-* Display the current system time with the press of a button.
+* Display the current system time with the press of a button (or two). 
+* Display the World Name & ID with the press of a button (or two).
 
 
 ## Chat Output Colors
@@ -78,6 +79,7 @@ If you are using a modified configuration file, the colors below may not be accu
 * `[` and `]` - Switch inventories.
 
 * `Ctrl-T` - Displays the current time according to your computer. (displays even if message display is toggled off)
+* `Alt-W` - Displays the current World's Name and ID. (displays even if message display is toggled off)
 
 * `F1` through `F*` - Built-in Teleport Locations. See below for what they are.
 * `Ctrl-F1` through `Ctrl-F12` - Custom Teleport Locations. Add these to the configuration file. See below for the format to use.
@@ -132,11 +134,11 @@ If itemHax is disabled some items behave differently than mentioned above.
 
 **Recommended Method:**
 
-1. Download the [installer](https://github.com/downloads/septor/Buildaria/buildaria_1.8.3_setup.exe) and run it. If you do not want your inventories or configuration overwritten you need to make sure you deselect the appropriate checkboxes when selecting what to install.
+1. Download the [installer](https://github.com/downloads/septor/Buildaria/buildaria_1.8.4_setup.exe) and run it. If you do not want your inventories or configuration overwritten you need to make sure you deselect the appropriate checkboxes when selecting what to install.
 
 **Alternative Method:**
 
-1. Download the [latest archive](https://github.com/downloads/septor/Buildaria/Buildaria_1.8.3.7z) and extract `Buildaria.exe` into your Terraria folder with `Terraria.exe`. This is usually found here: `Program Files/Steam/steamapps/common/terraria/`
+1. Download the [latest archive](https://github.com/downloads/septor/Buildaria/Buildaria_1.8.4.7z) and extract `Buildaria.exe` into your Terraria folder with `Terraria.exe`. This is usually found here: `Program Files/Steam/steamapps/common/terraria/`
 2. Run `Buildaria.exe`!
 
 

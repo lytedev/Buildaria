@@ -1,5 +1,12 @@
-Buildaria’s changelog
+Buildaria's changelog
 ===================
+
+1.8.4 (January 28th, 2012)
+-------------------------------------------------
+* Added the Wizard Hat to the Vanity inventory.
+* You can now display the World Name & ID with the press of a key (or two)! (default key: `Alt+W`)
+* A new external tool created by _Jon for editing your inventories has been added.
+
 
 1.8.3 (January 7th, 2012)
 -------------------------------------------------
@@ -11,7 +18,7 @@ Buildaria’s changelog
 * You can now use the selection tool while the inventory is open. ([#34](https://github.com/septor/Buildaria/issues/34))
 * Trash slot moved back to the top left (first slot of the second row). Inventory filling changed, but not like I thought.
 * Some inventories have had items added (or moved) to the hotbars to help manage what is in the inventories.
-* An inventory list has been added. It lists the **default** inventory structure.
+* An inventory list has been added. It lists the **default** inventory structure. ([#29](https://github.com/septor/Buildaria/issues/29))
 
 
 1.8.2 (December 15th, 2011)
