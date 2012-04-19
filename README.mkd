@@ -3,7 +3,7 @@
 * Any character you load while running Buildaria will have their **INVENTORY ERASED AND THEIR STATS MODIFIED PERMANENTLY**.
 * You could very possibly screw up your world. Make constant backups of your world or use a new world entirely.
 * **IF** you load up a character you didn't want to load up, you can avoid getting their stats changed by pressing `ALT+F4` and killing the Buildaria.exe process.
-* **IF** you have accidentilly saved your character -- overwrite it using it's backup: `player#.plr.bak`
+* **IF** you have accidentally saved your character -- overwrite it using it's backup: `player#.plr.bak`
 
 
 # Buildaria 1.8.4
