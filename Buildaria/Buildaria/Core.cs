@@ -301,11 +301,10 @@ namespace Buildaria
             t.SetData<Color>(new Color[] { new Color(255, 255, 255, 255) });
             DefaultTexture = t;
             
-            
             TileSize = new Vector2(16, 16);
 
             Window.Title = "Buildaria v" + VersionString;
-            Main.versionNumber = Window.Title + " on Terraria " + Main.versionNumber;
+            Main.versionNumber = Window.Title + " on Terraria " + Main.versionNumber + "\nREMINDER: Use a new character! Selected characters will have their inventories and stats overwritten!";
 
             SelectionOverlay = new Color(Convert.ToByte(selectionColor[0]), Convert.ToByte(selectionColor[1]), Convert.ToByte(selectionColor[2]), 50);
 
@@ -315,6 +314,7 @@ namespace Buildaria
             MainWrapper = asm.GetType("Terraria.Main");
 
             Inventory.LoadInventories();
+
         }
 
         protected override void Update(GameTime gameTime)
@@ -485,9 +485,7 @@ namespace Buildaria
 
             #region Bucket Management
 
-            // Disabled for now.
-
-            /*bool[] lavaBuckets = new bool[40];
+            bool[] lavaBuckets = new bool[40];
             bool[] waterBuckets = new bool[40];
             bool[] emptyBuckets = new bool[40];
             for (int i = 0; i < player[myPlayer].inventory.Length; i++)
@@ -506,6 +504,20 @@ namespace Buildaria
                 }
             }
 
+            try
+            {
+                base.Update(gameTime);
+            }
+            catch (Exception e)
+            {
+                Main.NewText(e.Message);
+                LoadInventory(0);
+                base.Update(gameTime);
+            }
+
+            if (gamePaused)
+                return;
+
             for (int i = 0; i < player[myPlayer].inventory.Length; i++)
             {
                 if (player[myPlayer].inventory[i].type == 0xcd)
@@ -523,23 +535,9 @@ namespace Buildaria
                         player[myPlayer].inventory[i].type = 0xcd;
                     }
                 }
-            }*/
+            }
 
             #endregion
-
-            try
-            {
-                base.Update(gameTime);
-            }
-            catch (Exception e)
-            {
-                Main.NewText(e.Message);
-                LoadInventory(0);
-                base.Update(gameTime);
-            }
-
-            if (gamePaused)
-                return;
 
             trashItem.SetDefaults(0);
 

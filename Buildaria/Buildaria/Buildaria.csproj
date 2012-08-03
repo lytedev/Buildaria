@@ -108,9 +108,7 @@
     <Reference Include="System.Net">
       <Private>False</Private>
     </Reference>
-    <Reference Include="Terraria, Version=1.0.4.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <ExecutableExtension>.exe</ExecutableExtension>
+    <Reference Include="Terraria">
       <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\terraria\Terraria.exe</HintPath>
     </Reference>
   </ItemGroup>

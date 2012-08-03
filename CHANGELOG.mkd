@@ -1,6 +1,13 @@
 Buildaria's changelog
 ===================
 
+1.8.5 (August 3rd, 2012)
+-------------------------------------------------
+* Reminder about character's getting overwritten added to the startup screen.
+* Unlimited water and lava buckets are back! Put out that fire without Jimmy John's!
+* Included a .gli file for people who use the Terraria Game Launcher.
+
+
 1.8.4 (January 28th, 2012)
 -------------------------------------------------
 * Added the Wizard Hat to the Vanity inventory.
