@@ -29,7 +29,7 @@ namespace Buildaria
         public static Texture2D DefaultTexture { get; set; } // A single white pixel texture
         public static string VersionString { get; set; } // Contains the version information as a simple string
         public static Color SelectionOverlay { get; set; } // The color of the drawn selection overlay
-        public static Vector2 TileSize { get; set; } // The size of the tiles... I don't know why I use this
+        public static Vector2 TileSize { get; set; } // The size of the tiles.
 
         public static Type WorldGenWrapper { get; set; } // For accessing WorldGen functions
         public static Type MainWrapper { get; set; } // For accessing private Main members
@@ -541,57 +541,6 @@ namespace Buildaria
 
             trashItem.SetDefaults(0);
 
-            #region NPC Spawning
-
-            if (keyState.IsKeyDown(Keys.C) && oldKeyState.IsKeyUp(Keys.C) && !editSign && !ctrl)
-            {
-                npcsEnabled = !npcsEnabled;
-
-                if (displayMessages)
-                {
-                    Main.NewText(npcsEnabled == true ? "Hostile NPCs will now spawn." : "Hostile NPCs will no longer spawn.", Convert.ToByte(otherToggles[0]), Convert.ToByte(otherToggles[1]), Convert.ToByte(otherToggles[2]));
-                }
-            }
-
-            if (!npcsEnabled)
-            {
-                foreach (NPC n in npc)
-                {
-                    if (!n.friendly)
-                    {
-                        n.life = 0;
-                        n.UpdateNPC(0);
-                    }
-                }
-            }
-
-            #endregion
-
-            #region World Items
-
-            if (keyState.IsKeyDown(Keys.M) && oldKeyState.IsKeyUp(Keys.M) && !editSign && !ctrl)
-            {
-                itemsEnabled = !itemsEnabled;
-
-                if (displayMessages)
-                {
-                    Main.NewText(itemsEnabled == true ? "Items will now drop to the ground when excavated or dropped." : "Items will no longer be visible when excavated or dropped.", Convert.ToByte(otherToggles[0]), Convert.ToByte(otherToggles[1]), Convert.ToByte(otherToggles[2]));
-                }
-            }
-
-            if (!itemsEnabled)
-            {
-                foreach (Item i in item)
-                {
-                    i.SetDefaults(0);
-                    i.stack = 0;
-                    i.name = "";
-                    i.UpdateItem(0);
-                }
-            }
-
-            #endregion
-
             if (menuMode != oldMenuMode)
             {
                 sel1 = -Vector2.One;
@@ -605,46 +554,218 @@ namespace Buildaria
             else if (menuMode == 10) // if in-game ...
             {
 
-                #region Display Chat Messages
-
-                if (keyState.IsKeyDown(Keys.K) && oldKeyState.IsKeyUp(Keys.K) && !editSign && !ctrl && !shift)
+                // Let's look for the forward slash to initiate a command.
+                if (keyState.IsKeyDown(Keys.OemQuestion) && oldKeyState.IsKeyUp(Keys.OemQuestion) && chatMode == false && !editSign && !shift)
                 {
-                    displayMessages = !displayMessages;
-
-                    Main.NewText(displayMessages == true ? "You will now see messages for toggles." : "You will no longer see messages for toggles.", Convert.ToByte(displayMessagesMsg[0]), Convert.ToByte(displayMessagesMsg[1]), Convert.ToByte(displayMessagesMsg[2]));
+                    chatMode = true;
                 }
 
-                #endregion
-
-                #region ItemHax
-
-                if (keyState.IsKeyDown(Keys.T) && oldKeyState.IsKeyUp(Keys.T) && !editSign && !ctrl && !shift)
+                // We're using the TAB key as the execute key, if it's pressed let's do some damage..
+                else if (keyState.IsKeyDown(Keys.Tab) && oldKeyState.IsKeyUp(Keys.Tab) && !editSign)
                 {
-                    itemHax = !itemHax;
+                    // Execute the commands
 
-                    if (displayMessages)
+                    #region Display Chat Messages
+                    if (chatText == "/chatmessages")
                     {
-                        Main.NewText(itemHax == true ? "You are no longer limited while placing or destroying blocks and items." : "Your construction powers have been normalized.", Convert.ToByte(otherToggles[0]), Convert.ToByte(otherToggles[1]), Convert.ToByte(otherToggles[2]));
+                        displayMessages = !displayMessages;
+                        Main.NewText(displayMessages == true ? "You will now see messages for toggles." : "You will no longer see messages for toggles.", Convert.ToByte(displayMessagesMsg[0]), Convert.ToByte(displayMessagesMsg[1]), Convert.ToByte(displayMessagesMsg[2]));
                     }
+                    #endregion
+
+                    #region itemHax
+                    if (chatText == "/unlimited")
+                    {
+                        itemHax = !itemHax;
+
+                        if (displayMessages)
+                        {
+                            Main.NewText(itemHax == true ? "You are no longer limited while placing or destroying blocks and items." : "Your construction powers have been normalized.", Convert.ToByte(otherToggles[0]), Convert.ToByte(otherToggles[1]), Convert.ToByte(otherToggles[2]));
+                        }
+                    }
+                    #endregion
+
+                    #region Save/Load Inventories File
+                    if (chatText == "/saveinv")
+                    {
+                        SaveInventory(inventoryType);
+                        Inventory.SaveInventories();
+                    }
+
+                    if (chatText == "/loadinv")
+                    {
+                        Inventory.LoadInventories();
+                    }
+                    #endregion
+
+                    #region Ghost/Hover Mode
+                    if (chatText == "/noclip")
+                    {
+                        hover = !hover;
+                        player[myPlayer].fallStart = (int)player[myPlayer].position.Y;
+                        player[myPlayer].immune = true;
+                        player[myPlayer].immuneTime = 1000;
+
+                        if (displayMessages)
+                        {
+                            Main.NewText(hover == true ? "You can now fly through any solid object!" : "You can no longer pass through solid objects. :(", Convert.ToByte(otherToggles[0]), Convert.ToByte(otherToggles[1]), Convert.ToByte(otherToggles[2]));
+                        }
+                    }
+                    #endregion
+
+                    #region Grid (ruler)
+                    if (chatText == "/grid")
+                    {
+                        gridMe = !gridMe;
+                        if (displayMessages)
+                        {
+                            Main.NewText(gridMe == true ? "Build free. You now have a 1x1 grid to assist you." : "The 1x1 grid has been hidden.", Convert.ToByte(otherToggles[0]), Convert.ToByte(otherToggles[1]), Convert.ToByte(otherToggles[2]));
+                        }
+                    }
+                    #endregion
+
+                    #region God Mode
+                    if (chatText == "/godmode")
+                    {
+                        godMode = !godMode;
+
+                        if (displayMessages)
+                        {
+                            Main.NewText(godMode == true ? "You are now an immortal entity." : "Welcome back to the world of the Normals.", Convert.ToByte(otherToggles[0]), Convert.ToByte(otherToggles[1]), Convert.ToByte(otherToggles[2]));
+                        }
+                    }
+                    #endregion
+
+                    #region Set Default Spawn Location
+                    if (chatText == "/setspawn")
+                    {
+                        int x = (int)((Main.mouseState.X + Main.screenPosition.X) / 16f);
+                        int y = (int)((Main.mouseState.Y + Main.screenPosition.Y) / 16f);
+
+                        Main.spawnTileX = x;
+                        Main.spawnTileY = y;
+
+                        if (displayMessages)
+                        {
+                            Main.NewText("You have successfully set the default spawn location.", Convert.ToByte(setSpawnPoint[0]), Convert.ToByte(setSpawnPoint[1]), Convert.ToByte(setSpawnPoint[2]));
+                        }
+                    }
+                    #endregion
+
+                    #region Display Coordinates
+                    if (chatText == "/coords")
+                    {
+                        int x = (int)((Main.mouseState.X + Main.screenPosition.X) / 16f);
+                        int y = (int)((Main.mouseState.Y + Main.screenPosition.Y) / 16f);
+
+                        Main.NewText("Your mouse currently points to " + x + ", " + y, Convert.ToByte(mouseCoords[0]), Convert.ToByte(mouseCoords[1]), Convert.ToByte(mouseCoords[2]));
+                    }
+                    #endregion
+
+                    #region System DateTime Display
+                    if (chatText == "/systime")
+                    {
+                        Main.NewText("The current system time is " + DateTime.Now.ToString("t"), Convert.ToByte(timeMessage[0]), Convert.ToByte(timeMessage[1]), Convert.ToByte(timeMessage[2]));
+                    }
+                    #endregion
+
+                    #region Light Me (unlimited Shine Potion & Night Owl Potion buff)
+                    if (chatText == "/lights")
+                    {
+                        lightMe = !lightMe;
+
+                        if (displayMessages)
+                        {
+                            Main.NewText(lightMe == true ? "Let there be light!" : "You casually switch your headlamp off.", Convert.ToByte(lightMeToggle[0]), Convert.ToByte(lightMeToggle[1]), Convert.ToByte(lightMeToggle[2]));
+                        }
+
+                    }
+                    #endregion
+
+                    #region Display World Information
+                    if (chatText == "/worldinfo")
+                    {
+                        Main.NewText("World Name: " + worldName.ToString(), Convert.ToByte(otherToggles[0]), Convert.ToByte(otherToggles[1]), Convert.ToByte(otherToggles[2]));
+                        Main.NewText("World ID: " + worldID.ToString(), Convert.ToByte(otherToggles[0]), Convert.ToByte(otherToggles[1]), Convert.ToByte(otherToggles[2]));
+                    }
+                    #endregion
+
+                    #region Time Shift
+                    if (chatText == "/movetime")
+                    {
+                        if (dayTime)
+                        {
+                            time = dayLength + 1;
+
+                            if (displayMessages)
+                            {
+                                Main.NewText("You have bent time. The sun is now setting.", Convert.ToByte(otherToggles[0]), Convert.ToByte(otherToggles[1]), Convert.ToByte(otherToggles[2]));
+                            }
+                        }
+                        else
+                        {
+                            if (displayMessages)
+                            {
+                                Main.NewText("You have bent time. The sun is now rising.", Convert.ToByte(otherToggles[0]), Convert.ToByte(otherToggles[1]), Convert.ToByte(otherToggles[2]));
+                            }
+                            time = nightLength;
+                        }
+                    }
+                    #endregion
+
+                    #region NPC Spawning
+                    if (chatText == "/npcs")
+                    {
+                        npcsEnabled = !npcsEnabled;
+
+                        if (displayMessages)
+                        {
+                            Main.NewText(npcsEnabled == true ? "Hostile NPCs will now spawn." : "Hostile NPCs will no longer spawn.", Convert.ToByte(otherToggles[0]), Convert.ToByte(otherToggles[1]), Convert.ToByte(otherToggles[2]));
+                        }
+                    }
+                    #endregion
+
+                    #region World Items
+                    if (chatText == "/drops")
+                    {
+                        itemsEnabled = !itemsEnabled;
+
+                        if (displayMessages)
+                        {
+                            Main.NewText(itemsEnabled == true ? "Items will now drop to the ground when excavated or dropped." : "Items will no longer be visible when excavated or dropped.", Convert.ToByte(otherToggles[0]), Convert.ToByte(otherToggles[1]), Convert.ToByte(otherToggles[2]));
+                        }
+                    }
+                    #endregion
+
+                    // Clear the editbox and disable chatMode.
+                    chatMode = false;
+                    chatText = "";
                 }
 
-                #endregion
-
-                #region Save/Load Inventories File
-
-                if (ctrl && shift && keyState.IsKeyDown(Keys.S) && oldKeyState.IsKeyUp(Keys.S))
+                #region Toggles
+                if (godMode)
                 {
-                    SaveInventory(inventoryType);
-                    Inventory.SaveInventories();
+                    player[myPlayer].accWatch = 3;
+                    player[myPlayer].accDepthMeter = 3;
+                    player[myPlayer].accCompass = 3;
+                    player[myPlayer].accFlipper = true;
+                    player[myPlayer].statLife = player[myPlayer].statLifeMax;
+                    player[myPlayer].statMana = player[myPlayer].statManaMax;
+                    player[myPlayer].dead = false;
+                    player[myPlayer].rocketTimeMax = 1000000;
+                    player[myPlayer].rocketTime = 1000;
+                    player[myPlayer].canRocket = true;
+                    player[myPlayer].fallStart = (int)player[myPlayer].position.Y;
+                    player[myPlayer].AddBuff(9, 50); // Spelunker effect
                 }
-
-                if (ctrl && shift && keyState.IsKeyDown(Keys.O) && oldKeyState.IsKeyUp(Keys.O))
-                    Inventory.LoadInventories();
-
-                #endregion
-
-                #region Ghost/Hover Mode
-
+                else
+                {
+                    player[myPlayer].respawnTimer = 1;
+                }
+                if (gridMe)
+                {
+                    player[myPlayer].rulerAcc = true;
+                }
                 if (hover)
                 {
                     player[myPlayer].position = lastPosition;
@@ -674,95 +795,36 @@ namespace Buildaria
                         player[myPlayer].position = new Vector2(player[myPlayer].position.X + magnitude, player[myPlayer].position.Y);
                     }
                 }
-
-                if (keyState.IsKeyDown(Keys.P) && !oldKeyState.IsKeyDown(Keys.P) && !editSign && !ctrl && !shift)
-                {
-                    hover = !hover;
-                    player[myPlayer].fallStart = (int)player[myPlayer].position.Y;
-                    player[myPlayer].immune = true;
-                    player[myPlayer].immuneTime = 1000;
-                    if (!hover)
-                    {
-                        player[myPlayer].immune = false;
-                    }
-
-                    if (displayMessages)
-                    {
-                        Main.NewText(hover == true ? "You can now fly through any solid object!" : "You can no longer pass through solid objects. :(", Convert.ToByte(otherToggles[0]), Convert.ToByte(otherToggles[1]), Convert.ToByte(otherToggles[2]));
-                    }
-                }
-
-                #endregion
-
-				#region Grid (ruler)
-                
-                if (keyState.IsKeyDown(Keys.R) && oldKeyState.IsKeyUp(Keys.R) && !editSign && !ctrl && !shift)
-                {
-                    
-                    gridMe = !gridMe;
-                    if (displayMessages)
-                    {
-                        Main.NewText(gridMe == true ? "Build free. You now have a 1x1 grid to assist you." : "The 1x1 grid has been hidden.", Convert.ToByte(otherToggles[0]), Convert.ToByte(otherToggles[1]), Convert.ToByte(otherToggles[2]));
-                    }
-                }
-                if (gridMe)
-                {
-                    player[myPlayer].rulerAcc = true;
-                }
-                
-
-                #endregion
-                
-                #region God Mode
-
-                if (keyState.IsKeyDown(Keys.G) && oldKeyState.IsKeyUp(Keys.G) && !editSign && !ctrl && !shift)
-                {
-                    godMode = !godMode;
-
-                    if (displayMessages)
-                    {
-                        Main.NewText(godMode == true ? "You are now an immortal entity." : "Welcome back to the world of the Normals.", Convert.ToByte(otherToggles[0]), Convert.ToByte(otherToggles[1]), Convert.ToByte(otherToggles[2]));
-                    }
-                }
-
-                if (godMode)
-                {
-                    player[myPlayer].accWatch = 3;
-                    player[myPlayer].accDepthMeter = 3;
-                    player[myPlayer].accCompass = 3;
-                    player[myPlayer].accFlipper = true;
-                    player[myPlayer].statLife = player[myPlayer].statLifeMax;
-                    player[myPlayer].statMana = player[myPlayer].statManaMax;
-                    player[myPlayer].dead = false;
-                    player[myPlayer].rocketTimeMax = 1000000;
-                    player[myPlayer].rocketTime = 1000;
-                    player[myPlayer].canRocket = true;
-                    player[myPlayer].fallStart = (int)player[myPlayer].position.Y;
-                    player[myPlayer].AddBuff(9, 50); // Spelunker effect
-                }
                 else
                 {
-                    player[myPlayer].respawnTimer = 1;
+                    player[myPlayer].immune = false;
                 }
-
-                #endregion
-
-                #region Set Default Spawn Location
-
-                if (keyState.IsKeyDown(Keys.L) && oldKeyState.IsKeyUp(Keys.L) && !editSign && !ctrl && !shift)
+                if (!itemsEnabled)
                 {
-                    int x = (int)((Main.mouseState.X + Main.screenPosition.X) / 16f);
-                    int y = (int)((Main.mouseState.Y + Main.screenPosition.Y) / 16f);
-
-                    Main.spawnTileX = x;
-                    Main.spawnTileY = y;
-
-                    if (displayMessages)
+                    foreach (Item i in item)
                     {
-                        Main.NewText("You have successfully set the default spawn location.", Convert.ToByte(setSpawnPoint[0]), Convert.ToByte(setSpawnPoint[1]), Convert.ToByte(setSpawnPoint[2]));
+                        i.SetDefaults(0);
+                        i.stack = 0;
+                        i.name = "";
+                        i.UpdateItem(0);
                     }
                 }
-
+                if (lightMe)
+                {
+                    player[myPlayer].AddBuff(11, 50); // Shine effect
+                    player[myPlayer].AddBuff(12, 50); // Night Owl effect
+                }
+                if (!npcsEnabled)
+                {
+                    foreach (NPC n in npc)
+                    {
+                        if (!n.friendly)
+                        {
+                            n.life = 0;
+                            n.UpdateNPC(0);
+                        }
+                    }
+                }
                 #endregion
 
                 #region Built-in Teleport Locations (bound to F1-F?)
@@ -945,57 +1007,6 @@ namespace Buildaria
                         player[myPlayer].position = new Vector2(x, y);
                         Main.NewText("You have been teleported to " + ctlF12[0], Convert.ToByte(teleportMessages[0]), Convert.ToByte(teleportMessages[1]), Convert.ToByte(teleportMessages[2]));
                     }
-                }
-
-                #endregion
-
-                #region Display Coordinates
-
-                if (keyState.IsKeyDown(Keys.I) && oldKeyState.IsKeyUp(Keys.I) && !editSign && !ctrl && !shift)
-                {
-                    int x = (int)((Main.mouseState.X + Main.screenPosition.X) / 16f);
-                    int y = (int)((Main.mouseState.Y + Main.screenPosition.Y) / 16f);
-
-                    Main.NewText("Your mouse currently points to " + x + ", " + y, Convert.ToByte(mouseCoords[0]), Convert.ToByte(mouseCoords[1]), Convert.ToByte(mouseCoords[2]));
-                }
-
-                #endregion
-
-                #region System DateTime Display
-
-                if (ctrl && keyState.IsKeyDown(Keys.T) && oldKeyState.IsKeyUp(Keys.T) && !editSign && !shift)
-                {
-                    Main.NewText("The current system time is " + DateTime.Now.ToString("t"), Convert.ToByte(timeMessage[0]), Convert.ToByte(timeMessage[1]), Convert.ToByte(timeMessage[2]));
-                }
-
-                #endregion
-
-                #region Light Me (unlimited Shine Potion & Night Owl Potion buff)
-
-                if (keyState.IsKeyDown(Keys.F) && !oldKeyState.IsKeyDown(Keys.F) && !editSign && !ctrl && !shift)
-                {
-                    lightMe = !lightMe;
-
-                    if (displayMessages)
-                    {
-                        Main.NewText(lightMe == true ? "Let there be light!" : "You casually switch your headlamp off.", Convert.ToByte(lightMeToggle[0]), Convert.ToByte(lightMeToggle[1]), Convert.ToByte(lightMeToggle[2]));
-                    }
-
-                }
-                if (lightMe)
-                {
-                    player[myPlayer].AddBuff(11, 50); // Shine effect
-                    player[myPlayer].AddBuff(12, 50); // Night Owl effect
-                }
-
-                #endregion
-
-                #region Display World Information
-
-                if (alt && keyState.IsKeyDown(Keys.W) && oldKeyState.IsKeyUp(Keys.W) && !editSign && !shift)
-                {
-                    Main.NewText("World Name: " + worldName.ToString(), Convert.ToByte(otherToggles[0]), Convert.ToByte(otherToggles[1]), Convert.ToByte(otherToggles[2]));
-                    Main.NewText("World ID: " + worldID.ToString(), Convert.ToByte(otherToggles[0]), Convert.ToByte(otherToggles[1]), Convert.ToByte(otherToggles[2]));
                 }
 
                 #endregion
@@ -1672,32 +1683,6 @@ namespace Buildaria
                         }
 
                         #endregion
-
-                        #region Day/Night Skip
-
-                        if (keyState.IsKeyDown(Keys.N) && !oldKeyState.IsKeyDown(Keys.N) && !editSign)
-                        {
-                            if (dayTime)
-                            {
-                                time = dayLength + 1;
-
-                                if (displayMessages)
-                                {
-                                    Main.NewText("You have bent time. The sun is now setting.", Convert.ToByte(otherToggles[0]), Convert.ToByte(otherToggles[1]), Convert.ToByte(otherToggles[2]));
-                                }
-                            }
-                            else
-                            {
-                                if (displayMessages)
-                                {
-                                    Main.NewText("You have bent time. The sun is now rising.", Convert.ToByte(otherToggles[0]), Convert.ToByte(otherToggles[1]), Convert.ToByte(otherToggles[2]));
-                                }
-                                time = nightLength;
-                            }
-                        }
-
-                        #endregion
-
                     }
                 }
                 catch
@@ -1718,6 +1703,7 @@ namespace Buildaria
             if (menuMode == 10)
             {
                 DrawSelectionOverlay();
+
             }
 
             spriteBatch.End();
