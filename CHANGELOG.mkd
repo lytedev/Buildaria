@@ -1,0 +1,106 @@
+Buildaria's changelog
+===================
+
+1.8.5 (August 3rd, 2012)
+-------------------------------------------------
+* Reminder about character's getting overwritten added to the startup screen.
+* Unlimited water and lava buckets are back! Put out that fire without Jimmy John's!
+* Included a .gli file for people who use the Terraria Game Launcher.
+
+
+1.8.4 (January 28th, 2012)
+-------------------------------------------------
+* Added the Wizard Hat to the Vanity inventory.
+* You can now display the World Name & ID with the press of a key (or two)! (default key: `Alt+W`)
+* A new external tool created by _Jon for editing your inventories has been added.
+
+
+1.8.3 (January 7th, 2012)
+-------------------------------------------------
+* Snow Wall does not exist. Snow Brick Wall does though! (also, it's in the inventory now)
+* Bumped the duration of the always on buffs to 1 second. This will stop the flickering.
+* You can now copy and paste wires. ([#23](https://github.com/septor/Buildaria/issues/23))
+* Moved the storage items into the Decorations inventory.
+* Filling by selection messages now tell you what the item was instead of it's ID.
+* You can now use the selection tool while the inventory is open. ([#34](https://github.com/septor/Buildaria/issues/34))
+* Trash slot moved back to the top left (first slot of the second row). Inventory filling changed, but not like I thought.
+* Some inventories have had items added (or moved) to the hotbars to help manage what is in the inventories.
+* An inventory list has been added. It lists the **default** inventory structure. ([#29](https://github.com/septor/Buildaria/issues/29))
+
+
+1.8.2 (December 15th, 2011)
+-------------------------------------------------
+* itemHax now has a rewritten output chat message.
+* The Light On output message has been tweaked.
+* Teleportation Update! You can now teleport to each ocean! `F3` for the left, `F4` for the right!
+* Statue inventories are now sorted by usefulness. One inventory can be triggered with wires, the other can't.
+* Christmas inventory (1.1.1 items) added.
+
+
+1.8.1 (December 11th, 2011)
+-------------------------------------------------
+* Added Pickaxe, Hammer, and Phaseblade to the Mechanical inventory (oops?).
+* Added Empty Bucket, Water Bucket, and Lava Bucket to the Tools inventory.
+* Moved the Mudstone Block to the Bricks inventory.
+* Moved the Soils & Dirt inventory next to the Bricks inventory.
+* The output chat messages have been rewritten to be a tad more informative.
+
+
+1.8 (December 8th, 2011)
+-------------------------------------------------
+* Night Owl effects added to Light On functionality. ([#18](https://github.com/septor/Buildaria/issues/18))
+* Spelunker effects added to God Mode. ([#18](https://github.com/septor/Buildaria/issues/18))
+* Ruler accessory can now be toggled on and off. (default key: `R`). ([#14](https://github.com/septor/Buildaria/issues/14))
+* Compass information is now displayed during God Mode.
+* Trash slot moved back to the bottom right of the inventory.
+* Inventories revamped to make way for the 1.1 items (which were added, btw). ([#20](https://github.com/septor/Buildaria/issues/20))
+* Selection color can now be customized in the configuration file.
+* Item drops are now enabled by default.
+* To prevent crashing, unlimited water and lava have been disabled. Fill by selection still works.
+
+
+1.7.3 (October 3rd, 2011)
+-------------------------------------------------
+* If a configuration item is missing from the file there is now fall back code in place.
+* You can now enable autosave on inventory switch in the configuration file.
+* Partial teleporting support has been added. View the README file for more information.
+* Added system time display. No more windowed mode! (default key: `Ctrl-T`).
+
+
+1.7.2 (September 25th, 2011)
+-------------------------------------------------
+* Ability to show your mouse's current X,Y location added (default key: `I`).
+* Materials inventory shuffled around. Gems are now on the hotbar since they are placeable.
+* Exiting ghost mode now makes you immediately susceptible to damage (if god mode is off, obviously). ([#6](https://github.com/septor/Buildaria/issues/6))
+* Most non-placeable/tool type items have had their speed/power/etc normalized when itemHax is on.
+* Default toggles and chat out put colors are now all managed in a configuration file. ([#2](https://github.com/septor/Buildaria/issues/2))
+* Toggles and the like should no longer function if `Ctrl` or `Shift` are pressed (when they aren't needed). ([#13](https://github.com/septor/Buildaria/issues/13))
+
+
+1.7.1 (September 15th, 2011)
+-------------------------------------------------
+* Output chat messages are now color coded. See the readme file for a chart.
+* You can now toggle a light aura (default key: `F`).
+* Due to the above change the Mining Helmet has been replaced with Sunglasses. Sunglasses are cool.
+
+
+1.7 (September 14th, 2011)
+-------------------------------------------------
+* The ability to toggle the information messages has been added (default key: `K`).
+* The ability to set the default spawn location has been added (default key: `L`).
+* No more itemHax countdown of doom.
+* Hammers, pickaxes, and grapple items are now defaulted when itemHax is off.
+* Double super speed has been added. Pressing `Shift + Alt` now moves you four times as fast while in ghost mode.
+* Inventories are no longer saved when you switch them. You need to manually save them (default key: `Ctrl + Shift + S`).
+* Gems are now placeable.
+* Placing blocks or items while the inventory is open is no longer possible.
+* Swords, axes, hammers, and bows are no longer converted to Iron (unless they should be Iron) (thanks scaryguy334).
+* Added Sawmill, Mug, Banners, and Spike to the inventories.
+* Many other items now display correctly due to their names being fixed.
+* You can once again unstack previously unstackable items (thanks scaryguy334).
+* If you toggle god mode off and you die the respawn timer is now 1 second.
+
+
+1.6.1 (August 11th, 2011)
+-------------------------------------------------
+* Last release by wraithx2. Changes undocumented (or too much work to retrieve).

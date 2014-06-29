@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Xml;
-using System.Xml.Serialization;
+﻿using System.Collections.Generic;
 using System.IO;
-
+using System.Xml.Serialization;
 using Terraria;
 
 namespace Buildaria
@@ -84,21 +79,11 @@ namespace Buildaria
         #endregion
 
         public string Name { get; set; }
-        public bool ItemHax { get; set; }
-        public bool GodMode { get; set; }
-        public bool NPCs { get; set; }
-        public bool BuildMode { get; set; }
-        public bool ItemDrops { get; set; }
         public InventoryItem[] Items { get; set; }
 
         public void Default()
         {
             Name = "Inventory";
-            ItemHax = true;
-            GodMode = true;
-            NPCs = false;
-            BuildMode = true;
-            ItemDrops = false;
             Items = new InventoryItem[0];
         }
 

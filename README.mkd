@@ -1,0 +1,159 @@
+## WARNINGS -- READ THIS FIRST:
+* Joining multiplayer games is disabled while running Buildaria.
+* Any character you load while running Buildaria will have their **INVENTORY ERASED AND THEIR STATS MODIFIED PERMANENTLY**.
+* You could very possibly screw up your world. Make constant backups of your world or use a new world entirely.
+* **IF** you load up a character you didn't want to load up, you can avoid getting their stats changed by pressing `ALT+F4` and killing the Buildaria.exe process.
+* **IF** you have accidentally saved your character -- overwrite it using it's backup: `player#.plr.bak`
+
+
+# Buildaria 1.8.5
+
+Buildaria is a Terraira mod geared towards map makers.
+
+
+## Features
+
+* Easy-to-use selection system that supports multiple shapes, copy, paste, and an undo.
+* Toggle off hostile NPCs so they don't hinder your building.
+* Noclip mode that let's you fly around the map and through blocks for easy construction.
+* Toggle between tools that instantly destroy everything you click on or normal 100% power tools.
+* Place blocks anywhere without needing background walls or adjacent blocks.
+* Cycle forward to dawn/dusk instantly.
+* Optional god mode just in case you fall or fly into lava.
+* One second respawn if you do manage to die.
+* A trash slot - you will always have inventory room.
+* Infinite spectre boots.
+* Toggle-able light aura for easier mining.
+* Toggle-able grid for easier building.
+* Depth meter, watch, and compass active with god mode.
+* Multiple, saved, preset inventory pages with all the construction materials you'll ever need.
+* Inventories are stored in an XML file, allowing you to add, remove, and customize your own inventories.
+* Color coded output chat messages to let you know what's going on... most of the time.
+* Item drops are toggle-able.
+* All toggle-able defaults and chat output colors can be customized in an XML configuration file.
+* Teleportation System! Get to areas of your map quickly just by pressing a button (or two)!
+* Ability to set the default spawn point with the press of a button.
+* Display the current X,Y coordinates of your mouse with the press of a button.
+* Display the current system time with the press of a button (or two). 
+* Display the World Name & ID with the press of a button (or two).
+
+
+## Chat Output Colors
+
+If you are using a modified configuration file, the colors below may not be accurate.
+
+* `Blue` - Selection/Copy/Paste/Fills/Drains
+* `Brown` - Undo
+* `Yellow Orange` - Load/Save Inventories
+* `Red` - Set Spawn Point
+* `Violet` - Coordinate Display Message
+* `White` - Display Messages Toggle
+* `Yellow` - Light Me Toggle
+* `Cyan` - Teleport Messages
+* `Green` - All Other Toggles
+* `Pistachio Green` - System Time Display
+
+
+## Controls
+
+* `Right-click` - Fills the current selection with whatever the current item normally fills/destroys.
+* `Alt` - Transforms the current selection in an ellipse (oval or circle). Also, causes Paste to paste upside-down, or flipped vertically.
+* `Shift` - Transforms the current selection into an outline. Works with `Alt` for a circle outline. Also, causes Paste to paste backwards, or flipped horizontally.
+
+* `Ctrl-C` - Copy the currently selected tiles.
+* `Ctrl-V` - Paste your current copy to the selected position.
+* `Ctrl-Z` - Undo the last selection-based modification.
+
+* `Ctrl-Shift-S` - Save Inventories to file.
+* `Ctrl-Shift-O` - Load Inventories from file.
+
+* `T` - Toggles item speeds.
+* `G` - Toggles god mode.
+* `C` - Toggles NPC spawning
+* `P` - Toggles between ghost mode. Noclip! Hold `Shift` to go extra fast. Hold `Shift+Alt` to go super extra fast!
+* `N` - Toggles day/night time.
+* `M` - Toggles item drops.
+* `K` - Toggles output chat messages.
+* `F` - Toggles a light aura for easier mining.
+* `R` - Toggles a 1x1 grid for easier building.
+* `L` - Set the currently moused-over area as the default spawn location.
+* `I` - Display the current X,Y location of your mouse. (displays even if message display is toggled off)
+* `[` and `]` - Switch inventories.
+
+* `Ctrl-T` - Displays the current time according to your computer. (displays even if message display is toggled off)
+* `Alt-W` - Displays the current World's Name and ID. (displays even if message display is toggled off)
+
+* `F1` through `F*` - Built-in Teleport Locations. See below for what they are.
+* `Ctrl-F1` through `Ctrl-F12` - Custom Teleport Locations. Add these to the configuration file. See below for the format to use.
+
+
+## Teleportation
+
+You can teleport to locations on your map by pressing the function (eg: `F1`) keys. Below is a list of built-in locations, the list will grow as more locations are added:
+
+* `F1` - Default Spawn Location
+* `F3` - Left Ocean
+* `F4` - Right Ocean
+
+*Note: Ocean teleports may be slightly off. You may or may not be teleported above or below the surface. It's also possible you may be spawned slightly to the left or right
+of each beach. Due to map size and world generation it's difficult to put you exactly on the beach of each ocean. I plan on making further tweaks to this, but it's
+still going to be a gamble.*
+
+Custom locations can be set up in the configuration file and you can get to these by pressing `Ctrl` followed by the corresponding function key. Below is how you need to add them to the configuration file:
+
+	<customTeleports>
+		<F1>Location Name,X,Y</F1>
+		<F2>Location Name,X,Y</F2>
+		<F3>Location Name,X,Y</F3>
+		<F4>Location Name,X,Y</F4>
+	</customTeleports>
+
+You can obtain the X and Y integers in-game by pressing `I`. Anything up to F12 will be accepted and usable. If you add more (eg: `F13`) it will be ignored.
+
+**It is very important that you follow the above syntax when entering custom locations! Failure to do so will result in Buildaria crashing!**
+
+## Items Explained
+
+* `Phaseblade` - Acts as the selection tool. Click and drag to select a box area. Right-click to clear selection. Works with any phaseblade color.
+* `Pickaxe` - Destroys any blocks that a normal pick would destroy, only instantaneously and without range. Right-click to clear selection of pick-able tiles.
+* `Hammer` - The same as the pickaxe, only it acts as a hamaxe. Right-click to clear selection of hamaxe-able tiles.
+* `Blocks` - Works normally, only you can place multiple blocks much faster than normal. Right-click to fill.
+* `Walls` - Works normally, only you can place multiple walls much faster than normal.
+* `Decorations` - Works normally, only you can place multiple decorations much faster than normal. I do not recommend using the right-click functionality with decorations!
+* `Filled Buckets` - Aside from their normal functions they fill the selection area by right-clicking.
+* `Empty Buckets` - Aside from it's normal function it removes any liquid within the selection area by right-clicking.
+
+### ItemHax Note
+
+If itemHax is disabled some items behave differently than mentioned above.
+
+* `Hammer` acts exactly like a Molten Hamaxe.
+* `Pickaxes` act like a cross between a Nightmare Pickaxe and a Molten Pickaxe, taken the best of both into consideration.
+* `Ivy Whip` and `Grappling Hook` behave normally.
+
+
+## How to Install
+
+**Recommended Method:**
+
+1. Download the [installer](https://github.com/downloads/septor/Buildaria/buildaria_1.8.5_setup.exe) and run it. If you do not want your inventories or configuration overwritten you need to make sure you deselect the appropriate checkboxes when selecting what to install.
+
+**Alternative Method:**
+
+1. Download the [latest archive](https://github.com/downloads/septor/Buildaria/Buildaria_1.8.5.7z) and extract `Buildaria.exe` into your Terraria folder with `Terraria.exe`. This is usually found here: `Program Files/Steam/steamapps/common/terraria/`
+2. Run `Buildaria.exe`!
+
+
+## Build from the source
+
+If you want to compile your own version of Buildaria follow the below steps:
+
+1. Download the [source](https://github.com/septor/Buildaria/zipball/master).
+2. Install [XNA Game Studio 4.0](http://www.microsoft.com/downloads/en/details.aspx?FamilyID=9ac86eca-206f-4274-97f2-ef6c8b1f478f).
+3. Open the Buildaria solution file `Buildaria.sln` in Visual Studio.
+4. In the Solution Explorer, expand `References`.
+5. Delete `Terraria`.
+6. Right-click `References` and select `Add Reference...`.
+7. In the dialog box, click `Browse` and locate your `Terraria.exe` file inside `Program Files/Steam/steamapps/common/terraria/`.
+8. Build!
+9. To test your changes copy the `Buildaria.exe` file from `bin\x86\Release` to your Terraria folder: `Program Files/Steam/steamapps/common/terraria/` and run it!
