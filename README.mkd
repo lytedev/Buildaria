@@ -1,3 +1,8 @@
+## NOTICE -- ATTENTION -- READ THIS FIRST FIRST (BEFORE THE OTHER READ THIS FIRST)
+**Buildaria does not currently work with the latest version of Terraria (1.3.*).** In fact, I don't even think it worked for 1.2.* correctly. I do have it planned to be updated, but there's no telling how long that will take. Until I get Buildaria updated (or even possible after) I recommend using [TerrariaPatcher](http://forums.terraria.org/index.php?threads/1-3-terrariapatcher-plugins-and-more.24615/). It has most of the same functionality that Buildaria had except notably NoClip, but I've made a [plugin](https://github.com/septor/TerrariaPatcherPlugins/blob/master/Plugins/NoClip.cs) for it that gives you semi-noclip.
+
+Sorry for the inconveniences this may cause.
+
 ## WARNINGS -- READ THIS FIRST:
 * Joining multiplayer games is disabled while running Buildaria.
 * Any character you load while running Buildaria will have their **INVENTORY ERASED AND THEIR STATS MODIFIED PERMANENTLY**.
