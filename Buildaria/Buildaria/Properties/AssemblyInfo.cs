@@ -8,8 +8,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Buildaria")]
 [assembly: AssemblyProduct("Buildaria")]
 [assembly: AssemblyDescription("")]
-[assembly: AssemblyCompany("LyteDev")]
-[assembly: AssemblyCopyright("Copyright © LyteDev 2011")]
+[assembly: AssemblyCompany("Patrick Weaver")]
+[assembly: AssemblyCopyright("Copyright © Patrick Weaver  2011-2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -31,4 +31,4 @@ using System.Runtime.InteropServices;
 //      Build Number
 //      Revision
 //
-[assembly: AssemblyVersion("1.6.1")]
+[assembly: AssemblyVersion("1.8.5")]
